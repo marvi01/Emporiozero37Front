@@ -6,8 +6,8 @@ import Contato from './Component/Contato/Contato';
 function App() {
   return (
     <div >
-      <Contato></Contato>
-      <Produto></Produto>
+      <Contato/>
+      <Produto/>
     </div>
   );
 }
