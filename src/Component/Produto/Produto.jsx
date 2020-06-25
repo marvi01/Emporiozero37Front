@@ -59,12 +59,20 @@ class Produto extends Component {
         if(this.state.estado != false){
           if (this.state.nulo !=true){
             const Prod = data.map((item,indice)=>( 
-                 
-              <div  key = {indice}  className="card tamanho group" >
+              <div  key = {indice}  className="card tamanho" >
               <img className="card-img-top foto" src={`https://anorosa.com.br/Emporio037/storage/${item.foto}`}   />
-              <div text align= "center " className="card-body desc">
-                  <h5 className="card-title">{item.nomeprod}</h5>
-                  <p>{item.teor}</p>
+              <div className="body card-body ">
+                <div className='titulocard a'>
+                  <h4 className="card-title titulo">{item.nomeprod}</h4>
+                </div>
+                  <dl>
+                    <dd> <p className="card-text"> Teor: {item.teor}% </p> </dd>
+                    <dd> <p className="card-text"> Quantidade: {item.ml}ml </p> </dd>
+                  </dl>
+                  <h3 className="card-text"> Preço: R${item.preco}</h3>
+                  <div className="botao">
+                  <a href="#" className=" btn btn-primary">Comprar</a>
+                  </div>
               </div>
           </div>
             )   
