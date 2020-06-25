@@ -27,8 +27,8 @@ class Destaque extends Component {
             }
           }
         return (
-            <div>
-               <div className="slide-container">
+            <div className="disan" >
+               <div className="slide-container ">
         <Slide {...properties}>
           <div className="each-slide">
             <div >
@@ -37,7 +37,7 @@ class Destaque extends Component {
           </div>
           <div className="each-slide">
             <div >
-            <img src={escava1} className="d-block w-100 " alt="..."></img>
+            <img src={escava2} className="d-block w-100 " alt="..."></img>
             </div>
           </div>
           <div className="each-slide">

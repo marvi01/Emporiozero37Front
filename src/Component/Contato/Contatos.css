@@ -1,7 +1,10 @@
+@media screen and (min-width: 601px) {
 .Contato{
     background-color: #f5f5dc ;
     width: auto;
     height: auto;
+    margin-bottom: 1%;
+    
     
 }
 .direita{
@@ -24,4 +27,20 @@
     text-align: center;
     color: black;
     text-decoration: none;
+}
+}
+@media screen and (max-width: 600px){
+    .instagram{
+        height: 10%;
+        width: 8%;
+        padding: 0.3%;
+    }
+    .Contato{
+        background-color: #f5f5dc ;
+        width: auto;
+        height: auto;
+        margin-bottom: 1%;
+        
+        
+    }
 }
