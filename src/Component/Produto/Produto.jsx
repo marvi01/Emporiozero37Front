@@ -63,11 +63,15 @@ class Produto extends Component {
               <img className="card-img-top foto" src={`https://anorosa.com.br/Emporio037/storage/${item.foto}`}   />
               <div className="body card-body ">
                 <div className='titulocard a'>
-                  <h4 className="card-title titulo">COMBO JOHNNIE WALKER GOLD RESERVE 250ML + 2 COPOS DE VIDRO HIGHBALL</h4>
+                  <h4 className="card-title titulo">{item.nomeprod}</h4>
                 </div>
+                  <dl>
+                    <dd> <p className="card-text"> Teor: {item.teor}% </p> </dd>
+                    <dd> <p className="card-text"> Quantidade: {item.ml}ml </p> </dd>
+                  </dl>
                   <h3 className="card-text"> Preço: R${item.preco}</h3>
                   <div className="botao">
-                  <a href="#"><p>Comprar</p></a>
+                  <a href="#" className=" btn btn-primary">Comprar</a>
                   </div>
               </div>
           </div>
