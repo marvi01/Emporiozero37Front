@@ -68,8 +68,6 @@ class Produto extends Component {
               <p>{item.teor}</p>
 =======
             <p>{item.teor}</p>
-
-
         
                   
 >>>>>>> 343c5cbcfee5ff0dbe80e7713c5fe81684a4f96c
