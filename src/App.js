@@ -6,9 +6,13 @@ import Destaque from './Component/Destaque/Destaque';
 function App() {
   return (
     <div >
+
       <Contato></Contato>
       <Destaque></Destaque>
       <Produto></Produto>
+
+      <Contato/>
+      <Produto/>
     </div>
   );
 }
