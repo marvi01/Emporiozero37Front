@@ -1,8 +1,16 @@
 .Contato{
     background-color: #f5f5dc ;
+    font-family: Brush Script MT, Brush Script Std, cursive;
+    width: auto;
+    height: auto;
+    
 }
 .instagram{
     height: 5%;
     width: 3%;
     padding: 0.3%;
+}
+.tam{
+    width: min-content;
+    height: auto;
 }
