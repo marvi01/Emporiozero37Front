@@ -1,6 +1,6 @@
 .tamanho{
-    height: 10%;
-    width: 10%;
+    height: 13%;
+    width: 13%;
     margin-left: 2%;
     margin-top: 1%;
     padding: 0.8% ;
@@ -18,7 +18,8 @@
     left: 25%;
 }
 .desc{
-    box-shadow: 0px -4px 2px grey;
+    border-top: 3px solid;
+    border-color: black;
 }
 
 .container {

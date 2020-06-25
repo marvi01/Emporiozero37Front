@@ -12,9 +12,10 @@ class header extends Component {
         return (
             <div>
                 <div className="Contato">
-                    <div className="tam">
-                        <a href="https://www.instagram.com/emporiozero37/?hl=pt-br">
+                    <div className="tam ">
+                        <a className="seguir " href="https://www.instagram.com/emporiozero37/?hl=pt-br">
                             <img className="instagram " src={insta} alt="" />
+                            Nos sigam
                         </a>
                     </div>
                 </div>

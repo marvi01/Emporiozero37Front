@@ -51,9 +51,6 @@ class Produto extends Component {
           <div text align="center " className="card-body desc">
             <h5 className="card-title">{item.nomeprod}</h5>
             <p>{item.teor}</p>
-
-
-
           </div>
         </div>
       )
