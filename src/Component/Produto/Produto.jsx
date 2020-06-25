@@ -31,6 +31,7 @@ class Produto extends Component {
           response = await fetch("https://anorosa.com.br/Emporio037/api/produto/list");
         } catch (error){
           console.log(error);
+          this.setState({error})
         }       
         const json = await response.json();
         if(json != null){
@@ -56,17 +57,14 @@ class Produto extends Component {
         const { data } = this.state.data;
         console.log(this.state.estado);
         if(this.state.estado != false){
-        if (this.state.nulo !=true){
+          if (this.state.nulo !=true){
             const Prod = data.map((item,indice)=>( 
                  
               <div  key = {indice}  className="card tamanho group" >
               <img className="card-img-top foto" src={`https://anorosa.com.br/Emporio037/storage/${item.foto}`}   />
               <div text align= "center " className="card-body desc">
                   <h5 className="card-title">{item.nomeprod}</h5>
-            <p>{item.teor}</p>
-
-        
-                  
+              <p>{item.teor}</p>
               </div>
           </div>
             )   
