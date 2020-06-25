@@ -51,22 +51,14 @@
     }
     .tamanho h3{
         text-align: center;
-        margin-top: 1.5vw;
+        margin-top: 1vw;
         font-size: 1.5vw;
     }
     .botao{
-        width: auto;
-        background-color: grey;
-        align-items: center;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-
         margin-top: 2vw;
         text-align: center;
         
         
-
     }
     .botao a p{
         align-self: center;
