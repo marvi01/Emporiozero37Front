@@ -5,8 +5,8 @@
     }
     
     .tamanho{
-        height: 35vw;
-        width: 20vw;
+        height: 32vw;
+        width: 18vw;
         margin-left: 0.8vw;
         margin-top: 1.6vw;
         float: left;
@@ -23,8 +23,8 @@
     }
     .foto{
         align-self: center;
-        max-width:18vw;
-        max-height:18vw;
+        max-width:16vw;
+        max-height:16vw;
         width: auto;
         height: auto;
        
@@ -32,7 +32,7 @@
     
     .titulocard{
         height: 5vw;
-        text-align: left;
+        
         margin-top: 0.8vw;
         border-bottom:1px solid;
         text-align: center;
@@ -45,10 +45,7 @@
     .container {
             width: 100%;
     }
-    .tamanho dd{
-        margin: 0;
-        font-size: 1vw;
-    }
+    
     .tamanho h3{
         text-align: center;
         margin-top: 1vw;
