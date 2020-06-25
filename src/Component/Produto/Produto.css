@@ -51,10 +51,11 @@
     }
     .tamanho h3{
         text-align: center;
-        margin-top: 1vw;
+        margin-top: 1.5vw;
         font-size: 1.5vw;
     }
     .botao{
+        margin-top: 2vw;
         text-align: center;
         
         
@@ -85,10 +86,10 @@
     }
     
     .tamanho{
-        height: 52.5vw;
-        width: 28vw;
-        margin-left: 1.2vw;
-        margin-top: 2.4vw;
+        height: 86.75vw;
+        width: 44vw;
+        margin-left: 1.9vw;
+        margin-top: 3.8vw;
         float: left;
         box-shadow: 0.5vw 0.5vw 1vw grey;
        /* padding: 0.8% ;
@@ -99,40 +100,37 @@
         align-items: center;*/
     }
     .tamanho p{
-        font-size: 2.4vw;
+        font-size: 3.8vw;
     }
     .foto{
         align-self: center;
-        max-width:27vw;
-        max-height:27vw;
+        max-width:42.4vw;
+        max-height:42.4vw;
         width: auto;
         height: auto;
         
     }
     
     .titulocard{
-        height: 7.5vw;
+        height: 11.7vw;
         text-align: left;
-        margin-top: 1.2vw;
+        margin-top: 1.8vw;
         border-bottom:1px solid;
         text-align: center;
         width: auto;
       /*  box-shadow: 0vw -1vh 1vw -0.2vw grey;*/
     }
     .titulocard h4{
-        font-size: 1.5vw;
+        font-size: 2.4vw;
     }
     .container {
             width: 100%;
     }
-    .tamanho dd{
-        margin: 0;
-        font-size: 1.5vw;
-    }
+    
     .tamanho h3{
         text-align: center;
-        margin-top: 1.5vw;
-        font-size: 2.25vw;
+        margin-top: 2.3vw;
+        font-size: 3.7vw;
     }
     .botao{
         text-align: center;
@@ -140,11 +138,13 @@
         
     }
     .botao a p{
+        margin-top: 4vw;
         align-self: center;
         background-color: lightseagreen;
+        padding-top: 1vw;
+        padding-bottom: 1vw;
         padding-left: 7,5vw;
         padding-right: 7,5vw;
-        font-size: 1;
         color: black;
         text-decoration: none;
     }
