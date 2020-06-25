@@ -10,9 +10,6 @@ function App() {
       <Contato></Contato>
       <Destaque></Destaque>
       <Produto></Produto>
-
-      <Contato/>
-      <Produto/>
     </div>
   );
 }
