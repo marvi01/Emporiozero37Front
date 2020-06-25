@@ -64,13 +64,7 @@ class Produto extends Component {
               <img className="card-img-top foto" src={`https://anorosa.com.br/Emporio037/storage/${item.foto}`}   />
               <div text align= "center " className="card-body desc">
                   <h5 className="card-title">{item.nomeprod}</h5>
-<<<<<<< HEAD
-              <p>{item.teor}</p>
-=======
-            <p>{item.teor}</p>
-        
-                  
->>>>>>> 343c5cbcfee5ff0dbe80e7713c5fe81684a4f96c
+                  <p>{item.teor}</p>
               </div>
           </div>
             )   
