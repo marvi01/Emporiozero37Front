@@ -1,12 +1,13 @@
-
+*{
+    margin: 0vw;
+    font-family:helvetica,arial,;
+}
 @media screen and (min-width: 601px) {
-    *{
-        margin: 0vw
-    }
+    
     
     .tamanho{
-        height: 35vw;
-        width: 20vw;
+        height: 30vw;
+        width: 18vw;
         margin-left: 0.8vw;
         margin-top: 1.6vw;
         float: left;
@@ -23,8 +24,8 @@
     }
     .foto{
         align-self: center;
-        max-width:18vw;
-        max-height:18vw;
+        max-width:15vw;
+        max-height:15vw;
         width: auto;
         height: auto;
        
@@ -53,11 +54,11 @@
         text-align: center;
         margin-top: 1vw;
         font-size: 1.5vw;
+        font-weight: bolder;
     }
     .botao{
         margin-top: 2vw;
         text-align: center;
-        border: 2px solid;
         text-decoration: none;
         
     }
@@ -82,9 +83,6 @@
 
 /* If the screen size is 600px wide or less. set the font-size of <div> to 30px */
 @media screen and (max-width: 600px) {
-    *{
-        margin: 0vw
-    }
     
     .tamanho{
         height: 86.75vw;
