@@ -1,4 +1,67 @@
-.desta{
-    height: 200px;
-    width: 200px;
+@media screen and (min-width: 601px) {
+.Desta{
+
+    width: 40%;
+    height: 30%;
+    background-size: 40% 30%;
+  margin-top: 1%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
+.slide-container {
+    width: 70%;
+    margin: auto; }
+   
+  h3 {
+    text-align: center; }
+   
+  .each-slide > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    height: 300px;
+  }
+   
+  .each-slide span {
+    padding: 20px;
+    font-size: 20px;
+    background: #efefef;
+    text-align: center;
+  }
+   
+  .each-fade {
+    display: flex;
+  }
+   
+  .each-fade .image-container {
+    width: 75%;
+    overflow: hidden;
+  }
+   
+  .each-fade .image-container img {
+    width: 100%;
+  }
+   
+  .each-fade h2 {
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    background: #adceed;
+  }
+}
+@media screen and (max-width: 600px) {
+    .Desta{
+        display:inline-block;
+        width: 90%;
+        height: 70%;
+        display: block;
+  margin-left: auto;
+  margin-right: auto;
+      margin-top: 1%;
+    
+    }
+ }
