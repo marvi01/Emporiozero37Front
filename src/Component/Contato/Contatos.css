@@ -1,9 +1,14 @@
 .Contato{
     background-color: #f5f5dc ;
-    font-family: Brush Script MT, Brush Script Std, cursive;
     width: auto;
     height: auto;
     
+}
+.direita{
+    float: right;
+}
+.esquerda{
+    float: left;
 }
 .instagram{
     height: 5%;
@@ -11,6 +16,12 @@
     padding: 0.3%;
 }
 .tam{
-    width: min-content;
-    height: auto;
+    width: auto;
+    height: auto;   
+}
+.seguir{
+    font-family:Brush Script Std, cursive;
+    text-align: center;
+    color: black;
+    text-decoration: none;
 }
