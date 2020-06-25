@@ -9,7 +9,7 @@ class Destaque extends Component {
       <img src="https://www.lippel.com.br/media_cache/noticias//45790bc20871da53d965b3d25f8d12835a_o-pfl-400x700-m-c-tambem-auxilia-em-reciclagem.jpg" class="d-block w-100" alt="..."/>
     </div>
     <div class="carousel-item">
-      <img src="https://www.lippel.com.br/media_cache/noticias//45790bc20871da53d965b3d25f8d12835a_o-pfl-400x700-m-c-tambem-auxilia-em-reciclagem.jpg" class="d-block w-100" alt="..."/>
+      <img src="https://www.lippel.com.br/media_cache/noticias//468934a0e43a008f4618cb865cc3c51a1d_pfl-400x700-4tt-suprindo-a-necessidade-de-cavacos-para-fornos-ceramicos.jpg" class="d-block w-100" alt="..."/>
     </div>
     <div class="carousel-item">
       <img src="https://www.lippel.com.br/media_cache/noticias//45790bc20871da53d965b3d25f8d12835a_o-pfl-400x700-m-c-tambem-auxilia-em-reciclagem.jpg" class="d-block w-100" alt="..."/>
