@@ -1,8 +1,12 @@
 
 @media screen and (min-width: 601px) {
+    *{
+        margin: 0vw
+    }
+    
     .tamanho{
-        height: 32vw;
-        width:20vw;
+        height: 35vw;
+        width: 20vw;
         margin-left: 0.8vw;
         margin-top: 1.6vw;
         float: left;
@@ -19,42 +23,36 @@
     }
     .foto{
         align-self: center;
-        max-width:12,8vw;
-        max-height:12vw;
+        max-width:18vw;
+        max-height:18vw;
         width: auto;
         height: auto;
-        margin-bottom: 0,8vw;
+       
     }
-    .desc{
-        border-top: 3px solid;
-        border-color: black;
-    }
+    
     .titulocard{
-        align-self: center;
-        height: 3vw;
+        height: 5vw;
+        text-align: left;
         margin-top: 0.8vw;
-        margin-bottom: 0.8vh;
         border-bottom:1px solid;
         text-align: center;
         width: auto;
       /*  box-shadow: 0vw -1vh 1vw -0.2vw grey;*/
     }
     .titulocard h4{
-        font-size: 2.2vw;
+        font-size: 1vw;
     }
     .container {
             width: 100%;
-            margin:15%;
-            margin-top: 2%;
     }
     .tamanho dd{
         margin: 0;
-        font-size: 1.2vw;
+        font-size: 1vw;
     }
     .tamanho h3{
         text-align: center;
-        margin: 0;
-        font-size: 2vw;
+        margin-top: 1.5vw;
+        font-size: 1.5vw;
     }
     .botao{
         width: auto;
@@ -62,16 +60,25 @@
         display: block;
         margin-left: auto;
         margin-right: auto;
+
+        margin-top: 2vw;
+        text-align: center;
+        
+        
+
     }
-    .botao a{
+    .botao a p{
         align-self: center;
-        background-color: brown;
-        padding-left: 5vw;
-        padding-right: 5vw;
+        background-color: lightseagreen;
+        padding-left: 7,5vw;
+        padding-right: 7,5vw;
         font-size: 1;
+        color: black;
+        text-decoration: none;
     }
-    .botao a:hover{
+    .botao a p:hover{
         background-color: green;
+        text-decoration: none;
     }
 }
 
@@ -79,43 +86,76 @@
 /*    CELULAR     */
 
 
-/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+/* If the screen size is 600px wide or less. set the font-size of <div> to 30px */
 @media screen and (max-width: 600px) {
-  .tamanho{
-      height: 40vw;
-      width: 25vw;
-      margin-left: 2vw;
-     margin-top: 2vw;
-        float: left;
-  }
-  .body{
-      padding: 0;
-  }
-  .foto{
-    align-self: center;
-    max-width:18vw;
-    max-height:15vw;
-    width: auto;
-    height: auto;
+    *{
+        margin: 0vw
     }
+    
+    .tamanho{
+        height: 86.75vw;
+        width: 44vw;
+        margin-left: 1.9vw;
+        margin-top: 3.8vw;
+        float: left;
+        box-shadow: 0.5vw 0.5vw 1vw grey;
+       /* padding: 0.8% ;
+        border-color: grey;
+        border-radius: 10px;
+        border-width: 10px;
+        box-shadow: 0vw 0.5vw 1vw -0.2vw grey;
+        align-items: center;*/
+    }
+    .tamanho p{
+        font-size: 3.8vw;
+    }
+    .foto{
+        align-self: center;
+        max-width:42.4vw;
+        max-height:42.4vw;
+        width: auto;
+        height: auto;
+        
+    }
+    
     .titulocard{
-        height: 3.5vw;
-        margin-bottom: 1vw;
+        height: 11.7vw;
+        text-align: left;
+        margin-top: 1.8vw;
         border-bottom:1px solid;
         text-align: center;
         width: auto;
       /*  box-shadow: 0vw -1vh 1vw -0.2vw grey;*/
     }
-    .tamanho h4{
-        font-size: 2.6vw;
+    .titulocard h4{
+        font-size: 2.4vw;
     }
-    .tamanho dd{
-        margin: 0;
-        font-size: 1.5vw;
+    .container {
+            width: 100%;
     }
+    
     .tamanho h3{
         text-align: center;
-        margin: 0;
-        font-size: 2vw;
+        margin-top: 2.3vw;
+        font-size: 3.7vw;
+    }
+    .botao{
+        text-align: center;
+        
+        
+    }
+    .botao a p{
+        margin-top: 4vw;
+        align-self: center;
+        background-color: lightseagreen;
+        padding-top: 1vw;
+        padding-bottom: 1vw;
+        padding-left: 7,5vw;
+        padding-right: 7,5vw;
+        color: black;
+        text-decoration: none;
+    }
+    .botao a p:hover{
+        background-color: green;
     }
 }
