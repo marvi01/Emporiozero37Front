@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import '../Destaque/Destaque.css';
-import escava1 from "../../imagens/escava1.jpg";
-import escava2 from "../../imagens/escava2.jpg";
+import destaque  from "../../imagens/destaque.jpg";
+import destaque2  from "../../imagens/destaque2.jpg";
+import destaque3  from "../../imagens/destaque3.jpg";
+
+
 import { Slide } from 'react-slideshow-image';
 class Destaque extends Component {
 
@@ -9,12 +12,6 @@ class Destaque extends Component {
 
     render() {
 
-        const slideImages = [
-            escava1,
-            escava2,
-            escava1
-          ];
-           
           const properties = {
             duration: 5000,
             transitionDuration: 500,
@@ -32,17 +29,17 @@ class Destaque extends Component {
         <Slide {...properties}>
           <div className="each-slide">
             <div >
-              <img src={escava1} className="d-block w-100 " alt="..."></img>
+              <img src={destaque} className="d-block w-100 " alt="..."></img>
             </div>
           </div>
           <div className="each-slide">
             <div >
-            <img src={escava2} className="d-block w-100 " alt="..."></img>
+            <img src={destaque3} className="d-block w-100 " alt="..."></img>
             </div>
           </div>
           <div className="each-slide">
             <div >
-            <img src={escava1} className="d-block w-100 " alt="..."></img>
+            <img src={destaque2} className="d-block w-100 " alt="..."></img>
             </div>
           </div>
         </Slide>
