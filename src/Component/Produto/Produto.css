@@ -2,9 +2,74 @@
     margin: 0vw;
     font-family:helvetica,arial,;
 }
-@media screen and (min-width: 601px) {
+/* tela 4k */
+@media screen and (min-width: 1701px){
+    .tamanho{
+        height: 15vw;
+        width: 9vw;
+        margin-left: 0.4vw;
+        margin-top: 0.8vw;
+        float: left;
+        box-shadow: 0.5vw 0.5vw 1vw grey;
+       /* padding: 0.8% ;
+        border-color: grey;
+        border-radius: 10px;
+        border-width: 10px;
+        box-shadow: 0vw 0.5vw 1vw -0.2vw grey;
+        align-items: center;*/
+    }
+    .tamanho p{
+        font-size: 0.8vw;
+    }
+    .foto{
+        align-self: center;
+        max-width:7.5vw;
+        max-height:7.5vw;
+        width: auto;
+        height: auto;
+       
+    }
     
+    .titulocard{
+        height: 2vw;
+        text-align: left;
+        margin-top: 0.4vw;
+        border-bottom:0.5px solid;
+        text-align: center;
+        width: auto;
+      /*  box-shadow: 0vw -1vh 1vw -0.2vw grey;*/
+    }
+    .titulocard h4{
+        font-size: 0.4vw;
+    }
+    .container {
+            width: 100%;
+    }
+    .tamanho dd{
+        margin: 0;
+        font-size: 0.5vw;
+    }
+    .tamanho h3{
+        text-align: center;
+        margin-top: 1vw;
+        font-size: 0.75vw;
+        font-weight: bolder;
+    }
+    .botao{
+        text-align: center;
+        text-decoration: none;
+        margin-top: 0.25vw;
+    }
+    .botao a p{
+        align-self: center;
+        padding-left: 3,75vw;
+        padding-right: 3,75vw;
+        font-size: 0.5;
+    }
     
+}
+/* tela normal */
+@media screen and (min-width: 601px) and (max-width: 1700px) {
     .tamanho{
         height: 30vw;
         width: 18vw;
@@ -59,7 +124,7 @@
     .botao{
         text-align: center;
         text-decoration: none;
-        margin-top: 2vw;
+        margin-top: 0.5vw;
     }
     .botao a p{
         align-self: center;
