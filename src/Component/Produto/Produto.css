@@ -63,17 +63,11 @@
     }
     .botao a p{
         align-self: center;
-        background-color: lightseagreen;
         padding-left: 7,5vw;
         padding-right: 7,5vw;
         font-size: 1;
-        color: black;
-        text-decoration: none;
     }
-    .botao a p:hover{
-        background-color: green;
-        text-decoration: none;
-    }
+    
 }
 
 
@@ -138,15 +132,20 @@
     .botao a p{
         margin-top: 4vw;
         align-self: center;
-        background-color: lightseagreen;
         padding-top: 1vw;
         padding-bottom: 1vw;
         padding-left: 7,5vw;
         padding-right: 7,5vw;
-        color: black;
-        text-decoration: none;
     }
-    .botao a p:hover{
-        background-color: green;
-    }
+}
+.botao a p{
+    background-color: lightseagreen;
+    color: black;
+    text-decoration: none;
+}
+.botao a:hover{
+    text-decoration: none;
+}
+.botao a p:hover{
+    background-color: #ff6666;
 }
