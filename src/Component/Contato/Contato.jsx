@@ -14,10 +14,10 @@ class header extends Component {
             <div>
                 <div className="Contato ">
                     <div className="tam ">
+                        <div >
                         <a className=" " href="https://www.instagram.com/emporiozero37/?hl=pt-br">
                             <img className="instagram " src={insta} alt="" />
-                        </a>
-                        <div className ="direita">
+                            <div >
                             <div >
                                 <a>
                                     <img className="telefone" src={cel}></img>(37)99999-9999
@@ -29,6 +29,10 @@ class header extends Component {
                                 </a>
                             </div>
                         </div>
+                        </a>
+                        
+                        </div>
+                        
                     </div>
                     
                 </div>

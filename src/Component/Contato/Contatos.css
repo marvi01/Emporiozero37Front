@@ -3,7 +3,6 @@
     background-color: #f5f5dc ;
     width: auto;
     height: auto;
-    margin-bottom: 1%;
     
     
 }
@@ -17,6 +16,7 @@
     height: 5%;
     width: 3%;
     padding: 0.3%;
+
 }
 .tam{
     width: auto;
@@ -35,6 +35,7 @@
         height: 10%;
         width: 8%;
         padding: 0.3%;
+        
     }
     .Contato{
         background-color: #f5f5dc ;
