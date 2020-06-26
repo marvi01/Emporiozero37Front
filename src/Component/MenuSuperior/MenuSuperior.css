@@ -1,0 +1,46 @@
+<<<<<<< HEAD
+=======
+.navigator{
+border-bottom: 1px solid;
+margin-bottom: 1vw;
+
+}
+
+.logo{
+    width: 20vw;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.logo img{
+    max-width:20vw;
+    max-height:10vw;
+    width: auto;
+    height: auto;
+}
+.searchbar{
+    float: top;
+    width: 40vw;
+}
+.categorias{
+
+    float: bottom;
+    width: 40vw;
+    font-size: 2vw;
+    padding-left: 2.5vw;
+    background-color: lightblue;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.categorias ul li{
+    
+    text-align: center;
+}
+>>>>>>> 918926d290f53a99bae5f3d17e863832519baef0
