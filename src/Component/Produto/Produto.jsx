@@ -9,37 +9,48 @@ class Produto extends Component {
       
         super(props);
         this.state = {
-            "nulo": true,
-            "estado": false,
-            "data":[{
-                "id":0,
-            "nomeprod":"",
-            "descricao":"",
-            "foto":"",
-            "preco":0,
-            "teor":0,
-            "ml":0,
-            "quantidade":0,
-            "categoria_id":0,
-            "created_at":"",
-            "updated_at":""}],
-            "status":false
+            nulo: true,
+            estado: false,
+            data:[{
+            id:0,
+            nomeprod:"",
+            descricao:"",
+            foto:"",
+            preco:0,
+            teor:0,
+            ml:0,
+            quantidade:0,
+            categoria_id:0,
+            created_at:"",
+            updated_at:""}],
+            status:false,
+            categ:[{
+            id:1,
+            nomecategoria:"",
+            created_at:"",
+            updated_at:""}]
         };
     };
     async componentDidMount() {
       var response;
+      var response2;
         try{
+          response2 = await fetch("https://anorosa.com.br/Emporio037/api/categoria/list");
           response = await fetch("https://anorosa.com.br/Emporio037/api/produto/list");
+
         } catch (error){
           console.log(error);
           this.setState({error})
         }       
         const json = await response.json();
+        const json2 = await response2.json();
         if(json != null){
-          this.setState({data:json, nulo: false}) 
+          this.setState({data:json, nulo: false});
+          this.setState({categ:json2});
         }
         this.setState({estado : true});
-        
+
+
     }
 
     exibeErro() {
@@ -56,7 +67,7 @@ class Produto extends Component {
       exibeProduto()
       {
         const { data } = this.state.data;
-        console.log(this.state.estado);
+        console.log(this.state);
         if(this.state.estado !== false){
           if (this.state.nulo !==true){
             const Prod = data.map((item,indice)=>( 
