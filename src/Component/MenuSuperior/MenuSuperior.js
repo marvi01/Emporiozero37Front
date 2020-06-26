@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './MenuSuperior.css';
 import { Link } from 'react-router-dom';
 import logo from '../../imagens/Logo.png';
-import SearchIcon from '@material-ui/icons/Search';
+
 class MenuSuperior extends Component {
     render() {
         return (
