@@ -56,8 +56,8 @@ class Produto extends Component {
       {
         const { data } = this.state.data;
         console.log(this.state.estado);
-        if(this.state.estado != false){
-          if (this.state.nulo !=true){
+        if(this.state.estado !== false){
+          if (this.state.nulo !==true){
             const Prod = data.map((item,indice)=>( 
               <div  key = {indice}  className="card tamanho" >
               <img className="card-img-top foto" src={`https://anorosa.com.br/Emporio037/storage/${item.foto}`}   />

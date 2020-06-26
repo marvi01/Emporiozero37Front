@@ -41,7 +41,7 @@
       /*  box-shadow: 0vw -1vh 1vw -0.2vw grey;*/
     }
     .titulocard h4{
-        font-size: 1vw;
+        font-size: 0.8vw;
     }
     .container {
             width: 100%;
@@ -57,7 +57,6 @@
         font-weight: bolder;
     }
     .botao{
-        margin-top: 2vw;
         text-align: center;
         text-decoration: none;
         
@@ -120,7 +119,7 @@
       /*  box-shadow: 0vw -1vh 1vw -0.2vw grey;*/
     }
     .titulocard h4{
-        font-size: 2.4vw;
+        font-size: 2vw;
     }
     .container {
             width: 100%;
