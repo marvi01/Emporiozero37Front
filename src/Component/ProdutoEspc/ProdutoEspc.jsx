@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-class index extends Component {
+class ProdutoEspc extends Component {
     render() {
         return (
             <div>
-                
+                Produto Espec
             </div>
         );
     }
 }
 
-export default index;
+export default ProdutoEspc;
