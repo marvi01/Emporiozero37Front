@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
 import './Produto.css';
+import { Link } from 'react-router-dom';
 
 class Produto extends Component {
   
@@ -67,7 +68,7 @@ class Produto extends Component {
                 </div>
                   <h3 className="card-text"> R${item.preco.toFixed(2).replace(".", ",")}</h3>
                   <div className="botao">
-                  <a href="#"><p>Comprar</p></a>
+                  <Link to ={`Produto/${item.id}`}><p>Comprar</p></Link>
                   </div>
               </div>
           </div>
