@@ -32,7 +32,7 @@
     }
     
     .titulocard{
-        height: 5vw;
+        height: 4vw;
         text-align: left;
         margin-top: 0.8vw;
         border-bottom:1px solid;
@@ -52,14 +52,14 @@
     }
     .tamanho h3{
         text-align: center;
-        margin-top: 1vw;
+        margin-top: 2vw;
         font-size: 1.5vw;
         font-weight: bolder;
     }
     .botao{
         text-align: center;
         text-decoration: none;
-        
+        margin-top: 2vw;
     }
     .botao a p{
         align-self: center;
@@ -110,7 +110,7 @@
     }
     
     .titulocard{
-        height: 11.7vw;
+        height: 10vw;
         text-align: left;
         margin-top: 1.8vw;
         border-bottom:1px solid;
@@ -127,12 +127,12 @@
     
     .tamanho h3{
         text-align: center;
-        margin-top: 2.3vw;
+        margin-top: 5vw;
         font-size: 3.7vw;
     }
     .botao{
         text-align: center;
-        
+        margin-top: 5vw;
         
     }
     .botao a p{
