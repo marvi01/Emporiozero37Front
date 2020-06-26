@@ -72,10 +72,8 @@ class Produto extends Component {
     console.log(this.state);
     if (this.state.estado !== false) {
       if (this.state.nulo !== true) {
-          const Catego = categoria.map((obj,id)=>{
               
           const ProdCod = data.map((item, indice) =>{
-              if (obj.id==item.categoria_id) {
                 return(
                   <div key={indice} className="card tamanho" >
                     <img className="card-img-top foto" src={`https://anorosa.com.br/Emporio037/storage/${item.foto}`} />
@@ -91,16 +89,12 @@ class Produto extends Component {
                   </div>
                 )
                 
-              }
+              
                
             })
               
-            return Catego, ProdCod;
-             }
-          )
-        
+            return ProdCod;
 
-        return Catego;
       } else {
         return (
           <div className="alert alert-light">
