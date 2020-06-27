@@ -6,12 +6,13 @@ import { Link } from 'react-router-dom';
 class Produto extends Component {
 
   constructor(props) {
-
+    var cat = props.idcat;
     super(props);
     this.state = {
+      idcat: cat,
       nulo: true,
       estado: false,
-      data: [{
+      prod: [{
         id: 0,
         nomeprod: "",
         descricao: "",
@@ -25,19 +26,13 @@ class Produto extends Component {
         updated_at: ""
       }],
       status: false,
-      categ: [{
-        id: 1,
-        nomecategoria: "",
-        created_at: "",
-        updated_at: ""
-      }]
     };
   };
   async componentDidMount() {
     var response;
-    var response2;
+    var idcat = this.state.idcat;
     try {
-      response = await fetch("https://anorosa.com.br/Emporio037/api/produto/list");
+      response = await fetch('https://anorosa.com.br/Emporio037/api/categoria/produtos/'+idcat, {method:'POST'});
 
     } catch (error) {
       console.log(error);
@@ -45,18 +40,7 @@ class Produto extends Component {
     }
     const json = await response.json();
     if (json != null) {
-      this.setState({ data: json, nulo: false });
-      try {
-        response2 = await fetch("https://anorosa.com.br/Emporio037/api/categoria/list");
-  
-      } catch (error) {
-        console.log(error);
-        this.setState({ error })
-      }
-      const json2 = await response2.json();
-      if (json2 != null) {
-        this.setState({ categ: json2,});
-      }
+      this.setState({ prod: json, nulo: false });
     }
     this.setState({ estado: true });
 
@@ -75,13 +59,12 @@ class Produto extends Component {
     }
   }
   exibeProduto() {
-    const { data } = this.state.data;
-    const { categoria } = this.state.categ;
+    const { prod } = this.state.prod;
     console.log(this.state);
     if (this.state.estado !== false) {
       if (this.state.nulo !== true) {
               
-          const ProdCod = data.map((item, indice) =>{
+          const ProdCod = prod.map((item, indice) =>{
                 return(
                   <div key={indice} className="card tamanho" >
                     <img className="card-img-top foto" src={`https://anorosa.com.br/Emporio037/storage/${item.foto}`} />
