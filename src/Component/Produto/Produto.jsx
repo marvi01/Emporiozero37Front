@@ -37,7 +37,6 @@ class Produto extends Component {
     var response;
     var response2;
     try {
-      response2 = await fetch("https://anorosa.com.br/Emporio037/api/categoria/list");
       response = await fetch("https://anorosa.com.br/Emporio037/api/produto/list");
 
     } catch (error) {
@@ -45,10 +44,19 @@ class Produto extends Component {
       this.setState({ error })
     }
     const json = await response.json();
-    const json2 = await response2.json();
     if (json != null) {
       this.setState({ data: json, nulo: false });
-      this.setState({ categ: json2 });
+      try {
+        response2 = await fetch("https://anorosa.com.br/Emporio037/api/categoria/list");
+  
+      } catch (error) {
+        console.log(error);
+        this.setState({ error })
+      }
+      const json2 = await response2.json();
+      if (json2 != null) {
+        this.setState({ categ: json2,});
+      }
     }
     this.setState({ estado: true });
 
@@ -89,9 +97,7 @@ class Produto extends Component {
                   </div>
                 )
                 
-              
-               
-            })
+              })
               
             return ProdCod;
 
