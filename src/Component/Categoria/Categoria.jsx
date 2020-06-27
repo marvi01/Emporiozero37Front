@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
 import Produto from '../Produto/Produto';
-
+import './Categoria.css';
 
 class Categoria extends Component {
 
@@ -56,10 +56,13 @@ class Categoria extends Component {
               
           const CatCod = categ.map((item, indice) =>{
                 return(
-                  <div key={indice}>
-                      <p>
-                          {item.nomecategoria}
-                      </p>
+                  <div key={indice} className='categoria'>
+                      <div className="nomeitem">
+                         <p>
+                            {item.nomecategoria}
+                        </p>
+                      </div>
+                      
                       <Produto idcat = {item.id}/>
                   </div>
                 )
