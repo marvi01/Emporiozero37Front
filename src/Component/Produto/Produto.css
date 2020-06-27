@@ -2,6 +2,8 @@
     margin: 0vw;
     font-family:helvetica,arial,;
 }
+
+
 /* tela 4k */
 @media screen and (min-width: 1701px){
     .tamanho{

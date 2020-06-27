@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import Destaque from '../Destaque/Destaque';
-import Produto from '../Produto/Produto';
+import Categoria from '../Categoria/Categoria';
 
 class MenuPrincipal extends Component {
     render() {
         return (
             <div>
                 <Destaque/>
-                <Produto/>                
+                <Categoria/>                
             </div>
         );
     }
