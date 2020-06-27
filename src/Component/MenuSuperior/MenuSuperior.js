@@ -39,61 +39,9 @@ class MenuSuperior extends Component {
 
                         </div>
                     </div>
-                    <input className="form-control mr-sm-2" type="search" placeholder="Procurar" aria-label="Search" />
-                    {/*  <form className="form-inline my-2 my-lg-0">
-                        <Link to="/Carrinho" ><img alt='some value' className="figuras " /></Link>
-                        
-                        <button className="btn btn-outline-dark" type="submit">⌕</button>
-                        <Link to="/Login" ><img alt='some value' className="figuras " /></Link>
-
-                        </form>*/}
                 </nav>
             </div>
-            /*  <header>
-                  <div >
-                  <img  src={logo} className=" titulo img-fluid rounded float-left " alt="Responsive image"></img>
-                      <Link to="/"><h2 className="titulo">Ferias</h2></Link>
-  
-                      <div className="chave">
-                          <nav className="links">
-                      <ul>
-                      <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                       <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                        {/*}  <Link to="/Login" ><img alt='some value' className="figuras " src={log} /></Link>
-                          <Link to="/" ><img alt='some value' className="figuras" src={logout} /></Link>
-                          </ul>
-                          </nav>
-  
-                      </div>
-                      <div className="menus" >
-                          <nav className="links">
-  
-                              <Link className="navbar-brand" to="Menu1" > Primeiro menu </Link>
-                              <Link className="navbar-brand" to="Menu2"> Segundo menu </Link>
-                              <Link className="navbar-brand" to="Menu3"> Terceiro menu </Link>
-                              
-                          </nav>
-                          
-                      </div>
-                      <div >
-                      
-                      </div>
-                  </div>
-  
-  
-  
-                      </header>*/
-            /*  <nav className = "navbar navbar-expand-lg navbar-dark bg-dark">
-              <img src= {logo}></img>
-                  <Link to = "/" className= "navbar-brand">Teste React</a>
-                  <button className = "navbar-toggler" type= "button" data-toggle = "collapse" data-target= "#navbarNav" >
-                  <span className = "navbar-toggler-icon"></span>
-                  </button>
-                  <div className = "collapse navbar-collapse" id ="navBarNav" >
-                      <ul className = "navnar-nav mr-auto">
-                      </ul>
-                 </div>
-              </nav>*/
+            
         )
     }
 }
