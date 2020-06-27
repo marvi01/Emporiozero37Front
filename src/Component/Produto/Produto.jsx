@@ -2,7 +2,23 @@
 import React, { Component } from 'react';
 import './Produto.css';
 import { Link } from 'react-router-dom';
+import ScrollMenu from 'react-horizontal-scrolling-menu';
 
+
+const Arrow = ({ text, className }) => {
+  return (
+    <div
+      className={className}
+    >{text}</div>
+  );
+};
+ 
+ 
+const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
+const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
+ 
+const selected = 'item1';
+ 
 class Produto extends Component {
 
   constructor(props) {
@@ -32,7 +48,7 @@ class Produto extends Component {
     var response;
     var idcat = this.state.idcat;
     try {
-      response = await fetch('https://anorosa.com.br/Emporio037/api/categoria/produtos/'+idcat, {method:'POST'});
+      response = await fetch('https://anorosa.com.br/Emporio037/api/categoria/produtos/' + idcat, { method: 'POST' });
 
     } catch (error) {
       console.log(error);
@@ -63,26 +79,38 @@ class Produto extends Component {
     console.log(this.state);
     if (this.state.estado !== false) {
       if (this.state.nulo !== true) {
-              
-          const ProdCod = prod.map((item, indice) =>{
-                return(
-                  <div key={indice} className="card tamanho" >
-                    <img className="card-img-top foto" src={`https://anorosa.com.br/Emporio037/storage/${item.foto}`} />
-                    <div className="body card-body ">
-                      <div className='titulocard'>
-                        <h4 className="card-title titulo">COMBO JOHNNIE WALKER GOLD RESERVE 250ML + 2 COPOS DE VIDRO HIGHBALL+ 2 COPOS DE VIDRO HIGHBALL</h4>
-                      </div>
-                      <h3 className="card-text"> R${item.preco.toFixed(2).replace(".", ",")}</h3>
-                      <div className="botao">
-                        <Link to={`Produto/${item.id}`}><p>Comprar</p></Link>
-                      </div>
-                    </div>
+        const ProdCod = prod.map((item, indice) => {
+         
+          return (
+            <div className={`menu-item`}>
+              <div key={indice} className="card tamanho" >
+                <img className="card-img-top foto" src={`https://anorosa.com.br/Emporio037/storage/${item.foto}`} />
+                <div className="body card-body ">
+                  <div className='titulocard'>
+                    <h4 className="card-title titulo">COMBO JOHNNIE WALKER GOLD RESERVE 250ML + 2 COPOS DE VIDRO HIGHBALL+ 2 COPOS DE VIDRO HIGHBALL</h4>
                   </div>
-                )
-                
-              })
-              
-            return ProdCod;
+                  <h3 className="card-text"> R${item.preco.toFixed(2).replace(".", ",")}</h3>
+                  <div className="botao">
+                    <Link to={`Produto/${item.id}`}><p>Comprar</p></Link>
+                  </div>
+                </div>
+              </div>
+              </div>
+          )
+        }
+        )
+        
+        return (
+          <ScrollMenu
+          data={ProdCod}
+          onSelect={null}
+          alignCenter={false}
+          
+          />
+     
+     
+          
+          );
 
       } else {
         return (
@@ -92,6 +120,8 @@ class Produto extends Component {
       }
     }
   }
+  
+
   //
   render() {
     return (
