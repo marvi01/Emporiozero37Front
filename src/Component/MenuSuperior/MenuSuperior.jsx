@@ -17,9 +17,9 @@ class MenuSuperior extends Component {
 
                     </div>
                     <div className="  input-group busca">
-                        <input type="text" className="buscatam" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" />
+                        <input type="text" className="buscatam" placeholder="Pesquise um produto" aria-label="Recipient's username" aria-describedby="basic-addon2" />
                         <div className="input-group-append">
-                            <button className="btn btn-outline-secondary" type="button">Button</button>
+                            <button className="btn btn-outline-dark" type="button">Pesquisar</button>
                         </div>
                         
                     </div>

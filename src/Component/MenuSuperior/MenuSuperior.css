@@ -6,7 +6,7 @@
 .navigator{
     border-bottom: 1px solid;
     margin-bottom: 1vw;
-    background-color: whitesmoke;
+    background-color: #f8ecec;
     height: 8.5vw;
     }
     
@@ -43,9 +43,12 @@
     .busca input{
         width: 30vw;
         height: 3vw;
+        border: 0.1px black solid;
+        background-color: whitesmoke;
     }
     .busca button{
         height: 3vw;
+        background-color: whitesmoke;
     }
     .figuras{
         max-width: 4vw;
@@ -66,7 +69,6 @@
         align-items: center;
         
     }
-    
 }
 @media screen and (max-width: 600px){
     .navigator{
