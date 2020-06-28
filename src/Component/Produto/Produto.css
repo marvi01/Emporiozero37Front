@@ -99,7 +99,11 @@
         height: auto;
        
     }
-    
+    .sobrefoto{
+        position: absolute;
+        width: 100%;
+        height: 15vw;
+    }
     .titulocard{
         height: 4vw;
         text-align: left;
