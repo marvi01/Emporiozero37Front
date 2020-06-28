@@ -143,15 +143,17 @@
     /*Scroller*/
     .menu-item {
         margin-bottom: 1vw;
-        
+        border: none;
+        cursor: pointer;
       }
-      .menu-item-wrapper.active {
-        border: 0px blue solid;
+    
+    .menu-item-wrapper.active {
+        border:0px steelblue solid;
       }
+    
       .menu-item.active {
-        border: 0px;
+        border: 0px green solid;
       }
-       
       .scroll-menu-arrow {
           
         margin-left: 0px;
@@ -235,13 +237,9 @@
 
     /*Scroller*/
     .menu-item {
-        margin-left: 0px;
-        margin-right: 0px;
-        padding: 0px;
-        margin-bottom: 1vw;
-        user-select: none;
+        
+        margin-bottom: 1vw;  
         cursor: pointer;
-        border: none;
       }
       .menu-item-wrapper.active {
         border: 0px blue solid;
