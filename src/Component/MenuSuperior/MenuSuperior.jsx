@@ -16,7 +16,7 @@ class MenuSuperior extends Component {
                         </Link>
 
                     </div>
-                    <div className="   input-group busca">
+                    <div className="  input-group busca">
                         <input type="text" className="buscatam" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" />
                         <div className="input-group-append">
                             <button className="btn btn-outline-secondary" type="button">Button</button>
@@ -26,7 +26,7 @@ class MenuSuperior extends Component {
                     <div className="comboFig ">
                         <Link to="/Carrinho" ><img alt='some value' className="figuras " src={carrinho} /></Link>
                         <Link to="/Login" ><img alt='some value' className="figuras " src={login} /></Link>
-                        </div>
+                    </div>
                         
 
                 </div>

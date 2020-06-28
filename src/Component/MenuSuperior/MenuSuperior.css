@@ -1,19 +1,23 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
 @media screen and (min-width: 601px){
 .navigator{
     border-bottom: 1px solid;
     margin-bottom: 1vw;
     background-color: whitesmoke;
-    
+    height: 8.5vw;
     }
     
     .logo{
         width: 20vw;
-        align-items: center;
         display: flex;
         flex-direction: row;
-        flex-wrap: wrap;
         justify-content: center;
-        padding-top: 0.5vw;
+        align-items: center;
+        float: left;
+        margin-top: 0.5vw;
     }
     
     .logo img{
@@ -22,41 +26,26 @@
         width: auto;
         height: auto;
     }
-    .searchbar{
-        float: top;
-        width: 40vw;
-    }
-    .categorias{
     
-        float: bottom;
-        width: 40vw;
-        font-size: 2vw;
-        padding-left: 2.5vw;
-        background-color: lightblue;
-        text-align: center;
-        align-items: center;
+    
+    .busca{
+       
+        max-width: 60vw;
+        max-height: 9vw;
         display: flex;
         flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    .categorias ul li{
-    
-        text-align: center;
-    }
-    .busca{
-        width: 30%;
-        display: flex;
         justify-content: center;
         align-items: center;
-        margin-left: auto;
-        margin-right: auto;
-        position: relative;
-        bottom: 5vw;
+        float: left;
+        margin-top: 2.75vw;
         
     }
-    .buscatam{
-        width: 30%;
+    .busca input{
+        width: 30vw;
+        height: 3vw;
+    }
+    .busca button{
+        height: 3vw;
     }
     .figuras{
         width: 4vw;
@@ -66,16 +55,13 @@
         
     }
     .comboFig{
-        float: right;
+        float: left;
+        width: 10vw;
+        height: 8.5vw;
         display: flex;
+        flex-direction: row;
         justify-content: center;
         align-items: center;
-        position: relative;
-        bottom: 7vw;
-        margin-right: 10vw;
-    }
-    .headerpadrao{
-        padding-bottom: 0%;
     }
 }
 @media screen and (max-width: 600px){
