@@ -1,3 +1,4 @@
+@media screen and (min-width: 601px){
 .navigator{
     border-bottom: 1px solid;
     margin-bottom: 1vw;
@@ -58,8 +59,8 @@
         width: 30%;
     }
     .figuras{
-        width: 80px;
-        height: 80px;
+        width: 4vw;
+        height: 4vw;
         margin-left: 0vw;
         margin-right: 1vw;
         
@@ -76,3 +77,85 @@
     .headerpadrao{
         padding-bottom: 0%;
     }
+}
+@media screen and (max-width: 600px){
+    .navigator{
+        border-bottom: 1px solid;
+        margin-bottom: 1vw;
+        background-color: whitesmoke;
+        
+        }
+        
+        .logo{
+            width: 20vw;
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding-top: 4vw;
+        }
+        
+        .logo img{
+            max-width:30vw;
+            max-height:15vw;
+            width: auto;
+            height: auto;
+        }
+        .searchbar{
+            float: top;
+            width: 40vw;
+        }
+        .categorias{
+        
+            float: bottom;
+            width: 40vw;
+            font-size: 2vw;
+            padding-left: 2.5vw;
+            background-color: lightblue;
+            text-align: center;
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .categorias ul li{
+        
+            text-align: center;
+        }
+        .busca{
+            width: 30%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            bottom: 10vw;
+            
+        }
+        .buscatam{
+            width: 30%;
+        }
+        .figuras{
+            width: 0vw;
+            height: 0vw;
+            margin-left: 0vw;
+            margin-right: 1vw;
+            
+        }
+        .comboFig{
+            float: right;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            bottom: 7vw;
+            margin-right: 10vw;
+        }
+        .headerpadrao{
+            padding-bottom: 0%;
+        }
+    }
+
