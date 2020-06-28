@@ -1,6 +1,7 @@
 .navigator{
     border-bottom: 1px solid;
     margin-bottom: 1vw;
+    background-color: whitesmoke;
     
     }
     
@@ -11,11 +12,12 @@
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
+        padding-top: 0.5vw;
     }
     
     .logo img{
-        max-width:20vw;
-        max-height:10vw;
+        max-width:15vw;
+        max-height:7.5vw;
         width: auto;
         height: auto;
     }
@@ -40,4 +42,37 @@
     .categorias ul li{
     
         text-align: center;
+    }
+    .busca{
+        width: 30%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        bottom: 5vw;
+        
+    }
+    .buscatam{
+        width: 30%;
+    }
+    .figuras{
+        width: 80px;
+        height: 80px;
+        margin-left: 0vw;
+        margin-right: 1vw;
+        
+    }
+    .comboFig{
+        float: right;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        bottom: 7vw;
+        margin-right: 10vw;
+    }
+    .headerpadrao{
+        padding-bottom: 0%;
     }
