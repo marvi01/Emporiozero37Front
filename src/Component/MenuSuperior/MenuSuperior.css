@@ -73,81 +73,71 @@
 @media screen and (max-width: 600px){
     .navigator{
         border-bottom: 1px solid;
-        margin-bottom: 1vw;
-        background-color: whitesmoke;
-        
+        margin-bottom: 2vw;
+        background-color: #f8ecec;
+        height: 20vw;
         }
         
         .logo{
-            width: 20vw;
-            align-items: center;
+            width: 30vw;
             display: flex;
             flex-direction: row;
-            flex-wrap: wrap;
             justify-content: center;
-            padding-top: 4vw;
+            align-items: center;
+            float: left;
+            margin-top: 2vw;
         }
         
         .logo img{
-            max-width:30vw;
-            max-height:15vw;
+            max-width:19vw;
+            max-height:16vw;
             width: auto;
             height: auto;
         }
-        .searchbar{
-            float: top;
-            width: 40vw;
-        }
-        .categorias{
         
-            float: bottom;
-            width: 40vw;
-            font-size: 2vw;
-            padding-left: 2.5vw;
-            background-color: lightblue;
-            text-align: center;
-            align-items: center;
+        
+        .busca{
+           
+            max-width: 70vw;
+            max-height: 18vw;
             display: flex;
             flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .categorias ul li{
-        
-            text-align: center;
-        }
-        .busca{
-            width: 30%;
-            display: flex;
             justify-content: center;
             align-items: center;
-            margin-left: auto;
-            margin-right: auto;
-            position: relative;
-            bottom: 10vw;
-            
+            float: left;
+            margin-top: 5.5vw;
+            font-size: 3.5vw;
         }
-        .buscatam{
-            width: 30%;
+        
+        .busca input{
+            width: 40vw;
+            height: 9vw;
+            border: 0.1px black solid;
+            background-color: whitesmoke;
+        }
+        .busca button{
+            height: 9vw;
+            font-size: 3.5vw;
+            background-color: whitesmoke;
         }
         .figuras{
-            width: 0vw;
-            height: 0vw;
+            max-width: 0vw;
+            max-height: 0vw;
+            width: auto;
+            height: auto;
             margin-left: 0vw;
-            margin-right: 1vw;
+            margin-right: 0vw;
             
         }
         .comboFig{
-            float: right;
+            float: left;
+            width: 0vw;
+            height: 0vw;
             display: flex;
+            flex-direction: row;
             justify-content: center;
             align-items: center;
-            position: relative;
-            bottom: 7vw;
-            margin-right: 10vw;
-        }
-        .headerpadrao{
-            padding-bottom: 0%;
+            
         }
     }
 
