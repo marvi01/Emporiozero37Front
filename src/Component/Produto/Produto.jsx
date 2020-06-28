@@ -16,8 +16,8 @@ const Arrow = ({ text, className }) => {
  
 /*const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
 const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
- 
-const selected = 'item1';*/
+ */
+const selected = 'false';
  
 class Produto extends Component {
 
@@ -77,13 +77,12 @@ class Produto extends Component {
   }
   exibeProduto() {
     const { prod } = this.state.prod;
-    console.log(this.state);
     if (this.state.estado !== false) {
       if (this.state.nulo !== true) {
         const ProdCod = prod.map((item, indice) => {
          
           return (
-            <div className={`menu-item `} key={indice}>
+            <div className={`menu-item ${selected ? 'active' : ''}`} key={indice}>
               <div  className="card tamanho" >
                 <img className="card-img-top foto" src={`https://anorosa.com.br/Emporio037/storage/${item.foto}`} />
                 <div className="sobrefoto"/>
@@ -108,6 +107,7 @@ class Produto extends Component {
           onSelect={null}
           alignCenter={false}
           wheel = {false}
+          useButtonRole = {false}
           
           />
      
