@@ -4,6 +4,8 @@
 }
 
 
+   
+  
 /* tela 4k */
 @media screen and (min-width: 1701px){
     .tamanho{
@@ -77,7 +79,7 @@
         width: 18vw;
         margin-left: 0.8vw;
         margin-top: 1.6vw;
-        float: left;
+        
         box-shadow: 0.5vw 0.5vw 1vw grey;
        /* padding: 0.8% ;
         border-color: grey;
@@ -134,7 +136,29 @@
         padding-right: 7,5vw;
         font-size: 1;
     }
-    
+    /*Scroller*/
+    .menu-item {
+        margin-bottom: 1vw;
+        
+      }
+      .menu-item-wrapper.active {
+        border: 0px blue solid;
+      }
+      .menu-item.active {
+        border: 0px;
+      }
+       
+      .scroll-menu-arrow {
+          
+        margin-left: 0px;
+        margin-right: 0px;
+        padding: 0px;
+        
+        margin-left: 0vw;
+        padding: 0px;
+        cursor: pointer;
+        
+      }
 }
 
 
@@ -204,6 +228,31 @@
         padding-left: 7,5vw;
         padding-right: 7,5vw;
     }
+
+    /*Scroller*/
+    .menu-item {
+        margin-left: 0px;
+        margin-right: 0px;
+        padding: 0px;
+        margin-bottom: 1vw;
+        user-select: none;
+        cursor: pointer;
+        border: none;
+      }
+      .menu-item-wrapper.active {
+        border: 0px blue solid;
+      }
+      .menu-item.active {
+        border: 0px;
+      }
+       
+      .scroll-menu-arrow {
+        font-size: 0px;
+        margin-left: 0vw;
+        padding: 0px;
+        cursor: pointer;
+        
+      }
 }
 .botao a p{
     background-color: lightseagreen;
