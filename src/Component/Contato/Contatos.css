@@ -3,7 +3,7 @@
 }
 @media screen and (min-width: 601px) {
 .header{
-    background-color: #f5f5dc ;
+    background-color: rgb(131, 7, 7) ;
     width: 100vw;
     height: 3vw;
     margin: 0;
@@ -72,7 +72,7 @@
 }
 @media screen and (max-width: 600px){
     .header{
-        background-color: #f5f5dc ;
+        background-color: rgb(131, 7, 7) ;
         width: 100vw;
         height: 9vw;
         margin: 0;
@@ -136,4 +136,7 @@
     .icones:hover{
         box-shadow: 0vw 0vw 1vw  grey;
     }
+}
+.cor{
+    color: black;
 }

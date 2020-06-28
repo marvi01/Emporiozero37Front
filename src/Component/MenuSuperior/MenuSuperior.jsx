@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './MenuSuperior.css';
 import { Link } from 'react-router-dom';
 import logo from '../../imagens/Logo.png';
-import login from '../../imagens/login.jpg'
+import login from '../../imagens/login.png'
 import carrinho from '../../imagens/carrinho.png';
 
 class MenuSuperior extends Component {

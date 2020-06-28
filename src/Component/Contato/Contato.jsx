@@ -36,11 +36,11 @@ class header extends Component {
                             <div className="tels">
                                 <ul>
                                     <li>
-                                        <a href="https://api.whatsapp.com/send?phone=5537988317271&text=Ol%C3%A1!%20Estou%20sendo%20redirecionado%20de%20um%20site%20para%20o%20whatsapp!!">(37) 98831-7271</a>
+                                        <a className="cor" href="https://api.whatsapp.com/send?phone=5537988317271&text=Ol%C3%A1!%20Estou%20sendo%20redirecionado%20de%20um%20site%20para%20o%20whatsapp!!">(37) 98831-7271</a>
                                         
                                     </li>
                                     <li>
-                                        <a href="https://api.whatsapp.com/send?phone=5537988317271&text=Ol%C3%A1!%20Estou%20sendo%20redirecionado%20de%20um%20site%20para%20o%20whatsapp!!">(37) 98831-7271</a>
+                                        <a className="cor" href="https://api.whatsapp.com/send?phone=5537988317271&text=Ol%C3%A1!%20Estou%20sendo%20redirecionado%20de%20um%20site%20para%20o%20whatsapp!!">(37) 98831-7271</a>
                                     </li>
                                 </ul>
                             </div>
