@@ -3,7 +3,7 @@
     padding: 0px;
 }
 @media screen and (min-width: 601px){
-.navigator{
+.headerpadrao{
     border-bottom: 1px solid;
     margin-bottom: 1vw;
     background-color: #f8ecec;
@@ -45,6 +45,7 @@
         height: 3vw;
         border: 0.1px black solid;
         background-color: whitesmoke;
+        padding-left: 1vw;
     }
     .busca button{
         height: 3vw;
@@ -69,9 +70,15 @@
         align-items: center;
         
     }
+    .comboFig ul li{
+        display: inline;
+    }
+    .comboFig ul li Link{
+        display: inline-block;
+    }
 }
 @media screen and (max-width: 600px){
-    .navigator{
+    .headerpadrao{
         border-bottom: 1px solid;
         margin-bottom: 2vw;
         background-color: #f8ecec;
@@ -114,6 +121,7 @@
             height: 9vw;
             border: 0.1px black solid;
             background-color: whitesmoke;
+            padding-left: 1vw;
         }
         .busca button{
             height: 9vw;

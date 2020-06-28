@@ -56,8 +56,6 @@ class Categoria extends Component {
       if (this.state.nulo !== true) {
               
           const CatCod = categ.map((item, indice) =>{
-            const child   = { width: `30em`, height: `100%`}
-            const parent  = { width: `60em`, height: `100%`}
             
                 return(
                   <div key={indice} className='categoria'>

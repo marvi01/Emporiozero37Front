@@ -6,6 +6,57 @@ import login from '../../imagens/login.png'
 import carrinho from '../../imagens/carrinho.png';
 
 class MenuSuperior extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            nulo: true,
+            estado: false,
+            categ: [{
+                "id": 0,
+                "nomecategoria": "",
+                "created_at": "",
+                "updated_at": ""
+            }],
+            status: false,
+        };
+    };
+    async componentDidMount() {
+        var response;
+        try {
+            response = await fetch("https://anorosa.com.br/Emporio037/api/categoria/list");
+
+        } catch (error) {
+            console.log(error);
+            this.setState({ error })
+        }
+        const json = await response.json();
+        console.log('===================' + json)
+        if (json != null) {
+            this.setState({ categ: json, nulo: false });
+        }
+        this.setState({ estado: true });
+    }
+    exibeListarCategoria(){
+        const { erro } = this.state;
+        const { categ } = this.state.categ;
+        if(erro){
+            
+        }else{
+            if (this.state.estado === true) {
+                if (this.state.nulo === false) {
+                    const CatCod = categ.map((item, indice) =>{
+                        return (
+                            
+                                <a className="nav-link" key={indice}>{item.nomecategoria}</a>
+                            
+                        )
+                    })
+                    return CatCod;
+                }
+                
+            }
+        }
+    }
     render() {
         return (
             <div className="navigator">
@@ -21,15 +72,20 @@ class MenuSuperior extends Component {
                         <div className="input-group-append">
                             <button className="btn btn-outline-dark" type="button">Pesquisar</button>
                         </div>
-                        
+
                     </div>
                     <div className="comboFig ">
-                        
+
                         <Link to="/Carrinho" ><img alt='some value' className="figuras " src={carrinho} /></Link>
                         <Link to="/Login" ><img alt='some value' className="figuras " src={login} /></Link>
                     </div>
-                        
 
+
+                </div>
+                <div className="menucategoria">
+                    <ul>
+                       {this.exibeListarCategoria()}
+                    </ul>
                 </div>
             </div>
 
