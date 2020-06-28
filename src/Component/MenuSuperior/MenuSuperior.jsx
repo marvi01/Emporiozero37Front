@@ -24,6 +24,7 @@ class MenuSuperior extends Component {
                         
                     </div>
                     <div className="comboFig ">
+                        
                         <Link to="/Carrinho" ><img alt='some value' className="figuras " src={carrinho} /></Link>
                         <Link to="/Login" ><img alt='some value' className="figuras " src={login} /></Link>
                     </div>

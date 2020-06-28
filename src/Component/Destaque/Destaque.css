@@ -3,7 +3,9 @@
 .slide-container {
     width: 64%;
     height: 55%;
-    margin: auto; }
+    margin: auto; 
+    margin-bottom: 3vw;
+  }
    
   h3 {
     text-align: center; }
