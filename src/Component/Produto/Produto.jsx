@@ -14,10 +14,10 @@ const Arrow = ({ text, className }) => {
 };
  
  
-const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
+/*const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
 const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
  
-const selected = 'item1';
+const selected = 'item1';*/
  
 class Produto extends Component {
 
@@ -58,6 +58,7 @@ class Produto extends Component {
     if (json != null) {
       this.setState({ prod: json, nulo: false });
     }
+    
     this.setState({ estado: true });
 
 
@@ -82,9 +83,10 @@ class Produto extends Component {
         const ProdCod = prod.map((item, indice) => {
          
           return (
-            <div className={`menu-item`}>
-              <div key={indice} className="card tamanho" >
+            <div className={`menu-item `} key={indice}>
+              <div  className="card tamanho" >
                 <img className="card-img-top foto" src={`https://anorosa.com.br/Emporio037/storage/${item.foto}`} />
+                <div className="sobrefoto"/>
                 <div className="body card-body ">
                   <div className='titulocard'>
                     <h4 className="card-title titulo">COMBO JOHNNIE WALKER GOLD RESERVE 250ML + 2 COPOS DE VIDRO HIGHBALL+ 2 COPOS DE VIDRO HIGHBALL</h4>
@@ -105,6 +107,7 @@ class Produto extends Component {
           data={ProdCod}
           onSelect={null}
           alignCenter={false}
+          wheel = {false}
           
           />
      
