@@ -46,9 +46,16 @@ class MenuSuperior extends Component {
                 if (this.state.nulo === false) {
                     const CatCod = categ.map((item, indice) => {
                         return (
-                            <li className="nav-item active" key={indice}>
-                                  <Link className="nav-link" to={`/Categoria/${item.id}`}>{item.nomecategoria}</Link>
+                            <div class='botaomenu' key={indice}>
+                            <li className="nav-item active" >
+                                
+                                    <Link className="nav-link" to={`/Categoria/${item.id}`}>
+                                        {item.nomecategoria}
+                                        </Link>
+                               
+                                
                             </li>
+                             </div>
                         )
                     })
                     return CatCod;
@@ -78,24 +85,24 @@ class MenuSuperior extends Component {
                     </div>
                 </div>
                 <div className='menucateg'>
-                    <div className='centro'>               
-               <nav className="celular navbar navbar-expand-lg navbar-light">
-                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className="collapse navbar-collapse " id="navbarSupportedContent">
-                        <ul className="navbar-nav mr-auto a">
-                        <li className="pc nav-item active">
-                                <Link className="nav-link" to="/Login">Entrar</Link>
-                            </li>
-                            <li className="pc nav-item active">
-                                <Link className="nav-link" to="/Carrinho">Carrinho</Link>
-                            </li>                           
-                            {this.exibeListarCategoria()}                          
-                        </ul>                    
+                    <div className='centro'>
+                        <nav className="celular navbar navbar-expand-lg navbar-light">
+                            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span className="navbar-toggler-icon"></span>
+                            </button>
+                            <div className="collapse navbar-collapse " id="navbarSupportedContent">
+                                <ul className="navbar-nav mr-auto a">
+                                    <li className="pc nav-item active">
+                                        <Link className="nav-link" to="/Login">Entrar</Link>
+                                    </li>
+                                    <li className="pc nav-item active">
+                                        <Link className="nav-link" to="/Carrinho">Carrinho</Link>
+                                    </li>
+                                    {this.exibeListarCategoria()}
+                                </ul>
+                            </div>
+                        </nav>
                     </div>
-                </nav>
-                </div>
                 </div>
             </div>
         )

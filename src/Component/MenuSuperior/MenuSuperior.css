@@ -27,6 +27,16 @@
     .menucateg nav{ 
         padding-left: 0px;
     }
+    .botaomenu{
+        
+        opacity: 0.8;
+        transition: 0.5s;
+    }
+    .botaomenu:hover{
+        opacity: 1;
+        background-color: pink;
+        box-shadow: 1vw 1vw 1vw grey;
+    }
     .centro{
         width: 100%;
         height: 100%;
