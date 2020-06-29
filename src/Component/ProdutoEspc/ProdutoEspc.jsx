@@ -8,6 +8,7 @@ class ProdutoEspc extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      valortotal:0,
       nulo: true,
       estado: false,
       data: [{
@@ -44,6 +45,17 @@ class ProdutoEspc extends Component {
 
 
   }
+  handleInputRef = (input) => {
+    this.input = input;
+  };
+  preco = () => {
+    let qde = `${this.input.value}`;
+    console.log(qde)
+    let precofinal = qde* this.state.data.preco;
+    this.setState({valortotal:precofinal});
+    
+    console.log(precofinal);
+  }
 
   exibeErro() {
     const { erro } = this.state;
@@ -69,23 +81,23 @@ class ProdutoEspc extends Component {
             <div className="titulos">
 
               <div className="posicao">
-                <h1 className=" ">{this.state.data.nomeprod}</h1>
-                <h3 className="">COMBO JOHNNIE WALKER GOLD RESERVE 250ML + 2 COPOS DE VIDRO HIGHBALL+ 2 COPOS DE VIDRO HIGHBALL</h3>
-                <h4>R${this.state.data.preco.toFixed(2).replace(".", ",")}</h4>
-                <div className="form-row">
-                  
-                  <label className="h4">Quantidade: </label>
-                  <input />
-                  <label className="h4">Valor total:R$ </label>
-                  <div className=" ima"><br></br>
-                    <Link to="/Carrinho" className="btn btn-success ">
-                      Adicionar Carrinho
+                <h1 className=" ">{this.state.data.nomeprod}</h1><br />
+        <h4 className="">COMBO JOHNNIE WALKER GOLD RESERVE 250ML + 2 COPOS DE VIDRO HIGHBALL+ 2 COPOS DE VIDRO HIGHBALL-{this.state.data.ml}ML</h4>
+
+        <h4>Teor Alcoólico:{this.state.data.teor}%</h4>
+                <label className="h4">Quantidade: </label>
+                <input ref={this.handleInputRef }onInput={this.preco}/><br />
+                <label className="h4">R${this.state.data.preco.toFixed(2).replace(".", ",")}</label><br />
+                <label className="h4">Valor total:R${this.state.valortotal} </label>
+                <div className=" ima"><br></br>
+                  <Link to="/Carrinho" className="btn btn-success ">
+                    Adicionar Carrinho
                     </Link>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
+
 
         )
 
