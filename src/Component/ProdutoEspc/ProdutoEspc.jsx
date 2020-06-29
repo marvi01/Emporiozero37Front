@@ -118,7 +118,7 @@ class ProdutoEspc extends Component {
   render() {
     return (
       <div>
-        <MenuSuperior/>
+        
       <div className=" container">
 
         <div>{this.exibeErro() || this.exibeProduto()}</div>

@@ -56,7 +56,7 @@ export default function CategoriaEspec(props) {
       );
       return (
         <div>
-          <MenuSuperior></MenuSuperior>
+          
           <div className='width'>
             {ProdCod}
           </div>
@@ -67,14 +67,14 @@ export default function CategoriaEspec(props) {
     } else {
 
       return <div>
-        <MenuSuperior></MenuSuperior>
+       
         <a>Nenhum produto cadastrado nesta categoria :c</a>;
       </div>
     }
   } else {
     return (
       <div>
-        <MenuSuperior></MenuSuperior>
+        
         <div class="text-center">
           <div class="spinner-border" role="status">
             <span class="sr-only">Loading...</span>
