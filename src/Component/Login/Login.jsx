@@ -7,6 +7,7 @@ export default function Login(){
         return(
             <div>
                 <p>Login</p>
+                <input type="text" id="user-name" class="form-control" placeholder="Full name" required="" autofocus=""/>
             <button onClick={()=> setLogin(false)}>
                 troca
             </button>
@@ -16,7 +17,7 @@ export default function Login(){
     }else{
         return (
             <div>
-                <p>Cadastr</p>
+                <p>Cadastro</p>
             <button onClick={()=> setLogin(true)}>
                 troca
             </button>
