@@ -74,7 +74,7 @@ class ProdutoEspc extends Component {
     if (this.state.estado !== false) {
       if (this.state.nulo !== true) {
         return (
-          <div>
+          <div className="externa">
             <div className="esquerda">
               <img className="imagem figure-img img-fluid rounded " src={`https://anorosa.com.br/Emporio037/storage/${this.state.data.foto}`} alt="Responsive image" />
             </div>
@@ -82,7 +82,7 @@ class ProdutoEspc extends Component {
 
               <div className="posicao">
                 <h1 className=" ">{this.state.data.nomeprod}</h1><br />
-        <h4 className="">COMBO JOHNNIE WALKER GOLD RESERVE 250ML + 2 COPOS DE VIDRO HIGHBALL+ 2 COPOS DE VIDRO HIGHBALL-{this.state.data.ml}ML</h4>
+        <h4 className="">{this.state.data.descricao}-{this.state.data.ml}ML</h4>
 
         <h4>Teor Alcoólico:{this.state.data.teor}%</h4>
                 <label className="h4">Quantidade: </label>
