@@ -9,7 +9,9 @@ class CategProduto extends Component {
 
     constructor(props) {
         super(props);
+        let idCateg = props.idCategoria
         this.state = {
+          id: idCateg,
           nulo: true,
           estado: false,
           prod: [{
@@ -30,7 +32,8 @@ class CategProduto extends Component {
       };
       async componentDidMount() {
         var response;
-        const { id } = this.props.match.params;
+        const { id } = this.state.id;
+        console.log(id);
         try {
           response = await fetch('https://anorosa.com.br/Emporio037/api/categoria/produtos/' + id);
     
