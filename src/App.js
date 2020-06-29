@@ -5,15 +5,15 @@ import ProdutoEspc from './Component/ProdutoEspc/ProdutoEspc';
 import MenuPrincial from './Component/MenuPrincipal/MenuPrincipal';
 import MenuSuperior from './Component/MenuSuperior/MenuSuperior';
 import {Switch, Route} from 'react-router-dom';
+import RotasMenuSup from './Component/MenuSuperior/RotasMenuSup';
 function App() {
   return (
     <div className="corpo">
       
 
       <Contato/>
-      <MenuSuperior/>
       <Switch>
-      <Route path="/" exact  component={MenuPrincial}/>
+      <Route path="/" exact  component={RotasMenuSup}/>
       <Route path = "/Produto/:id" exact component = {ProdutoEspc}/>
       
       </Switch>
