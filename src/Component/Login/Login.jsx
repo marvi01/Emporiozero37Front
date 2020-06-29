@@ -7,10 +7,11 @@ export default function Login(){
         return(
             <div>
                 <p>Login</p>
-                <input type="text" id="user-name" class="form-control" placeholder="Full name" required="" autofocus=""/>
-            <button onClick={()=> setLogin(false)}>
-                troca
-            </button>
+                <input type="email" id="user-name" class="form-control" placeholder="Full name" required="true" autofocus=""/>
+                <input type="password" id="user-name" class="form-control" placeholder="Full name" required="" autofocus=""/>
+                    <button onClick={()=> setLogin(false)}>
+                        troca
+                    </button>
             </div>
             
         );
