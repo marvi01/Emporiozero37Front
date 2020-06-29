@@ -65,9 +65,13 @@
     max-width: 2.8vw;
     padding-left: 0.2vw;
     padding-right: 0.2vw;
+    opacity: 0.8;
+        transition: 0.5s;
 }
 .icones:hover{
-    box-shadow: 0vw 0vw 1vw  grey;
+    opacity: 1;
+    background-color: rgb(228, 186, 108) ;
+        box-shadow: 1vw 1vw 1vw grey;
 }
 }
 @media screen and (max-width: 600px){
@@ -132,9 +136,14 @@
         max-width: 8.6vw;
         padding-left: 0.2vw;
         padding-right: 0.2vw;
+        opacity: 0.8;
+        transition: 0.5s;
     }
     .icones:hover{
-        box-shadow: 0vw 0vw 1vw  grey;
+        opacity: 1;
+
+        box-shadow: 1vw 1vw 1vw grey;
+        
     }
 }
 .cor{
