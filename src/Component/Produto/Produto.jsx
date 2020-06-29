@@ -48,7 +48,7 @@ class Produto extends Component {
     var response;
     var idcat = this.state.idcat;
     try {
-      response = await fetch('https://anorosa.com.br/Emporio037/api/categoria/produtos/' + idcat, { method: 'POST' });
+      response = await fetch('https://anorosa.com.br/Emporio037/api/categoria/produtos/' + idcat);
 
     } catch (error) {
       console.log(error);
