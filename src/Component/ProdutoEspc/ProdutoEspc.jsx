@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import './EspProd.css'
+import './EspProd.css';
+import MenuSuperior from '../MenuSuperior/MenuSuperior';
 
 class ProdutoEspc extends Component {
 
@@ -116,10 +117,12 @@ class ProdutoEspc extends Component {
   //
   render() {
     return (
-
+      <div>
+        <MenuSuperior/>
       <div className=" container">
 
         <div>{this.exibeErro() || this.exibeProduto()}</div>
+      </div>
       </div>
     );
   };

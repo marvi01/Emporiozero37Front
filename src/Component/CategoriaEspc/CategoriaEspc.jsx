@@ -76,7 +76,8 @@ class CategoriaEspc extends Component {
                       </div>
                       <h3 className="card-text"> R${item.preco.toFixed(2).replace(".", ",")}</h3>
                       <div className="botao">
-                        <Link to={`Produto/${item.id}`}><p>Comprar</p></Link>
+                        <Link to={`../Produto/${item.id}`}><p>Comprar</p></Link>
+                        {console.log(item)}
                       </div>
                     </div>
                   </div>
