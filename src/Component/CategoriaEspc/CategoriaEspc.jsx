@@ -1,36 +1,88 @@
-import React, { Component } from 'react';
-
-import '../Produto/Produto.css';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import ScrollMenu from 'react-horizontal-scrolling-menu';
 import MenuSuperior from '../MenuSuperior/MenuSuperior';
-import CategProd from '../CategProduto/CategProduto';
+import './CategoriaEspc.css';
+export default function CategoriaEspec(props) {
 
-class CategoriaEspc extends Component {
+  const { id } = props.match.params;
+  console.log(id);
+  const [prod, setProd] = useState(null);
+  const [estado, setEstado] = useState(false);
+  const [nulo, setNulo] = useState(true);
+  const [erro, setErro] = useState(null);
 
-      exibeProduto() {
-        const { id } = this.props.match.params;
-        console.log(id)
-        return(
-            <div>
-              <CategProd idCategoria={id}/>
+  async function conexao() {
+    var response;
+    try {
+      response = await fetch('https://anorosa.com.br/Emporio037/api/categoria/produtos/' + id);
+    } catch (error) {
+      console.log(error);
+      setErro(error);
+    }
+    const json = await response.json();
+    if (json != null) {
+      setProd(json.prod);
+      setNulo(false);
+    };
+
+    setEstado(true);
+  };
+  conexao();
+
+  if (estado === true) {
+    if (nulo === false) {
+      const ProdCod = prod.map((item, indice) => {
+
+        return (
+
+          <div className={`menu-item`} key={indice}>
+            <div className="card tamanho" >
+              <img className="card-img-top foto" src={`https://anorosa.com.br/Emporio037/storage/${item.foto}`} />
+              <div className="sobrefoto" />
+              <div className="body card-body ">
+                <div className='titulocard'>
+                  <h4 className="card-title titulo">COMBO JOHNNIE WALKER GOLD RESERVE 250ML + 2 COPOS DE VIDRO HIGHBALL+ 2 COPOS DE VIDRO HIGHBALL</h4>
+                </div>
+                <h3 className="card-text"> R${item.preco.toFixed(2).replace(".", ",")}</h3>
+                <div className="botao">
+                  <Link to={`Produto/${item.id}`}><p>Comprar</p></Link>
+                </div>
+              </div>
             </div>
+          </div>
+
         )
       }
-      
-    
-      //
-      render() {
-        return (
-            <div>
-          <div className=" container">
-              
-            <div>{  this.exibeProduto()}</div>
+      );
+      return (
+        <div>
+          <MenuSuperior></MenuSuperior>
+          <div className='width'>
+            {ProdCod}
           </div>
-          </div>
-        );
-      };
-    
-}
+        </div>
 
-export default CategoriaEspc;
+
+      )
+    } else {
+
+      return <div>
+        <MenuSuperior></MenuSuperior>
+        <a>Nenhum produto cadastrado nesta categoria :c</a>;
+      </div>
+    }
+  } else {
+    return (
+      <div>
+        <MenuSuperior></MenuSuperior>
+        <div class="text-center">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+
+}
