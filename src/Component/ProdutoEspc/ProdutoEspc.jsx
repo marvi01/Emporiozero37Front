@@ -86,9 +86,10 @@ class ProdutoEspc extends Component {
 
         <h4>Teor Alcoólico:{this.state.data.teor}%</h4>
                 <label className="h4">Quantidade: </label>
-                <input ref={this.handleInputRef }onInput={this.preco}/><br />
+                <input   ref={this.handleInputRef }onInput={this.preco}   maxLength="2"/><br />
+
                 <label className="h4">R${this.state.data.preco.toFixed(2).replace(".", ",")}</label><br />
-                <label className="h4">Valor total:R${this.state.valortotal} </label>
+                <label className="h4">Valor total:R${this.state.valortotal.toFixed(2).replace(".", ",")} </label>
                 <div className=" ima"><br></br>
                   <Link to="/Carrinho" className="btn btn-success ">
                     Adicionar Carrinho

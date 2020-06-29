@@ -109,12 +109,8 @@ class Produto extends Component {
           wheel = {false}
           useButtonRole = {false}
           
-          />
-     
-     
-          
+          />  
           );
-
       } else {
         return (
           <div className="alert alert-light">
