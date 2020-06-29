@@ -6,7 +6,7 @@ import MenuPrincial from './Component/MenuPrincipal/MenuPrincipal';
 import MenuSuperior from './Component/MenuSuperior/MenuSuperior';
 import CategoriaEspc from './Component/CategoriaEspc/CategoriaEspc';
 import {Switch, Route} from 'react-router-dom';
-import RotasMenuSup from './Component/MenuSuperior/RotasMenuSup';
+
 import Carrinho from './Component/Carrinho/Carrinho';
 import Login from './Component/Login/Login';
 function App() {
@@ -16,7 +16,7 @@ function App() {
 
       <Contato/>
       <Switch>
-      <Route path="/" exact  component={RotasMenuSup}/>
+      <Route path="/" exact  component={MenuPrincial}/>
       <Route path = "/Produto/:id" exact component = {ProdutoEspc}/>
       <Route path ="/Categoria/:id"  component={CategoriaEspc}/>
       <Route path = "/Carrinho" exact component={Carrinho}/>
