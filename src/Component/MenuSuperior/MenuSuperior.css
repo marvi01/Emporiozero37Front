@@ -94,7 +94,11 @@
         height: auto;
         margin-left: 0vw;
         margin-right: 1vw;
-        
+        transition: 0.5s;
+    }
+    .figuras:hover{
+        max-width: 5vw;
+        max-height: 5vw;
     }
     .comboFig{
         float: left;
