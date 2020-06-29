@@ -68,10 +68,14 @@
     opacity: 0.8;
         transition: 0.5s;
 }
-.icones:hover{
+.icone:hover{
     opacity: 1;
+    margin-top: 0vw;
+    padding-left: 0.1vw;
+    padding-right: 0.1vw;
+    max-width: 3vw;
     background-color: rgb(228, 186, 108) ;
-        box-shadow: 1vw 1vw 1vw grey;
+    
 }
 }
 @media screen and (max-width: 600px){
