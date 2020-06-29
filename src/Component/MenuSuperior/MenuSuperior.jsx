@@ -49,9 +49,9 @@ class MenuSuperior extends Component {
                             <div class='botaomenu' key={indice}>
                             <li className="nav-item active" >
                                 
-                                    <Link className="nav-link" to={`/Categoria/${item.id}`}>
+                                    <a className="nav-link" href={`/Categoria/${item.id}`}>
                                         {item.nomecategoria}
-                                        </Link>
+                                        </a>
                                
                                 
                             </li>
