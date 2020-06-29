@@ -65,26 +65,20 @@ class MenuSuperior extends Component {
                         <Link to="/">
                             <img src={logo} placeholder="logo" />
                         </Link>
-
                     </div>
                     <div className="  input-group busca">
                         <input type="text" className="buscatam" placeholder="Pesquise um produto" aria-label="Recipient's username" aria-describedby="basic-addon2" />
                         <div className="input-group-append">
                             <button className="btn btn-outline-dark" type="button">Pesquisar</button>
                         </div>
-
                     </div>
                     <div className="comboFig ">
                         <Link to="/Carrinho" ><img alt='some value' className="figuras " src={carrinho} /></Link>
                         <Link to="/Login" ><img alt='some value' className="figuras " src={login} /></Link>
                     </div>
-
-
                 </div>
                 <div className='menucateg'>
-                    <div className='centro'>
-
-                    
+                    <div className='centro'>               
                <nav className="celular navbar navbar-expand-lg navbar-light">
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -96,18 +90,14 @@ class MenuSuperior extends Component {
                             </li>
                             <li className="pc nav-item active">
                                 <Link className="nav-link" to="/Carrinho">Carrinho</Link>
-                            </li>
-                            
-                            
-                            {this.exibeListarCategoria()}
-                            
+                            </li>                           
+                            {this.exibeListarCategoria()}                          
                         </ul>                    
                     </div>
                 </nav>
                 </div>
                 </div>
             </div>
-
         )
     }
 }
