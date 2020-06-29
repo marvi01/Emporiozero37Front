@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import './EspProd.css'
 
 class ProdutoEspc extends Component {
 
@@ -56,22 +57,40 @@ class ProdutoEspc extends Component {
     }
   }
   exibeProduto() {
-    console.log(this.state.data.nomeprod);
-    
+
+
     if (this.state.estado !== false) {
       if (this.state.nulo !== true) {
-
-        
-
-          return (
-            <div>
-              <b>{this.state.data.nomeprod}</b>
-              <b>{this.state.data.preco}</b>
+        return (
+          <div>
+            <div className="esquerda">
+              <img className="imagem figure-img img-fluid rounded " src={`https://anorosa.com.br/Emporio037/storage/${this.state.data.foto}`} alt="Responsive image" />
             </div>
-          )
+            <div className="titulos">
+
+              <div className="posicao">
+                <h1 className=" ">{this.state.data.nomeprod}</h1>
+                <h3 className="">COMBO JOHNNIE WALKER GOLD RESERVE 250ML + 2 COPOS DE VIDRO HIGHBALL+ 2 COPOS DE VIDRO HIGHBALL</h3>
+                <h4>R${this.state.data.preco.toFixed(2).replace(".", ",")}</h4>
+                <div className="form-row">
+                  
+                  <label className="h4">Quantidade: </label>
+                  <input />
+                  <label className="h4">Valor total:R$ </label>
+                  <div className=" ima"><br></br>
+                    <Link to="/Carrinho" className="btn btn-success ">
+                      Adicionar Carrinho
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        )
 
 
-        
+
 
       } else {
         return (
