@@ -8,7 +8,7 @@ class ProdutoEspc extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      valortotal:0,
+      valortotal: 0,
       nulo: true,
       estado: false,
       data: [{
@@ -51,9 +51,9 @@ class ProdutoEspc extends Component {
   preco = () => {
     let qde = `${this.input.value}`;
     console.log(qde)
-    let precofinal = qde* this.state.data.preco;
-    this.setState({valortotal:precofinal});
-    
+    let precofinal = qde * this.state.data.preco;
+    this.setState({ valortotal: precofinal });
+
     console.log(precofinal);
   }
 
@@ -82,11 +82,11 @@ class ProdutoEspc extends Component {
 
               <div className="posicao">
                 <h1 className=" ">{this.state.data.nomeprod}</h1><br />
-        <h4 className="">{this.state.data.descricao}-{this.state.data.ml}ML</h4>
+                <h4 className="">{this.state.data.descricao}-{this.state.data.ml}ML</h4>
 
-        <h4>Teor Alcoólico:{this.state.data.teor}%</h4>
+                <h4>Teor Alcoólico:{this.state.data.teor}%</h4>
                 <label className="h4">Quantidade: </label>
-                <input   ref={this.handleInputRef }onInput={this.preco}   maxLength="2"/><br />
+                <input ref={this.handleInputRef} onInput={this.preco} maxLength="2" /><br />
 
                 <label className="h4">R${this.state.data.preco.toFixed(2).replace(".", ",")}</label><br />
                 <label className="h4">Valor total:R${this.state.valortotal.toFixed(2).replace(".", ",")} </label>
