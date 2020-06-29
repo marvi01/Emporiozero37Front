@@ -8,6 +8,7 @@ import CategoriaEspc from './Component/CategoriaEspc/CategoriaEspc';
 import {Switch, Route} from 'react-router-dom';
 import RotasMenuSup from './Component/MenuSuperior/RotasMenuSup';
 import Carrinho from './Component/Carrinho/Carrinho';
+import Login from './Component/Login/Login';
 function App() {
   return (
     <div className="corpo">
@@ -19,6 +20,7 @@ function App() {
       <Route path = "/Produto/:id" exact component = {ProdutoEspc}/>
       <Route path ="/Categoria/:id"  component={CategoriaEspc}/>
       <Route path = "/Carrinho" exact component={Carrinho}/>
+      <Route path = "/Login" exact component={Login}/>
       </Switch>
     </div>
   );
