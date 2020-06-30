@@ -6,8 +6,7 @@ class Carrinho extends Component {
     render() {
         return (
             <div>
-                
-                <i class="fab fa-accessible-icon"></i>         
+                Carrinho
             </div>
         );
     }
