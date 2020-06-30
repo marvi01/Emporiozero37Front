@@ -28,9 +28,11 @@ class ProdutoEspc extends Component {
       status: false,
     };
   };
+  // função que faz a Busca Na API 
   async componentDidMount() {
     var response;
     try {
+      //Buscando o parametro passado 
       const { id } = this.props.match.params;
       response = await fetch('https://anorosa.com.br/Emporio037/api/produto/' + id);
 
@@ -46,16 +48,16 @@ class ProdutoEspc extends Component {
 
 
   }
+  //função para fazer acesso ao Input 
   handleInputRef = (input) => {
     this.input = input;
   };
+  //Função para calcular o falor total do produto 
   preco = () => {
     let qde = `${this.input.value}`;
     console.log(qde)
     let precofinal = qde * this.state.data.preco;
     this.setState({ valortotal: precofinal });
-
-    console.log(precofinal);
   }
 
   exibeErro() {
@@ -69,8 +71,8 @@ class ProdutoEspc extends Component {
       );
     }
   }
+  //HTML do Produto 
   exibeProduto() {
-
 
     if (this.state.estado !== false) {
       if (this.state.nulo !== true) {

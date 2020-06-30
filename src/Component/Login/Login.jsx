@@ -4,8 +4,10 @@ import './Login.css';
 
 
 export default function Login(){
+  //Constante para fazer a troca de telas entre Login e Cadastro 
     const [login, setLogin] = useState(true);
     if(login === true){
+      //HTLML DE LOGIN DENTRO DESSA DIV
         return(
             <div>
                 <form>
@@ -37,9 +39,10 @@ export default function Login(){
             
         );
     }else{
+      //HTLML DE CADASTRO DENTRO DESSA DIV
         return (
             <div>
-                <p>HTLML DE CADASTRO DENTRO DESSA DIV</p>
+                <p></p>
             <button onClick={()=> setLogin(true)}>
                 troca
             </button>
