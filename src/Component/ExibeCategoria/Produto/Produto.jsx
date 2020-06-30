@@ -22,6 +22,7 @@ const selected = 'false';
 class Produto extends Component {
 
   constructor(props) {
+    //Variavel passando o Id da Categoria 
     var cat = props.idcat;
     super(props);
     this.state = {
@@ -44,6 +45,7 @@ class Produto extends Component {
       status: false,
     };
   };
+    // função que faz a Busca Na API 
   async componentDidMount() {
     var response;
     var idcat = this.state.idcat;
@@ -75,6 +77,7 @@ class Produto extends Component {
       );
     }
   }
+  //HTML que vai gerar o Array de Produtos de uma categoria X
   exibeProduto() {
     const { prod } = this.state.prod;
     if (this.state.estado !== false) {
