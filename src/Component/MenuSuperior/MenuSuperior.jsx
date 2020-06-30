@@ -49,13 +49,13 @@ class MenuSuperior extends Component {
                             <div className='botaomenu' key={indice}>
                             <li className="nav-item active" >
                                 
-                                    <a className="nav-link" href={`/Categoria/${item.id}`}>
-                                        {item.nomecategoria}
-                                        </a>
+                                <a className="nav-link" href={`/Categoria/${item.id}`}>
+                                    {item.nomecategoria}
+                                </a>
                                
                                 
                             </li>
-                             </div>
+                            </div>
                         )
                     })
                     return CatCod;
