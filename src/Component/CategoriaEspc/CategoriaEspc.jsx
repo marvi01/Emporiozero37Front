@@ -20,7 +20,7 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
     try {
       response = await fetch('https://anorosa.com.br/Emporio037/api/categoria/produtos/' + id); //Consulta a api
     } catch (error) {
-     
+
       setErro(error); //Muda o estado da tela para erro se ao consultar a api a resposta não for 200
     }
     const json = await response.json(); //Convertendo o resultado da consulta para json
@@ -31,10 +31,10 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
 
     setEstado(true);//Seta que a api foi consutada
   };
-  useEffect( ()=>{ //Este método faz que, após o site ser renderizado, execute a função dentro dele
+  useEffect(() => { //Este método faz que, após o site ser renderizado, execute a função dentro dele
     conexao();
   }, [countconexao]);//Enquanto countconexao não mudar, este metodo não será executado novamente
-  
+
   if (estado === true) { //Caso a api foi consultada
     if (nulo === false) { //Caso o retorno da api foi != null
 
@@ -64,7 +64,7 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
       //E retorna o seguinte html para ser exibido no site:
       return (
         <div>
-          
+
           <div className='width'>
             {ProdCod}{/*Esta é a constante onde temos um array com todos os cards (linha 43 a 57)*/}
           </div>
