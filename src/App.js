@@ -15,6 +15,7 @@ function App() {
       
 
       <Contato/>
+      <MenuSuperior/>
       <Switch>
       <Route path="/" exact  component={MenuPrincial}/>
       <Route path = "/Produto/:id" exact component = {ProdutoEspc}/>

@@ -5,7 +5,7 @@ class Carrinho extends Component {
     render() {
         return (
             <div>
-                <MenuSuperior/>
+                
                 <div>
               Carrinho
                </div>                 

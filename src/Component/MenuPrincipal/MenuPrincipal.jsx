@@ -7,7 +7,6 @@ class MenuPrincipal extends Component {
     render() {
         return (
             <div>
-                <MenuSuperior/>
                 <Destaque/>
                 <Categoria/>                
             </div>
