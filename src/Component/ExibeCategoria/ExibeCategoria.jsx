@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
-import Produto from '../Produto/Produto';
+import Produto from './Produto/Produto';
 
 import './Categoria.css';
 
-class Categoria extends Component {
+class ExibeCategoria extends Component {
 
   constructor(props) {
     super(props);
@@ -97,4 +97,4 @@ class Categoria extends Component {
 
 
 };
-export default Categoria;
+export default ExibeCategoria;

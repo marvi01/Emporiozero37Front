@@ -4,8 +4,9 @@ import MenuSuperior from '../MenuSuperior/MenuSuperior';
 import './CategoriaEspc.css';
 export default function CategoriaEspec(props) {
 
-  const { id } = props.match.params;
-  const [prod, setProd] = useState(null);
+  //Criação das constantes
+  const { id } = props.match.params; //Pegando um valor que foi mandado pela url
+  const [prod, setProd] = useState(null); //Objeto produto
   const [estado, setEstado] = useState(false);
   const [nulo, setNulo] = useState(true);
   const [countconexao, setCountconexao] = useState(0);
