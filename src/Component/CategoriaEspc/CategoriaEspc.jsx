@@ -8,9 +8,10 @@ export default function CategoriaEspec(props) {
   const [prod, setProd] = useState(null);
   const [estado, setEstado] = useState(false);
   const [nulo, setNulo] = useState(true);
-  const [a, setA] = useState(0);
+  const [countconexao, setCountconexao] = useState(0);
   const [erro, setErro] = useState(null);
-  console.log(id);
+  console.log('1')
+ 
   async function conexao() {
     var response;
     console.log('consumiu');
@@ -28,14 +29,14 @@ export default function CategoriaEspec(props) {
 
     setEstado(true);
   };
- useEffect(()=>{
-   conexao();
-}, [a]);
-
+  useEffect( ()=>{
+    conexao();
+  }, [countconexao]);
+  
   if (estado === true) {
     if (nulo === false) {
+      
       const ProdCod = prod.map((item, indice) => {
-
         return (
 
           <div className={`menu-item`} key={indice}>
