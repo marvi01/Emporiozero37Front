@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import MenuSuperior from '../MenuSuperior/MenuSuperior';
 import './CategoriaEspc.css';
@@ -8,8 +8,9 @@ export default function CategoriaEspec(props) {
   const [prod, setProd] = useState(null);
   const [estado, setEstado] = useState(false);
   const [nulo, setNulo] = useState(true);
+  const [a, setA] = useState(0);
   const [erro, setErro] = useState(null);
-
+  console.log(id);
   async function conexao() {
     var response;
     try {
@@ -26,9 +27,9 @@ export default function CategoriaEspec(props) {
 
     setEstado(true);
   };
-  if(estado === false){
-    conexao();
-  }
+ useEffect(()=>{
+   conexao();
+}, [a]);
 
   if (estado === true) {
     if (nulo === false) {
