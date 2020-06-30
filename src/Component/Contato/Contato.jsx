@@ -3,10 +3,7 @@ import './Contatos.css';
 import insta from '../../imagens/instagram.png';
 import cell from '../../imagens/telefone.png';
 
-class header extends Component {
-
-
-
+class header extends Component { //Nós temos um componente, que ao ser chamado vai exibir no site o html dentro de render()
 
 
     render() {
