@@ -39,7 +39,7 @@ export default function Login(){
     }else{
         return (
             <div>
-                <p>Cadastro</p>
+                <p>HTLML DE CADASTRO DENTRO DESSA DIV</p>
             <button onClick={()=> setLogin(true)}>
                 troca
             </button>
