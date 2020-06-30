@@ -3,7 +3,7 @@ import cell from '../../imagens/telefone.png';//Importa imagem
 import './Exemplo.css';//Importa css
 
 
-class Carrinho extends Component {
+class Exemplo extends Component {
     produto(){//Você pode criar algum outro estado de html para tela
         return(
             <div>
@@ -22,10 +22,10 @@ class Carrinho extends Component {
             <div>
                 
                 <div>
-                    Carrinho
+                    <p>HTML AQUI</p>
                </div>                 
             </div>
         );
     }
 }
-export default Carrinho;
+export default Exemplo; //Aqui retorna o componente
