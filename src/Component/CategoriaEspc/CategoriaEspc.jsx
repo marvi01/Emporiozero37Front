@@ -5,7 +5,6 @@ import './CategoriaEspc.css';
 export default function CategoriaEspec(props) {
 
   const { id } = props.match.params;
-  console.log(id);
   const [prod, setProd] = useState(null);
   const [estado, setEstado] = useState(false);
   const [nulo, setNulo] = useState(true);
@@ -16,7 +15,7 @@ export default function CategoriaEspec(props) {
     try {
       response = await fetch('https://anorosa.com.br/Emporio037/api/categoria/produtos/' + id);
     } catch (error) {
-      console.log(error);
+     
       setErro(error);
     }
     const json = await response.json();
@@ -27,7 +26,9 @@ export default function CategoriaEspec(props) {
 
     setEstado(true);
   };
-  conexao();
+  if(estado === false){
+    conexao();
+  }
 
   if (estado === true) {
     if (nulo === false) {
