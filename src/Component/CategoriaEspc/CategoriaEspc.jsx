@@ -82,7 +82,6 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
     //Enquanto a api não é consultada este html é exibido no site:
     return (
       <div>
-        
         <div className="text-center">
           <div className="spinner-border" role="status">
             <span className="sr-only">Loading...</span>
