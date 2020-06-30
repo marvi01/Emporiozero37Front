@@ -46,7 +46,7 @@ class MenuSuperior extends Component {
                 if (this.state.nulo === false) {
                     const CatCod = categ.map((item, indice) => {
                         return (
-                            <div class='botaomenu' key={indice}>
+                            <div className='botaomenu' key={indice}>
                             <li className="nav-item active" >
                                 
                                     <a className="nav-link" href={`/Categoria/${item.id}`}>

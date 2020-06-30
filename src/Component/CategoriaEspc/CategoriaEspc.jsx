@@ -13,6 +13,7 @@ export default function CategoriaEspec(props) {
   console.log(id);
   async function conexao() {
     var response;
+    console.log('consumiu');
     try {
       response = await fetch('https://anorosa.com.br/Emporio037/api/categoria/produtos/' + id);
     } catch (error) {
@@ -47,7 +48,7 @@ export default function CategoriaEspec(props) {
                 </div>
                 <h3 className="card-text"> R${item.preco.toFixed(2).replace(".", ",")}</h3>
                 <div className="botao">
-                  <Link to={`Produto/${item.id}`}><p>Comprar</p></Link>
+                  <Link to={`/Produto/${item.id}`}><p>Comprar</p></Link>
                 </div>
               </div>
             </div>
@@ -77,9 +78,9 @@ export default function CategoriaEspec(props) {
     return (
       <div>
         
-        <div class="text-center">
-          <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
+        <div className="text-center">
+          <div className="spinner-border" role="status">
+            <span className="sr-only">Loading...</span>
           </div>
         </div>
       </div>
