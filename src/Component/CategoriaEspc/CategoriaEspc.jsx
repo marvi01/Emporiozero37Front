@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import MenuSuperior from '../MenuSuperior/MenuSuperior';
+import HeaderMeio from '../HeaderMeio/HeaderMeio';
 import './CategoriaEspc.css';
 
 

@@ -6,16 +6,12 @@ class Cadastro extends Component {
         super(props);
         this.state = {
             "data": {
-                "id": 0,
                 "nome": "Marcos",
                 "type": 1,
-                "telefone": "999983843",
-                "endereco": "Manoel Rodruiges 32",
+                "telefone": "37999983843",
+                "password":"123456",
                 "nasc": "2002-02-07",//Data de Nascimento 
-                "email": "marcos@gmail.com",
-                "email_verified_at": null,
-                "created_at": "",
-                "updated_at": ""
+                "email": "marcos@gmail.com"
             },
             status: true,
             erro: null,
