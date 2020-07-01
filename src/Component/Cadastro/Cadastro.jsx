@@ -8,13 +8,10 @@ class Cadastro extends Component {
             "data": {
                 "nome": "Marcos",
                 "type": 1,
-                "telefone": "999983843",
-                "endereco": "Manoel Rodruiges 32",
+                "telefone": "37999983843",
+                "password":"123456",
                 "nasc": "2002-02-07",//Data de Nascimento 
-                "email": "marcos@gmail.com",
-                "email_verified_at": null,
-                "created_at": "",
-                "updated_at": ""
+                "email": "marcos@gmail.com"
             },
             status: true,
             erro: null,
@@ -38,7 +35,7 @@ class Cadastro extends Component {
     handleSubmit = event => {
         fetch("https://anorosa.com.br/Emporio037/api/usuario/add", {
             method: "post",
-            body: JSON.stringify(this.state),
+            body: JSON.stringify(this.state.data),
             headers: {
                 "Content-Type": "application/json"
             }
