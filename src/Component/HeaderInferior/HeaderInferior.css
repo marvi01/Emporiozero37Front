@@ -1,0 +1,9 @@
+#categorias .nav-link {
+    color: var(--middle-gray);
+}
+.nav-item.active a {
+    color:white !important;
+}
+#categorias .nav-link:hover {
+    color: var(--light-gray) !important;
+}
