@@ -14,7 +14,7 @@ export default function Carrinho(props) {
         var response;
         var response2;
         try {
-          response = await fetch('hanorosa.com.br/Emporio037/api/me?token=' + token);
+          response = await fetch('http://anorosa.com.br/Emporio037/api/me?token=' + token);
         } catch (error) {
     
           setErro(error); 
@@ -23,7 +23,7 @@ export default function Carrinho(props) {
         if (json.id != null) { 
           setUserId(json.id);
           try {
-            response2 = await fetch('hanorosa.com.br/Emporio037/api/selectusercarrinho/' + userid);
+            response2 = await fetch('http://anorosa.com.br/Emporio037/api/selectusercarrinho/' + userid);
           } catch (error) {
             setErro(error); 
           }
