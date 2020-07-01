@@ -25,9 +25,7 @@ function App() {
       </header>
      
       <Switch>
-        {/*
           <Route path="/" exact component={TelaInicial} />
-        */}
         <Route path="/Produto/:id" exact component={ProdutoEspc} />
         <Route path="/Categoria/:id" component={CategoriaEspc} />
         <Route path="/Carrinho" exact component={Carrinho} />
