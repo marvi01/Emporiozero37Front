@@ -14,31 +14,31 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
   const [countconexao, setCountconexao] = useState(0);
   const [erro, setErro] = useState(null);
 
-  async function conexao() { //Função para consultar a api
+  async function conexao() { 
     var response;
     console.log('consumiu');
     try {
-      response = await fetch('https://anorosa.com.br/Emporio037/api/categoria/produtos/' + id); //Consulta a api
+      response = await fetch('https://anorosa.com.br/Emporio037/api/categoria/produtos/' + id); 
     } catch (error) {
 
-      setErro(error); //Muda o estado da tela para erro se ao consultar a api a resposta não for 200
+      setErro(error); 
     }
-    const json = await response.json(); //Convertendo o resultado da consulta para json
-    if (json != null) { //Verifica se existiu uma resposta da api
-      setProd(json.prod);  //Muda o estado de produto
-      setNulo(false); //Seta que a api não foi nula
+    const json = await response.json(); 
+    if (json != null) {
+      setProd(json.prod);  
+      setNulo(false); 
     };
 
-    setEstado(true);//Seta que a api foi consutada
+    setEstado(true);
   };
-  useEffect(() => { //Este método faz que, após o site ser renderizado, execute a função dentro dele
+  useEffect(() => {
     conexao();
-  }, [countconexao]);//Enquanto countconexao não mudar, este metodo não será executado novamente
+  }, [countconexao]);
 
-  if (estado === true) { //Caso a api foi consultada
-    if (nulo === false) { //Caso o retorno da api foi != null
+  if (estado === true) { 
+    if (nulo === false) { 
 
-      ///Cria um mapa (array) com o html de cada card de produto
+      
       const ProdCod = prod.map((item, indice) => {
         return (
 
@@ -61,25 +61,25 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
         )
       }
       );
-      //E retorna o seguinte html para ser exibido no site:
+     
       return (
         <div>
 
           <div className='width'>
-            {ProdCod}{/*Esta é a constante onde temos um array com todos os cards (linha 43 a 57)*/}
+            {ProdCod}
           </div>
         </div>
 
 
       )
     } else {
-      //Caso a api não retorne nada é exibido no site:
+   
       return <div>
         <a>Nenhum produto cadastrado nesta categoria :c</a>;
       </div>
     }
   } else {
-    //Enquanto a api não é consultada este html é exibido no site:
+   
     return (
       <div>
         <div className="text-center">
