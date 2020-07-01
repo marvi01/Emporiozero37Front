@@ -57,7 +57,7 @@ class Produto extends Component {
       this.setState({ error })
     }
     const json = await response.json();
-    if (json != null) {
+    if (json.status === true) {
       this.setState({ prod: json, nulo: false });
     }
     

@@ -6,7 +6,6 @@ class Cadastro extends Component {
         super(props);
         this.state = {
             "data": {
-                "id": 0,
                 "nome": "Marcos",
                 "type": 1,
                 "telefone": "999983843",
@@ -39,7 +38,7 @@ class Cadastro extends Component {
     handleSubmit = event => {
         fetch("https://anorosa.com.br/Emporio037/api/usuario/add", {
             method: "post",
-            body: JSON.stringify(this.state.data),
+            body: JSON.stringify(this.state),
             headers: {
                 "Content-Type": "application/json"
             }
