@@ -6,7 +6,6 @@ import './Login.css';
 export default function Login(){
   //Constante para fazer a troca de telas entre Login e Cadastro 
     const [login, setLogin] = useState(true);
-    if(login === true){
       //HTLML DE LOGIN DENTRO DESSA DIV
         return(
             <div>
@@ -27,10 +26,10 @@ export default function Login(){
               <input type="checkbox" className="form-check-input" id="exampleCheck1"></input>
               <div className="">
               <label className="form-check-label" for="exampleCheck1">Lembre-se de mim</label>
-              <p><Link  onClick={()=> setLogin(false)} className="form-check-label texto">Cadastre-se </Link></p>
+              <p><Link  to="/Cadastro" className="form-check-label texto">Cadastre-se </Link></p>
               </div>
             </div>
-            <button type="submit" class="btn btn-outline-success">Submit</button>
+            <button type="submit" className="btn btn-outline-success">Submit</button>
           
           </fieldset>
           </form>
@@ -38,20 +37,9 @@ export default function Login(){
            
             
         );
-    }else{
-      //HTLML DE CADASTRO DENTRO DESSA DIV
-        return (
-            <div>
-                <p></p>
-            <button onClick={()=> setLogin(true)}>
-                troca
-            </button>
-            </div>
-        );
-        
     }
+        
     
-}
 
 
 

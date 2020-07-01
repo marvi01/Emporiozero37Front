@@ -13,7 +13,6 @@ class header extends Component { //Nós temos um componente, que ao ser chamado 
                 <div className="header">
                     <div className="tam">
                         <div className="socialm">
-                        <FontAwesomeIcon icon={faThumbsUp} />
                            <ul>
                                <li>
                                     <a  href="https://www.instagram.com/emporiozero37/?hl=pt-br">
