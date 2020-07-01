@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import './Login.css';
-import { Link,Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data:{
-        "email":"",
-        "password":""
-        },
-        redirect: false
+      data: {
+        "email": "",
+        "password": "",
+      },
+      redirect: false,
+      lembrar: "off"
     }
   }
 
@@ -19,7 +20,7 @@ class Login extends Component {
 
     return (
       <div>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <fieldset className="layout">
 
             <div className="form-group">
@@ -33,7 +34,7 @@ class Login extends Component {
               <input onChange={this.handleInputChange} name="password" type="password" className="form-control" id="exampleInputPassword1"></input>
             </div>
             <div className="form-group form-check ">
-              <input  type="checkbox" className="form-check-input" id="exampleCheck1"></input>
+              <input onChange={this.handleInputCheck} type="checkbox" className="form-check-input" id="exampleCheck1"></input>
               <div className="">
                 <label className="form-check-label" for="exampleCheck1">Lembre-se de mim</label>
                 <p><Link to="/Cadastro" className="form-check-label texto">Cadastre-se </Link></p>
@@ -58,8 +59,11 @@ class Login extends Component {
     })
       .then(data => {
         if (data.ok) {
-          this.setState({ redirect: true });
-          console.log(this.state.data);
+          if (this.state) {
+            this.setState({ redirect: true });
+            console.log(data.json());
+            localStorage.setItem(this.state.data.email, data.json());
+          }
         } else {
           data.json().then(data => {
             if (data.error) {
@@ -71,6 +75,19 @@ class Login extends Component {
       .catch(erro => this.setState({ erro: erro }));
     event.preventDefault();
   };
+  handleInputCheck = event => {
+    if (this.state.lembrar == "off") {
+      const target = event.target;
+      const name = target.name;
+      let value = target.value;
+      this.setState({ lembrar: value });
+      console.log(this.state.lembrar)
+    } else {
+      this.setState({ lembrar: "off" });
+      console.log(this.state.lembrar)
+    }
+
+  }
   handleInputChange = event => {
     const target = event.target;
     const name = target.name;
@@ -82,14 +99,15 @@ class Login extends Component {
   render() {
     const { redirect } = this.state;
 
-        if (redirect) {
-            return <Redirect to="/" />;
-        } else {
-    return (
-      <div>
-        {this.htmlLogin()}
-      </div>
-    );}
+    if (redirect) {
+      return <Redirect to="/" />;
+    } else {
+      return (
+        <div>
+          {  this.htmlLogin()}
+        </div>
+      );
+    }
   }
 }
 
