@@ -7,12 +7,12 @@ class Cadastro extends Component {
         this.state = {
             "data": {
                 "id": 0,
-                "nome": "",
-                "type": 0,
-                "telefone": "",
-                "endereco": "",
-                "nasc": "",//Data de Nascimento 
-                "email": "",
+                "nome": "Marcos",
+                "type": 1,
+                "telefone": "999983843",
+                "endereco": "Manoel Rodruiges 32",
+                "nasc": "2002-02-07",//Data de Nascimento 
+                "email": "marcos@gmail.com",
                 "email_verified_at": null,
                 "created_at": "",
                 "updated_at": ""
@@ -27,7 +27,10 @@ class Cadastro extends Component {
         //ESCREVA O HTML AQUI 
         const htmlCadastro = (
             <div>
-                Cadastro
+                <form onSubmit={this.handleSubmit}> 
+                    Cadastro
+                <button type="submit"> Botao Cadastro </button>
+                </form>
                 
             </div>
         )
