@@ -8,18 +8,7 @@ import destaque3  from "../../imagens/destaque3.jpg";
 import { Slide } from 'react-slideshow-image';
 class Destaque extends Component {
 
-      teste(){
-        var token = localStorage.getItem("marcos@gmail.com");
-        console.log(token);
-        return(
-          <div>
-
-          </div>
-        )
-      }
-
     render() {
-        this.teste();
           const properties = {
             duration: 5000,
             transitionDuration: 500,

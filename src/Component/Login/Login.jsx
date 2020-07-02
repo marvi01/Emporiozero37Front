@@ -70,11 +70,9 @@ class Login extends Component {
     })
       .then(data => {
         if (data.ok) {
-          if (this.state) {
             this.setState({ redirect: true });
-            console.log(data.json());
-            localStorage.setItem(this.state.data.email, data);
-          }
+            return data.json();
+
         } else {
           data.json().then(data => {
             if (data.error) {
@@ -82,6 +80,11 @@ class Login extends Component {
             }
           });
         }
+      }).then(token =>{ 
+
+        console.log(token.access_token)
+        console.log(token)
+        localStorage.setItem("JWT_token",token.access_token);
       })
       .catch(erro => this.setState({ erro: erro }));
     event.preventDefault();
