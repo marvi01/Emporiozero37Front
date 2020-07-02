@@ -51,7 +51,6 @@ class ExibeCategoria extends Component { //Nós temos um componente
   }
   exibeProduto() {//Metodo para caso não dê erro
     const { categ } = this.state.categ;//Criamos uma constante que recebe os valores do estado de categoria
-    console.log(this.state);
     if (this.state.estado === true) {//Se a api já foi consultada
       if (this.state.nulo === false) {//Se o resultado da api não for nulo
           

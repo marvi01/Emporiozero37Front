@@ -73,7 +73,7 @@ class Login extends Component {
           if (this.state) {
             this.setState({ redirect: true });
             console.log(data.json());
-            localStorage.setItem(this.state.data.email, data.json());
+            localStorage.setItem(this.state.data.email, data);
           }
         } else {
           data.json().then(data => {
