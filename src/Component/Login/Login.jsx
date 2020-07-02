@@ -11,10 +11,21 @@ class Login extends Component {
         "password": "",
       },
       redirect: false,
-      lembrar: "off"
+      lembrar: "off",
+      erro: null,
     }
   }
+  exibeErro() {
+    const { erro } = this.state;
 
+    if (erro) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          
+        </div>
+      );
+    }
+  }
 
   htmlLogin() {
 
@@ -102,6 +113,7 @@ class Login extends Component {
     if (redirect) {
       return <Redirect to="/" />;
     } else {
+      console.log(this.state.erro)
       return (
         <div>
           {  this.htmlLogin()}

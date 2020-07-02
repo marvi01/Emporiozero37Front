@@ -77,17 +77,17 @@ class HeaderMeio extends Component {
                             <div className="row justify-content-end">
                                 <div className="col-lg-6">
                                     <ul class="nav">
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark-brown" href="#">
-                                                <i class="fas fa-sign-in-alt mr-2"></i>
+                                        <li className="nav-item">
+                                            <Link className="nav-link text-dark-brown" to="/Login">
+                                                <i className="fas fa-sign-in-alt mr-2"></i>
                                                 Login
-                                            </a>
+                                            </Link>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark-brown" href="#">
-                                                <i class="fas fa-user-plus mr-2"></i>
+                                        <li className="nav-item">
+                                            <Link className="nav-link text-dark-brown" to="/Cadastro">
+                                                <i className="fas fa-user-plus mr-2"></i>
                                                 Cadastro
-                                            </a>
+                                            </Link>
                                         </li>
                                     </ul>
                                     <div className="input-group shadow-sm">
