@@ -46,7 +46,7 @@ class HeaderInferior extends Component {
                     const CatCod = data.map((item, indice) => {
                         return (
                             <li key={indice} className="nav-item active">
-                                <Link to={`/Categoria/${item.id}`} className="nav-link" href="#">{item.nomecategoria} <span className="sr-only">(current)</span></Link>
+                                <Link to={`/Categoria/${item.id}`} className="nav-link">{item.nomecategoria} <span className="sr-only">(current)</span></Link>
                             </li>
                         )
                     })
