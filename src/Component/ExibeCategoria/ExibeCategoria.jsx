@@ -11,7 +11,7 @@ class ExibeCategoria extends Component { //Nós temos um componente
     this.state = { //Cria o estado inicial
       nulo: true, //Valor que nos dirá se a api foi nula
       estado: false, //Valor que nos dirá se a api já foi consultada
-      categ: [{ //Aqui nós temos os valores a serem recebidos da api
+      data: [{ //Aqui nós temos os valores a serem recebidos da api
         "id":0,
         "nomecategoria":"",
         "created_at":"",
@@ -30,8 +30,8 @@ class ExibeCategoria extends Component { //Nós temos um componente
       this.setState({ error }) //Caso dê uma resposta diferente de 200 o estado é setado para o erro
     }
     const json = await response.json(); //Converte a resposta em json
-    if (json != null) { //Caso o json não seja nulo
-      this.setState({ categ: json, nulo: false }); //o valor de categoria é setado e também seta que não é nulo
+    if (json.data != null) { //Caso o json não seja nulo
+      this.setState({ data: json, nulo: false }); //o valor de categoria é setado e também seta que não é nulo
     }
     this.setState({ estado: true });//Informa que a api foi consultada
 
@@ -50,12 +50,12 @@ class ExibeCategoria extends Component { //Nós temos um componente
     }
   }
   exibeProduto() {//Metodo para caso não dê erro
-    const { categ } = this.state.categ;//Criamos uma constante que recebe os valores do estado de categoria
+    const { data } = this.state.data;//Criamos uma constante que recebe os valores do estado de categoria
     if (this.state.estado === true) {//Se a api já foi consultada
       if (this.state.nulo === false) {//Se o resultado da api não for nulo
           
         //É criado um array html que lista as categorias
-          const CatCod = categ.map((item, indice) =>{
+          const CatCod = data.map((item, indice) =>{
             
                 return(
                   <div key={indice} className='categoria'>
