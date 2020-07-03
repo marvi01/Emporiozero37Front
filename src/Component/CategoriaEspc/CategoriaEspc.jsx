@@ -24,7 +24,7 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
       setErro(error); 
     }
     const json = await response.json(); 
-    if (json != null) {
+    if (json.prod != null) {
       setProd(json.prod);  
       setNulo(false); 
     };
@@ -32,8 +32,10 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
     setEstado(true);
   };
   useEffect(() => {
+    setEstado(false);
+    setNulo(true);
     conexao();
-  }, [countconexao]);
+  }, [id]);
 
   if (estado === true) { 
     if (nulo === false) { 
@@ -75,7 +77,7 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
     } else {
    
       return <div>
-        <a>Nenhum produto cadastrado nesta categoria :c</a>;
+        <a>Nenhum produto cadastrado nesta categoria :c</a>
       </div>
     }
   } else {

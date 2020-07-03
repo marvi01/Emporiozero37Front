@@ -8,7 +8,7 @@ class HeaderInferior extends Component {
         this.state = {
             nulo: true,
             estado: false,
-            categ: [{
+            data: [{
                 "id": 0,
                 "nomecategoria": "",
                 "created_at": "",
@@ -27,26 +27,27 @@ class HeaderInferior extends Component {
             this.setState({ error })
         }
         const json = await response.json();
-        console.log('===================' + json)
-        if (json != null) {
-            this.setState({ categ: json, nulo: false });
+        console.log( json)
+        if (json.data != null) {
+            this.setState({ data: json, nulo: false });
         }
         this.setState({ estado: true });
     }
 
     exibeListarCategoria() {
         const { erro } = this.state;
-        const { categ } = this.state.categ;
+        const { data } = this.state.data;
+        console.log( this.state.data)
         if (erro) {
 
         } else {
             if (this.state.estado === true) {
                 if (this.state.nulo === false) {
-                    const CatCod = categ.map((item, indice) => {
+                    const CatCod = data.map((item, indice) => {
                         return (
-                                <li key={indice} className="nav-item active">
-                                    <Link to={`/Categoria/${item.id}`} className="nav-link" href="#">{item.nomecategoria} <span className="sr-only">(current)</span></Link>
-                                </li>
+                            <li key={indice} className="nav-item active">
+                                <Link to={`/Categoria/${item.id}`} className="nav-link">{item.nomecategoria} <span className="sr-only">(current)</span></Link>
+                            </li>
                         )
                     })
                     return CatCod;
@@ -64,9 +65,9 @@ class HeaderInferior extends Component {
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#categorias">
                             <span className="navbar-toggler-icon"></span>
                         </button>
-                        <div  classNameName="collapse navbar-collapse" id="categorias">
+                        <div classNameName="collapse navbar-collapse" id="categorias">
                             <ul className="navbar-nav">
-                                {this.exibeListarCategoria()} 
+                                {this.exibeListarCategoria()}
                             </ul>
                         </div>
                     </nav>
