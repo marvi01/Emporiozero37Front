@@ -1,0 +1,7 @@
+.section {
+    margin-bottom: 3rem;
+    border-radius: 0.25rem;
+}
+.section:last-child {
+    margin-bottom: 0px;
+}

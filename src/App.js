@@ -5,6 +5,7 @@ import HeaderMeio from './Component/HeaderMeio/HeaderMeio';
 import HeaderInferior from './Component/HeaderInferior/HeaderInferior';
 
 
+
 import ProdutoEspc from './Component/ProdutoEspc/ProdutoEspc';
 import TelaInicial from './Component/TelaInicial/TelaInicial';
 import CategoriaEspc from './Component/CategoriaEspc/CategoriaEspc';
@@ -21,16 +22,16 @@ function App() {
       <header>
             <HeaderSuperior />
             <HeaderMeio />
-            <HeaderInferior  />
+            <HeaderInferior />
       </header>
      
       <Switch>
           <Route path="/" exact component={TelaInicial} />
-        <Route path="/Produto/:id" exact component={ProdutoEspc} />
-        <Route path="/Categoria/:id" component={CategoriaEspc} />
-        <Route path="/Carrinho" exact component={Carrinho} />
-        <Route path="/Login" exact component={Login} />
-        <Route path="/Cadastro" exact component={Cadastro} />
+          <Route path="/Produto/:id" exact component={ProdutoEspc} />
+          <Route path="/Categoria/:id" component={CategoriaEspc} />
+          <Route path="/Carrinho" exact component={Carrinho} />
+          <Route path="/Login" exact component={Login} />
+          <Route path="/Cadastro" exact component={Cadastro} />
       </Switch>
     </div>
   );

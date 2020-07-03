@@ -58,7 +58,7 @@ class HeaderInferior extends Component {
     render() {//Aqui acontece a renderização da página
         return (
             <div className="header-bottom  bg-dark-brown ">
-                <div className="container">
+                <div className="container-md">
                     <nav className="navbar navbar-expand-md navbar-light">
                         <a className="navbar-brand text-middle-brown" href="#">Emporio</a>
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#categorias">

@@ -1,0 +1,20 @@
+.product-wrapper {
+    position: relative;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+@media screen and (max-width: 1224px) {
+    .product-wrapper {
+        margin-bottom: 0.5rem;
+    }
+}
+h3 {
+    font-style: unset !important;
+}
+.old-price {
+    text-decoration: line-through;
+}
+.product-img-wrapper img {
+    height: 220px;
+    width: auto;
+}

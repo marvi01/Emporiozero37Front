@@ -6,8 +6,8 @@ class HeaderSuperior extends Component { //Nós temos um componente, que ao ser 
 
     render() {
         return (
-            <div className="bg-light d-none d-sm-block" id="header-top">
-                <div className="container">
+            <div className="bg-light d-sm-block" id="header-top">
+                <div className="container-md">
                     <div className="row align-items-center">
                         <div className="col">
                             <ul className="nav">

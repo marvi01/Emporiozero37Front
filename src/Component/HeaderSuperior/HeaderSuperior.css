@@ -1,3 +1,6 @@
+#header-top {
+    display: none;
+}
 #header-top .nav-link {
     color: var(--dark-gray)
 }
