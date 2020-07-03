@@ -61,7 +61,7 @@ class Login extends Component {
     );
   }
   handleSubmit = event => {
-    fetch("https://anorosa.com.br/Emporio037/api/login", {
+    fetch("https://anorosa.com.br/Emporio037/api/remember", {
       method: "post",
       body: JSON.stringify(this.state.data),
       headers: {

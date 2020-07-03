@@ -37,7 +37,7 @@ class HeaderInferior extends Component {
     exibeListarCategoria() {
         const { erro } = this.state;
         const { data } = this.state.data;
-        console.log("aaaaaaaaa"+ this.state.data)
+        console.log( this.state.data)
         if (erro) {
 
         } else {
