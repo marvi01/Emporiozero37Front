@@ -1,9 +1,27 @@
-#categorias .nav-link {
+#categorias .nav-link, #categorias button {
     color: var(--middle-gray);
+}
+#categorias button {
+    box-shadow: none !important;
 }
 .nav-item.active a {
     color:white !important;
 }
-#categorias .nav-link:hover {
+#categorias .nav-link:hover, #categorias button:hover {
     color: var(--light-gray) !important;
+}
+.btn-reset {
+    border:none !important;
+    background: transparent !important;
+    outline:none !important;
+    padding: 0px;
+    margin: 0px;
+}
+.dropdown-menu {
+    padding: 0px !important;
+    overflow: hidden;
+}
+.dropdown-menu .dropdown-item:hover {
+    background-color: var(--middle-brown) !important;
+    color:var(--dark-brown) !important;
 }

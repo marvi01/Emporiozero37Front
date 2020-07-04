@@ -45,9 +45,7 @@ class HeaderInferior extends Component {
                 if (this.state.nulo === false) {
                     const CatCod = data.map((item, indice) => {
                         return (
-                            <li key={indice} className="nav-item active">
-                                <Link to={`/Categoria/${item.id}`} className="nav-link">{item.nomecategoria} <span className="sr-only">(current)</span></Link>
-                            </li>
+                            <Link to={`/Categoria/${item.id}`} className="dropdown-item text-light pl-4 py-2">{item.nomecategoria}</Link>
                         )
                     })
                     return CatCod;
@@ -60,14 +58,27 @@ class HeaderInferior extends Component {
         return (
             <div className="header-bottom  bg-dark-brown ">
                 <div className="container-md">
-                    <nav className="navbar navbar-expand-md navbar-light">
-                        <a className="navbar-brand text-middle-brown" href="#">Emporio</a>
+                    <nav className="navbar navbar-expand-md navbar-dark">
+                        <h2 className="mb-0 navbar-brand text-middle-brown">Emporio</h2>
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#categorias">
                             <span className="navbar-toggler-icon"></span>
                         </button>
-                        <div classNameName="collapse navbar-collapse" id="categorias">
+                        <div className="collapse navbar-collapse" id="categorias">
                             <ul className="navbar-nav">
-                                {this.exibeListarCategoria()}
+                                <li className="nav-item">
+                                    <Link to="/" className="nav-link">Inicio</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <div class="dropdown nav-link">
+                                        <button class="btn-reset dropdown-toggle" type="button" id="categorias" data-toggle="dropdown">
+                                            Categorias
+                                        </button>
+                                        <div class="dropdown-menu bg-dark">
+                                            <h6 class="dropdown-header">Bebidas</h6>
+                                            {this.exibeListarCategoria()}
+                                        </div>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                     </nav>
