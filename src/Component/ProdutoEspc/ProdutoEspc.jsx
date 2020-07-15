@@ -84,29 +84,76 @@ class ProdutoEspc extends Component {
     if (this.state.estado !== false) {
       if (this.state.nulo !== true) {
         return (
-          <form onSubmit={this.handleSubmit}>
-            <div className="externa">
-              <div className="esquerda">
-                <img className="imagem figure-img img-fluid rounded " src={`https://anorosa.com.br/Emporio037/storage/${this.state.data.foto}`} alt="Responsive image" />
-              </div>
-              <div className="titulos">
-                <div className="posicao">
-                  <h1 className=" ">{this.state.data.nomeprod}</h1><br />
-                  <h4 className="">{this.state.data.descricao}-{this.state.data.ml}ML</h4>
-                  <h4>Teor Alcoólico:{this.state.data.teor}%</h4>
-                  <label className="h4">Quantidade: </label>
-                  <input onChange={this.handleInputChange} name="quantidade" value={this.state.carrinho.quantidade} ref={this.handleInputRef} onInput={this.preco} maxLength="2" /><br />
-                  <label className="h4">R${this.state.data.preco.toFixed(2).replace(".", ",")}</label><br />
-                  <label className="h4">Valor total:R${this.state.valortotal.toFixed(2).replace(".", ",")} </label>
-                  <div className=" ima"><br></br>
-                    <button type="submit" className="btn btn-success ">
-                      Adicionar Carrinho
-                    </button>
-                  </div>
+         <div className="container py-5">
+            <h1 className="h3 text-center">{this.state.data.nomeprod}</h1>
+            <hr className="mb-5" />
+           <div className="row">
+             
+             <div className="order-last order-md-0 order-lg-first col-md-6 col-lg">
+               <div className="product-info">
+                    <div className="product-info-icon">
+                        <i class="fas fa-info"></i>
+                    </div>
+                    <div className="product-info-text">
+                        <h2 className="h6">Descrição:</h2>
+                        <p>{this.state.data.descricao}</p>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </form>
+                <div className="product-info">
+                    <div className="product-info-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div className="product-info-text">
+                        <h2 className="h6">Teor Alcoólico</h2>
+                        <p>{this.state.data.teor}%</p>
+                    </div>
+                </div>
+                <div className="product-info">
+                    <div className="product-info-icon">
+                        <i className="fas fa-wine-bottle"></i>
+                    </div>
+                    <div className="product-info-text">
+                        <h2 className="h6 p-0">Volume</h2>
+                        <p>{this.state.data.ml} ml</p>
+                    </div>
+                </div>
+             </div>
+             <div className="order-first order-lg-0 mb-4 mb-lg-0 col-lg-5 col-xl-6">
+                <div className="bg-white">
+                  <img id="product-image" className="img-fluid rounded " src={`https://anorosa.com.br/Emporio037/storage/${this.state.data.foto}`} alt={this.state.data.nomeprod} />
+                </div>
+             </div>
+             <div className="col-md-6 col-lg mb-4 mb-md-0">
+                <div className="bg-light p-4 mb-2 text-center">
+                    <span class="old-price text-muted">R$ 100,00</span>
+                    <span className="badge badge-success ml-2">50% OFF</span>
+                    <h2 className="mb-0">R$ {this.state.data.preco.toFixed(2).replace(".", ",")}</h2>
+                </div>
+                <form action="" onSubmit={this.handleSubmit} id="form-quantity" className="py-2 bg-dark-brown rounded">
+                  <div className="row no-gutters align-items-center">
+                    <div className="col-auto">
+                      <div className="input-group" id="quantity">
+                        <div className="input-group-append">
+                            <button type="button" className="btn btn-reset text-middle-brown">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                        <input onChange={this.handleInputChange} ref={this.handleInputRef} type="text" className="input-quantity form-control-lg" name="quantidade" readonly="true" value={this.state.carrinho.quantidade}/>
+                        <div className="input-group-append">
+                            <button type="button" className="btn btn-reset text-middle-brown">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col">
+                        <button type="submit" className="btn d-block mx-auto text-white">Adicionar</button>
+                    </div>
+                  </div>
+                </form>
+             </div>
+           </div>
+         </div>
         )
       } else {
         return (

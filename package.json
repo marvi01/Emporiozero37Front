@@ -12,6 +12,7 @@
     "jwt-decode": "^2.2.0",
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
+    "react-bootstrap": "^1.2.2",
     "react-dom": "^16.13.1",
     "react-horizontal-scrolling-menu": "^0.7.7",
     "react-router-dom": "^5.2.0",

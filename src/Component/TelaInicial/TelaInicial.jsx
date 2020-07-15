@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Destaque from '../Destaque/Destaque';
-import BestSellers from '../Sections/BestSellers/BestSellers';
-import Promotions from '../Sections/Promotions/Promotions';
-import Releases from '../Sections/Releases/Releases';
+import Promotions from '../Sections/Promotions';
+import Releases from '../Sections/Releases';
+import BestSellers from '../Sections/BestSellers';
+
 
 import Categorias from '../Categorias/Categorias';
 

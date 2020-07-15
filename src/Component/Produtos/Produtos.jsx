@@ -8,7 +8,7 @@ class Produto extends Component {
     render() {//Aqui acontece a renderização da página
      
         return (
-            <div className="product-wrapper bg-white ">
+            <div className="product-wrapper bg-white shadow-sm">
                 <div className="row align-items-center no-gutters">
                     <div className="col-auto px-3">
                         <div className="product-img-wrapper">
