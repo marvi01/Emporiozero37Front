@@ -11,15 +11,13 @@ class ProdutoEspc extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      carrinho: {
-        "quantidade": 0,
-        "produto_id": 0,
-        "user_id": 2
-      },
+      quantItem: 1,
       data: [{
         "id": 0,
         "nomeprod": "",
         "descricao": "",
+        "desconto": 0,
+        "destaque":0,
         "foto": "",
         "preco": 0,
         "teor": 0,
@@ -52,7 +50,7 @@ class ProdutoEspc extends Component {
     const json = await response.json();
     if (json != null) {
       this.setState({ data: json.data, nulo: false });
-      this.setState(Object.assign(this.state.carrinho,{produto_id:id}));
+     // this.setState(Object.assign(this.state.carrinho,{produto_id:id}));
     }
     this.setState({ estado: true });
   }
@@ -83,6 +81,7 @@ class ProdutoEspc extends Component {
   exibeProduto() {
     if (this.state.estado !== false) {
       if (this.state.nulo !== true) {
+        
         return (
          <div className="container py-5">
             <h1 className="h3 text-center">{this.state.data.nomeprod}</h1>
@@ -124,23 +123,22 @@ class ProdutoEspc extends Component {
                 </div>
              </div>
              <div className="col-md-6 col-lg mb-4 mb-md-0">
-                <div className="bg-light p-4 mb-2 text-center">
-                    <span class="old-price text-muted">R$ 100,00</span>
-                    <span className="badge badge-success ml-2">50% OFF</span>
-                    <h2 className="mb-0">R$ {this.state.data.preco.toFixed(2).replace(".", ",")}</h2>
-                </div>
+                
+                  {promocao(this.state.data.preco, this.state.data.desconto)}
                 <form action="" onSubmit={this.handleSubmit} id="form-quantity" className="py-2 bg-dark-brown rounded">
                   <div className="row no-gutters align-items-center">
                     <div className="col-auto">
                       <div className="input-group" id="quantity">
                         <div className="input-group-append">
                             <button type="button" className="btn btn-reset text-middle-brown">
-                                <i class="fas fa-minus"></i>
+                                <i class="fas fa-minus" onClick={()=>{if(this.state.quantItem>1){
+                                  this.setState({quantItem: this.state.quantItem -1})
+                                }}}></i>
                             </button>
                         </div>
-                        <input onChange={this.handleInputChange} ref={this.handleInputRef} type="text" className="input-quantity form-control-lg" name="quantidade" readonly="true" value={this.state.carrinho.quantidade}/>
+                        <input onChange={this.handleInputChange} ref={this.handleInputRef} type="text" className="input-quantity form-control-lg" name="quantidade" readonly="true" value={this.state.quantItem}/>
                         <div className="input-group-append">
-                            <button type="button" className="btn btn-reset text-middle-brown">
+                            <button type="button" className="btn btn-reset text-middle-brown" onClick={()=>{this.setState({quantItem: this.state.quantItem +1})}}>
                                 <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -163,7 +161,7 @@ class ProdutoEspc extends Component {
       }
     }
   }
-  handleSubmit = event => {
+  /*handleSubmit = event => {
     fetch("https://anorosa.com.br/Emporio037/api/itemcarrinhouser/add", {
       method: "post",
       body: JSON.stringify(this.state.carrinho),
@@ -193,7 +191,7 @@ class ProdutoEspc extends Component {
     this.setState(prevState => ({
       carrinho: { ...prevState.carrinho, [name]: value }
     }));
-  };
+  };*/
   render() {
     const { redirect } = this.state;
 
@@ -211,3 +209,18 @@ class ProdutoEspc extends Component {
   };
 };
 export default ProdutoEspc;
+
+function promocao(preco, desconto){
+    if(desconto === 0 || desconto === null){
+      return(<div className="bg-light p-4 mb-2 text-center">
+        <h2 className="mb-0">R$ {parseFloat(preco).toFixed(2).replace(".", ",")}</h2>
+      </div>);
+    }else{
+      var valoratual =preco - preco * parseFloat(desconto)/100;
+      return (<div className="bg-light p-4 mb-2 text-center">
+        <span class="old-price text-muted">R${preco.toFixed(2).replace(".", ",")}</span>
+        <span className="badge badge-success ml-2">{desconto}% OFF</span>
+        <h2 className="mb-0">R${valoratual.toFixed(2).replace(".", ",")}</h2>
+      </div>);
+    }
+}

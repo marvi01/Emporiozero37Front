@@ -6,6 +6,7 @@ import HeaderInferior from './Component/HeaderInferior/HeaderInferior';
 
 
 
+
 import ProdutoEspc from './Component/ProdutoEspc/ProdutoEspc';
 import TelaInicial from './Component/TelaInicial/TelaInicial';
 import CategoriaEspc from './Component/CategoriaEspc/CategoriaEspc';
@@ -13,7 +14,7 @@ import Cadastro from './Component/Cadastro/Cadastro';
 import { Switch, Route } from 'react-router-dom';
 import Carrinho from './Component/Carrinho/Carrinho';
 import Login from './Component/Login/Login';
-
+import CalcularFrete from './Component/CalcularFrete/CalcularFrete';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/Carrinho" exact component={Carrinho} />
           <Route path="/Login" exact component={Login} />
           <Route path="/Cadastro" exact component={Cadastro} />
+          <Route path="/frete" exact component={CalcularFrete} />
       </Switch>
     </div>
   );
