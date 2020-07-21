@@ -73,7 +73,7 @@ label{
     margin: 0 auto;
     max-height: 550px;
 }
-.product-info {
+.product-esp-info {
     display:flex;
     margin-bottom: 1rem;
     background-color: var(--light);

@@ -90,7 +90,7 @@ class ProdutoEspc extends Component {
            <div className="row">
              
              <div className="order-last order-md-0 order-lg-first col-md-6 col-lg">
-               <div className="product-info">
+               <div className="product-esp-info">
                     <div className="product-info-icon">
                         <i class="fas fa-info"></i>
                     </div>
@@ -99,7 +99,7 @@ class ProdutoEspc extends Component {
                         <p>{this.state.data.descricao}</p>
                     </div>
                 </div>
-                <div className="product-info">
+                <div className="product-esp-info">
                     <div className="product-info-icon">
                         <i class="fas fa-percentage"></i>
                     </div>
@@ -108,7 +108,7 @@ class ProdutoEspc extends Component {
                         <p>{this.state.data.teor}%</p>
                     </div>
                 </div>
-                <div className="product-info">
+                <div className="product-esp-info">
                     <div className="product-info-icon">
                         <i className="fas fa-wine-bottle"></i>
                     </div>

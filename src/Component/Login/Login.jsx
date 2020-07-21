@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './Login.css';
 import { Link, Redirect } from "react-router-dom";
+import logo from '../../imagens/LOGO BRANCA.png';
+import background from '../../imagens/background.jpg';
+
 
 class Login extends Component {
   constructor(props) {
@@ -30,34 +33,42 @@ class Login extends Component {
   htmlLogin() {
 
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <fieldset className="layout">
-
-            <div className="form-group">
-              <h3 align="center">Logar</h3>
-              <label for="exampleInputEmail1">Email </label>
-              <input onChange={this.handleInputChange} name="email" type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"></input>
-
+      <div className="row no-gutters" id="content">
+          <div className="col-md-4 bg-dark text-light center-flex py-3">
+            <img src={logo} class="mx-md-auto mb-md-5" alt="" id="logo"/>
+            <div className="d-md-block" id="welcome">
+                <h2>Bem vindo!</h2>
+                <p>Para continuar comprando,<br/> por favor faça login na sua conta</p>
             </div>
-            <div className="form-group">
-              <label for="exampleInputPassword1">Senha</label>
-              <input onChange={this.handleInputChange} name="password" type="password" className="form-control" id="exampleInputPassword1"></input>
+        </div>
+        <div className="col bg-light p-md-0" id="form-login" style={{backgroundImage: 'url('+ background +')'}}>
+            <div className="col-sm-10 col-lg-8 col-xl-6">
+                <form action="" class="px-sm-5 pb-sm-5">
+                    <a href="" className="d-block mb-3">
+                        <i className="fas fa-long-arrow-alt-left mr-2"></i>
+                        Voltar
+                    </a>
+                    <div className="form-group">
+                        <label for="email" >Email</label>
+                        <input type="email" id="email" className="form-control" />
+                    </div>
+                    <div className="form-group">
+                        <label for="password" >Senha</label>
+                        <input type="password" id="password" className="form-control mb-2" />
+                        <div className="custom-control custom-checkbox">
+                            <input type="checkbox" className="custom-control-input" id="customCheck1" />
+                            <label className="custom-control-label" for="customCheck1">Mantenha-me conectado</label>
+                        </div>
+                    </div>
+                    <button type="submit" className="btn btn-block btn-success">Logar</button>
+                    <div className="or">
+                        <span>OU</span>
+                    </div>
+                    <a href="#" className="btn btn-block btn-outline-primary">Cadastre-se</a>
+                </form>
             </div>
-            <div className="form-group form-check ">
-              <input onChange={this.handleInputCheck} type="checkbox" className="form-check-input" id="exampleCheck1"></input>
-              <div className="">
-                <label className="form-check-label" for="exampleCheck1">Lembre-se de mim</label>
-                <p><Link to="/Cadastro" className="form-check-label texto">Cadastre-se </Link></p>
-              </div>
-            </div>
-            <button type="submit" className="btn btn-outline-success">Submit</button>
-
-          </fieldset>
-        </form>
+        </div>
       </div>
-
-
     );
   }
   handleSubmit = event => {
