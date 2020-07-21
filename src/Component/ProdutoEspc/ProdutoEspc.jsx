@@ -11,15 +11,13 @@ class ProdutoEspc extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      carrinho: {
-        "quantidade": 0,
-        "produto_id": 0,
-        "user_id": 2
-      },
+      quantItem: 1,
       data: [{
         "id": 0,
         "nomeprod": "",
         "descricao": "",
+        "desconto": 0,
+        "destaque": 0,
         "foto": "",
         "preco": 0,
         "teor": 0,
@@ -27,8 +25,11 @@ class ProdutoEspc extends Component {
         "quantidade": 0,
         "categoria_id": 0,
         "created_at": "",
-        "updated_at": ""
+        "updated_at": "",
+        "QuantProd": 0,
+        "ValorTotal": 0
       }],
+
       valortotal: 0,
       erro: null,
       nulo: true,
@@ -43,31 +44,45 @@ class ProdutoEspc extends Component {
     const { id } = this.props.match.params;
     try {
       //Buscando o parametro passado 
-      
+
       response = await fetch('https://anorosa.com.br/Emporio037/api/produto/' + id);
     } catch (error) {
       console.log(error);
       this.setState({ error })
     }
+
     const json = await response.json();
-    if (json != null) {
-      this.setState({ data: json.data, nulo: false });
-      this.setState(Object.assign(this.state.carrinho,{produto_id:id}));
+
+    const jsonf = gerarJson(json);
+    console.log(json);
+    if (json.data != null) {
+      this.setState({ data: jsonf, nulo: false });
+      console.log(this.state.data);
+      // this.setState(Object.assign(this.state.carrinho,{produto_id:id}));
     }
     this.setState({ estado: true });
   }
+
   //função para fazer acesso ao Input 
   handleInputRef = (input) => {
     this.input = input;
   };
   //Função para calcular o falor total do produto 
   preco = () => {
-    let qde = `${this.input.value}`;
-    console.log(qde)
-    let precofinal = qde * this.state.data.preco;
-    this.setState({ valortotal: precofinal });
-    this.setState({Carrinho: this.state.data.id});
-    
+    let qde =parseFloat(`${this.input.value}`);
+    qde= qde+1;
+    var valorDesc=0;
+    var preco = parseFloat(this.state.data.preco);
+    if (this.state.data.desconto !== 0) {
+      var desconto = parseFloat(this.state.data.desconto);
+      valorDesc = ((preco) * desconto / 100) * qde;
+    } 
+    let valor = (preco*qde)-valorDesc;
+    console.log(qde);
+    this.setState(prevState => ({
+      data: { ...prevState.data, ValorTotal: valor }
+    }));
+
   }
   exibeErro() {
     const { erro } = this.state;
@@ -79,12 +94,60 @@ class ProdutoEspc extends Component {
       );
     }
   }
+  logado = () => {
+    let log = localStorage.getItem("JWT_token");
+    if (log && log.length) {
+      return (
+
+        <button onClick={this.carrinho} type="submit" className="btn d-block mx-auto text-white" >Adicionar</button>
+
+      )
+    } else {
+      return (
+
+        <button onClick={this.carrinho} type="submit" className="btn d-block mx-auto text-white" >Adicionar</button>
+
+      )
+    }
+  }
+  carrinho = () => {
+
+
+
+    console.log(this.state.data);
+    let qde = this.state.data.quantItem;
+    let obj = sessionStorage.getItem(this.state.data.id)
+    if (qde === 0) {
+      alert("Digite algum valor na quantidade ");
+    }
+    else if (qde !== 0) {
+      if (obj && obj.length) {
+        let confirma = window.confirm("Deseja atualizar a quantidade de " + this.state.data.nomeprod + " ?")
+        if (confirma) {
+          console.log(qde);
+          let prod = JSON.stringify(this.state.data);
+          sessionStorage.setItem(this.state.data.id, prod);
+          console.log(prod);
+          this.setState({ redirect: true });
+          alert("Atualizado no Carrinho com sucesso")
+
+        }
+      } else {
+        console.log(qde);
+        let prod = JSON.stringify(this.state.data);
+        sessionStorage.setItem(this.state.data.id, prod);
+        this.setState({ redirect: true });
+        alert("Adicionado no Carrinho com sucesso")
+      }
+    }
+  }
   //HTML do Produto 
   exibeProduto() {
     if (this.state.estado !== false) {
       if (this.state.nulo !== true) {
+
         return (
-         <div className="container py-5">
+          <div className="container py-5">
             <h1 className="h3 text-center">{this.state.data.nomeprod}</h1>
             <hr className="mb-5" />
            <div className="row">
@@ -117,43 +180,55 @@ class ProdutoEspc extends Component {
                         <p>{this.state.data.ml} ml</p>
                     </div>
                 </div>
-             </div>
-             <div className="order-first order-lg-0 mb-4 mb-lg-0 col-lg-5 col-xl-6">
+              </div>
+              <div className="order-first order-lg-0 mb-4 mb-lg-0 col-lg-5 col-xl-6">
                 <div className="bg-white">
                   <img id="product-image" className="img-fluid rounded " src={`https://anorosa.com.br/Emporio037/storage/${this.state.data.foto}`} alt={this.state.data.nomeprod} />
                 </div>
-             </div>
-             <div className="col-md-6 col-lg mb-4 mb-md-0">
-                <div className="bg-light p-4 mb-2 text-center">
-                    <span class="old-price text-muted">R$ 100,00</span>
-                    <span className="badge badge-success ml-2">50% OFF</span>
-                    <h2 className="mb-0">R$ {this.state.data.preco.toFixed(2).replace(".", ",")}</h2>
-                </div>
-                <form action="" onSubmit={this.handleSubmit} id="form-quantity" className="py-2 bg-dark-brown rounded">
-                  <div className="row no-gutters align-items-center">
+              </div>
+              <div className="col-md-6 col-lg mb-4 mb-md-0">
+
+                {promocao(this.state.data.preco, this.state.data.desconto)}
+                <div id="form-quantity" className="py-2 bg-dark-brown rounded">
+                  <div className="row no-gutters align-items-center py-2 bg-dark-brown rounded">
                     <div className="col-auto">
                       <div className="input-group" id="quantity">
                         <div className="input-group-append">
-                            <button type="button" className="btn btn-reset text-middle-brown">
-                                <i class="fas fa-minus"></i>
-                            </button>
+                          <button type="button" className="btn btn-reset text-middle-brown">
+                            <i class="fas fa-minus" onClick={() => {
+
+                              if (this.state.data.QuantProd > 1) {
+                                this.setState(prevState => ({
+                                  data: { ...prevState.data, QuantProd: this.state.data.QuantProd - 1 }
+                                }));
+                                this.preco();
+
+                              }
+                            }}></i>
+                          </button>
                         </div>
-                        <input onChange={this.handleInputChange} ref={this.handleInputRef} type="text" className="input-quantity form-control-lg" name="quantidade" readonly="true" value={this.state.carrinho.quantidade}/>
+                        <input ref={this.handleInputRef}  type="text" className="input-quantity form-control-lg" name="quantItem" readonly="true" value={this.state.data.QuantProd} />
                         <div className="input-group-append">
-                            <button type="button" className="btn btn-reset text-middle-brown">
-                                <i class="fas fa-plus"></i>
-                            </button>
+                          <button type="button" className="btn btn-reset text-middle-brown" onClick={() => {
+                            this.setState(prevState => ({
+                              data: { ...prevState.data, QuantProd: this.state.data.QuantProd + 1 }
+                            }));
+                            this.preco();
+
+                          }}>
+                            <i class="fas fa-plus"></i>
+                          </button>
                         </div>
                       </div>
                     </div>
                     <div className="col">
-                        <button type="submit" className="btn d-block mx-auto text-white">Adicionar</button>
+                      {this.logado()}
                     </div>
                   </div>
-                </form>
-             </div>
-           </div>
-         </div>
+                </div>
+              </div>
+            </div>
+          </div>
         )
       } else {
         return (
@@ -163,7 +238,9 @@ class ProdutoEspc extends Component {
       }
     }
   }
-  handleSubmit = event => {
+
+
+  /*handleSubmit = event => {
     fetch("https://anorosa.com.br/Emporio037/api/itemcarrinhouser/add", {
       method: "post",
       body: JSON.stringify(this.state.carrinho),
@@ -186,28 +263,59 @@ class ProdutoEspc extends Component {
       .catch(erro => this.setState({ erro: erro }));
     event.preventDefault();
   };
-  handleInputChange = event => {
-    const target = event.target;
-    const name = target.name;
-    const value = target.value;
-    this.setState(prevState => ({
-      carrinho: { ...prevState.carrinho, [name]: value }
-    }));
-  };
+  
+  
+  };*/
+
+
   render() {
     const { redirect } = this.state;
 
     if (redirect) {
       return <Redirect to="/" />;
     } else {
-    return (
-      <div>
-        <div className=" container">
-          <div>{this.exibeErro() || this.exibeProduto()}</div>
+      return (
+        <div>
+          <div className=" container">
+            <div>{this.exibeErro() || this.exibeProduto()}</div>
+          </div>
         </div>
-      </div>
-    );
+      );
     }
   };
 };
 export default ProdutoEspc;
+
+function promocao(preco, desconto) {
+  if (desconto === 0 || desconto === null) {
+    return (<div className="bg-light p-4 mb-2 text-center">
+      <h2 className="mb-0">R$ {parseFloat(preco).toFixed(2).replace(".", ",")}</h2>
+    </div>);
+  } else {
+    var valoratual = preco - preco * parseFloat(desconto) / 100;
+    return (<div className="bg-light p-4 mb-2 text-center">
+      <span class="old-price text-muted">R${preco.toFixed(2).replace(".", ",")}</span>
+      <span className="badge badge-success ml-2">{desconto}% OFF</span>
+      <h2 className="mb-0">R${valoratual.toFixed(2).replace(".", ",")}</h2>
+    </div>);
+  }
+}
+function gerarJson(json) {
+  return {
+    "id": json.data.id,
+    "nomeprod": json.data.nomeprod,
+    "descricao": json.data.descricao,
+    "desconto": json.data.desconto,
+    "destaque": json.data.destaque,
+    "foto": json.data.foto,
+    "preco": json.data.preco,
+    "teor": json.data.teor,
+    "ml": json.data.ml,
+    "quantidade": json.data.quantidade,
+    "categoria_id": json.data.categoria_id,
+    "created_at": json.data.created_at,
+    "updated_at": json.data.updated_at,
+    "QuantProd": 1,
+    "ValorTotal": 0
+  };
+}

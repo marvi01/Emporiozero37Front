@@ -5,88 +5,58 @@ import { data } from 'jquery';
 
 export default function Carrinho(props) {
 
-  const [carrinho, setCarrinho] = useState(null);
-  const [user, setUser] = useState(null);
-  const [error, setErro] = useState(null);
-  const [estado, setEstado] = useState(false);
-  const [nulo, setNulo] = useState(true);
-  const [countconexao] = useState(0);
-  const [Produto, setProduto] = useState(true);
-  
-  async function conexao() { //Função para consultar a api
-    var response;
-    var response2;
-    try {
-      const token = localStorage.getItem("JWT_token");
-      console.log(token);
-      response = await fetch('http://anorosa.com.br/Emporio037/api/me?token=' + token,{method: "post"}) 
-      let usuario = await response.json();
-      console.log(usuario);
-      setUser(usuario=>
-        setUser(usuario)); 
-      console.log(localStorage.getItem("JWT_token"));
-      console.log(user);
-    } catch (error) {
+  const [Prod, setProd] = useState(true);
+    const [count, setcount] = useState(true);
 
-      setErro(error);
-    }
-      try {
-        console.log(user);
-        response2 = await fetch('http://anorosa.com.br/Emporio037/api/selectusercarrinho/' +2 );
-        const responseCarrinho = await response2.json();
-        const json2 = responseCarrinho.data
-        console.log(json2[0]);
-        setCarrinho(responseCarrinho);
-      } catch (error) {
-        setErro(error);
-      }
-      const carro = await response2;
-      if (carro.data != null) {
-        setCarrinho(carro.data);
-        setNulo(false);
-        try {
-          //Buscando o parametro passado 
-          const id = carrinho.produto_id
-          const response3 = await fetch('https://anorosa.com.br/Emporio037/api/produto/' + id);
-          const json3 = await response3.json();
-          console.log(response3.json());
-          if(json3 !=null){
-            
-              setProduto(json3.data)
-              console.log(Produto);
-          }
-        } catch (error) {
-          console.log(error);
-          this.setProduto(error )
+    const prencherArray = () => {
+        var array = []
+
+        for (let i = 0; i < 10; i++) {
+            let tranformador = sessionStorage.getItem(i);
+            if (tranformador != null) {
+                
+                let tranformado = JSON.parse(tranformador);
+                array.push(tranformado);
+                
+            }
         }
-      };
-    ;
-
-    setEstado(true);
-  };
-
-  useEffect(() => {
-    conexao();
-  }, [countconexao]);
-  if (estado === true) {
-    if (nulo === false) {
-      return(
-        <p>HTML EXIBIDO PARA O CARRINHO</p>
-      )
-    } else {
-      return (
-        <p>HTML CASO CARRINHO ESTEJA VAZIO</p>
-      )
+        setProd(array);
+        console.log(array);
     }
-  } else {
-    return (
-      <p>HTML EXIBIDO ENQUANTO A API É CONSULTADA</p>
-    )
-  }
+    useEffect(() => {
+      prencherArray()
+  }, [count]);
+  const exibiCarrinho = () => {
 
-  if (error) {
-    return (
-      <p>HTML CASO DÊ UM ERRO NA API</p>
-    )
-  }
+    if (Prod && Prod.length) {
+        const ProdutoCarrinho = Prod.map((item, indice) =>
+            (
+              <div key={indice}>
+                <p>{item.ValorTotal}</p>
+                {console.log(Prod)}
+                ssss
+              </div>
+            )
+        )
+
+        return ProdutoCarrinho;
+    } else {
+        return (
+            <div>
+                <a>
+                    Nenhum produto encontrado no carrinho :(
+                </a>
+
+            </div>)
+    }
+
+}
+  
+      return(
+      <div>
+        {exibiCarrinho()}
+      </div>
+      )
+    
+
 }

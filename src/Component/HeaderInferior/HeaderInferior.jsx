@@ -23,11 +23,11 @@ class HeaderInferior extends Component {
             response = await fetch("https://anorosa.com.br/Emporio037/api/categoria/list");
 
         } catch (error) {
-            console.log(error);
+            
             this.setState({ error })
         }
         const json = await response.json();
-        console.log( json)
+       
         if (json.data != null) {
             this.setState({ data: json, nulo: false });
         }
@@ -37,7 +37,7 @@ class HeaderInferior extends Component {
     exibeListarCategoria() {
         const { erro } = this.state;
         const { data } = this.state.data;
-        console.log( this.state.data)
+       
         if (erro) {
 
         } else {
