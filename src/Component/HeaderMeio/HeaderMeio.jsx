@@ -6,7 +6,6 @@ export default function HeaderMeio() {
     const [logado, setLogado] = useState(false);
     const [estado, setEstado] = useState(true);
     const [user, setUser] = useState(null);
-   
     const [token, setToken] = useState(localStorage.getItem("JWT_token"));
     
     
@@ -119,6 +118,25 @@ export default function HeaderMeio() {
         }
     }
     
+     const logout =()=>{
+        var response;
+        if (token != null) {
+            try {
+                response =  fetch("https://anorosa.com.br/Emporio037/api/logout?token=" + token, {method:'POST'}).then((resposta)=>{
+                if(resposta.ok){
+                    let confirma = window.confirm('Deseja mesmo deslogar');
+                    if(confirma){
+                    localStorage.removeItem("JWT_token");
+                setToken("");
+                    }
+                }
+                });
+            } catch (error) {
+                
+            }
+        }
+        
+    }
         return (
             <div className="header-middle py-4 bg-middle-brown">
                 <div className="container">
@@ -148,22 +166,6 @@ export default function HeaderMeio() {
             </div>
         )
     
-        async function logout(){
-            var response;
-            if (token != null) {
-                try {
-                    response = await fetch("https://anorosa.com.br/Emporio037/api/logout?token=" + token, {method:'POST'});
-                } catch (error) {
-                    
-                }
-                var json = response.json();
-                if(json.status === true){
-                    localStorage.removeItem("JWTAuth");
-                    setToken("");
-                    alert(json.message);
-                }
-            }
-            
-        }
+         
     
 }
