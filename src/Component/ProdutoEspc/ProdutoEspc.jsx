@@ -25,8 +25,10 @@ class ProdutoEspc extends Component {
         "quantidade": 0,
         "categoria_id": 0,
         "created_at": "",
-        "updated_at": ""
+        "updated_at": "",
+        "QuantProd":1
       }],
+      
       valortotal: 0,
       erro: null,
       nulo: true,
@@ -47,9 +49,14 @@ class ProdutoEspc extends Component {
       console.log(error);
       this.setState({ error })
     }
+    
     const json = await response.json();
+    
+    const jsonf = gerarJson(json);
+    console.log(json);
     if (json != null) {
-      this.setState({ data: json.data, nulo: false });
+      this.setState({ data: jsonf, nulo: false });
+      console.log(this.state.data);
       // this.setState(Object.assign(this.state.carrinho,{produto_id:id}));
     }
     this.setState({ estado: true });
@@ -269,4 +276,22 @@ function promocao(preco, desconto) {
       <h2 className="mb-0">R${valoratual.toFixed(2).replace(".", ",")}</h2>
     </div>);
   }
+}
+function gerarJson(json){
+ return {
+    "id": json.data.id,
+    "nomeprod": json.data.nomeprod,
+    "descricao": json.data.descricao,
+    "desconto": json.data.desconto,
+    "destaque": json.data.destaque,
+    "foto": json.data.foto,
+    "preco": json.data.preco,
+    "teor": json.data.teor,
+    "ml": json.data.ml,
+    "quantidade": json.data.quantidade,
+    "categoria_id": json.data.categoria_id,
+    "created_at": json.data.created_at,
+    "updated_at": json.data.updated_at,
+    "QuantProd":1
+};
 }
