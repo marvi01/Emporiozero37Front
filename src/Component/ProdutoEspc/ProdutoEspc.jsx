@@ -26,7 +26,8 @@ class ProdutoEspc extends Component {
         "categoria_id": 0,
         "created_at": "",
         "updated_at": "",
-        "QuantProd":1
+        "QuantProd":1,
+        "ValorTotal":0
       }],
       
       valortotal: 0,
@@ -54,7 +55,7 @@ class ProdutoEspc extends Component {
     
     const jsonf = gerarJson(json);
     console.log(json);
-    if (json != null) {
+    if (json.data != null) {
       this.setState({ data: jsonf, nulo: false });
       console.log(this.state.data);
       // this.setState(Object.assign(this.state.carrinho,{produto_id:id}));
@@ -95,13 +96,26 @@ class ProdutoEspc extends Component {
     } else {
       return (
         
-          <button onClick={this.carrinho} type="submit" className="btn d-block mx-auto text-white" disabled>Adicionar</button>
+          <button onClick={this.carrinho} type="submit" className="btn d-block mx-auto text-white" >Adicionar</button>
         
       )
     }
   }
-  carrinho = () => {
-    let qde = this.state.data.quantItem;
+   carrinho = async () => {
+    var valor;
+    var preco = parseFloat(this.state.data.preco);
+    var quantidade = parseInt(this.state.quantItem);
+    if(this.state.data.desconto !== 0){
+      var desconto = parseFloat(this.state.data.desconto);
+      valor = (preco - preco * desconto / 100) * quantidade;
+    }else{
+      valor = preco*quantidade;
+    }
+    await this.setState(prevState => ({
+      data: { ...prevState.data, QuantProd: quantidade, ValorTotal: valor}
+    }));
+    console.log(this.state.data);
+   /* let qde = this.state.data.quantItem;
     let obj = sessionStorage.getItem(this.state.data.id)
     if (qde === 0) {
       alert("Digite algum valor na quantidade ");
@@ -126,7 +140,7 @@ class ProdutoEspc extends Component {
         this.setState({ redirect: true });
         alert("Adicionado no Carrinho com sucesso")
       }
-    }
+    }*/
   }
   //HTML do Produto 
   exibeProduto() {
@@ -189,7 +203,7 @@ class ProdutoEspc extends Component {
                             }}></i>
                           </button>
                         </div>
-                        <input onChange={this.handleInputChange} ref={this.handleInputRef} type="text" className="input-quantity form-control-lg" name="quantidade" readonly="true" value={this.state.quantItem} />
+                        <input type="text" className="input-quantity form-control-lg" name="quantidade" readonly="true" value={this.state.quantItem} />
                         <div className="input-group-append">
                           <button type="button" className="btn btn-reset text-middle-brown" onClick={() => { this.setState({ quantItem: this.state.quantItem + 1 }) }}>
                             <i class="fas fa-plus"></i>
@@ -239,12 +253,15 @@ class ProdutoEspc extends Component {
   };
   handleInputChange = event => {
     const target = event.target;
-    const name = target.name;
+    const QuantProd = target.QuantProd;
     const value = target.value;
     this.setState(prevState => ({
-      carrinho: { ...prevState.carrinho, [name]: value }
-    }));
+      data: { ...prevState.carrinho, [QuantProd]: value }
+    }))};
+  
   };*/
+
+  
   render() {
     const { redirect } = this.state;
 
@@ -292,6 +309,7 @@ function gerarJson(json){
     "categoria_id": json.data.categoria_id,
     "created_at": json.data.created_at,
     "updated_at": json.data.updated_at,
-    "QuantProd":1
+    "QuantProd":1,
+    "ValorTotal":0
 };
 }
