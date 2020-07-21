@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './HeaderSuperior.css';
-
+import { Link } from 'react-router-dom';
 class HeaderSuperior extends Component { //Nós temos um componente, que ao ser chamado vai exibir no site o html dentro de render()
 
 
@@ -27,7 +27,7 @@ class HeaderSuperior extends Component { //Nós temos um componente, que ao ser 
                                     </a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">
+                                    <a className="nav-link" href="https://www.instagram.com/emporiozero37" target="_blank" >
                                         <i className="fab fa-instagram"></i>
                                     </a>
                                 </li>
