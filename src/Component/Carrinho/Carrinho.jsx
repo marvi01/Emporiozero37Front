@@ -17,10 +17,11 @@ export default function Carrinho(props) {
                 
                 let tranformado = JSON.parse(tranformador);
                 array.push(tranformado);
-                console.log(tranformado.data.nomeprod);
+                
             }
         }
         setProd(array);
+        console.log(array);
     }
     useEffect(() => {
       prencherArray()
@@ -31,7 +32,8 @@ export default function Carrinho(props) {
         const ProdutoCarrinho = Prod.map((item, indice) =>
             (
               <div key={indice}>
-                <p>{item.data.nomeprod}</p>
+                <p>{item.ValorTotal}</p>
+                {console.log(Prod)}
                 ssss
               </div>
             )
@@ -40,19 +42,19 @@ export default function Carrinho(props) {
         return ProdutoCarrinho;
     } else {
         return (
-            <tr>
-                <th>
+            <div>
+                <a>
                     Nenhum produto encontrado no carrinho :(
-                </th>
+                </a>
 
-            </tr>)
+            </div>)
     }
 
 }
   
       return(
       <div>
-        {exibiCarrinho}
+        {exibiCarrinho()}
       </div>
       )
     

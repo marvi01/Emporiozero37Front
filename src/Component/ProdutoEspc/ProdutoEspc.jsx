@@ -26,10 +26,10 @@ class ProdutoEspc extends Component {
         "categoria_id": 0,
         "created_at": "",
         "updated_at": "",
-        "QuantProd":1,
-        "ValorTotal":0
+        "QuantProd": 0,
+        "ValorTotal": 0
       }],
-      
+
       valortotal: 0,
       erro: null,
       nulo: true,
@@ -50,9 +50,9 @@ class ProdutoEspc extends Component {
       console.log(error);
       this.setState({ error })
     }
-    
+
     const json = await response.json();
-    
+
     const jsonf = gerarJson(json);
     console.log(json);
     if (json.data != null) {
@@ -62,17 +62,26 @@ class ProdutoEspc extends Component {
     }
     this.setState({ estado: true });
   }
+
   //função para fazer acesso ao Input 
   handleInputRef = (input) => {
     this.input = input;
   };
   //Função para calcular o falor total do produto 
   preco = () => {
-    let qde = `${this.input.value}`;
-    console.log(qde)
-    let precofinal = qde * this.state.data.preco;
-    this.setState({ valortotal: precofinal });
-    this.setState({ Carrinho: this.state.data.id });
+    let qde =parseFloat(`${this.input.value}`);
+    qde= qde+1;
+    var valorDesc=0;
+    var preco = parseFloat(this.state.data.preco);
+    if (this.state.data.desconto !== 0) {
+      var desconto = parseFloat(this.state.data.desconto);
+      valorDesc = ((preco) * desconto / 100) * qde;
+    } 
+    let valor = (preco*qde)-valorDesc;
+    console.log(qde);
+    this.setState(prevState => ({
+      data: { ...prevState.data, ValorTotal: valor }
+    }));
 
   }
   exibeErro() {
@@ -89,33 +98,24 @@ class ProdutoEspc extends Component {
     let log = localStorage.getItem("JWT_token");
     if (log && log.length) {
       return (
-        
-          <button onClick={this.carrinho} type="submit" className="btn d-block mx-auto text-white" >Adicionar</button>
-        
+
+        <button onClick={this.carrinho} type="submit" className="btn d-block mx-auto text-white" >Adicionar</button>
+
       )
     } else {
       return (
-        
-          <button onClick={this.carrinho} type="submit" className="btn d-block mx-auto text-white" >Adicionar</button>
-        
+
+        <button onClick={this.carrinho} type="submit" className="btn d-block mx-auto text-white" >Adicionar</button>
+
       )
     }
   }
-   carrinho = async () => {
-    var valor;
-    var preco = parseFloat(this.state.data.preco);
-    var quantidade = parseInt(this.state.quantItem);
-    if(this.state.data.desconto !== 0){
-      var desconto = parseFloat(this.state.data.desconto);
-      valor = (preco - preco * desconto / 100) * quantidade;
-    }else{
-      valor = preco*quantidade;
-    }
-    await this.setState(prevState => ({
-      data: { ...prevState.data, QuantProd: quantidade, ValorTotal: valor}
-    }));
+  carrinho = () => {
+
+
+
     console.log(this.state.data);
-   /* let qde = this.state.data.quantItem;
+    let qde = this.state.data.quantItem;
     let obj = sessionStorage.getItem(this.state.data.id)
     if (qde === 0) {
       alert("Digite algum valor na quantidade ");
@@ -125,7 +125,7 @@ class ProdutoEspc extends Component {
         let confirma = window.confirm("Deseja atualizar a quantidade de " + this.state.data.nomeprod + " ?")
         if (confirma) {
           console.log(qde);
-          let prod = JSON.stringify(this.state);
+          let prod = JSON.stringify(this.state.data);
           sessionStorage.setItem(this.state.data.id, prod);
           console.log(prod);
           this.setState({ redirect: true });
@@ -134,13 +134,12 @@ class ProdutoEspc extends Component {
         }
       } else {
         console.log(qde);
-        let prod = JSON.stringify(this.state);
+        let prod = JSON.stringify(this.state.data);
         sessionStorage.setItem(this.state.data.id, prod);
-        console.log(prod);
         this.setState({ redirect: true });
         alert("Adicionado no Carrinho com sucesso")
       }
-    }*/
+    }
   }
   //HTML do Produto 
   exibeProduto() {
@@ -197,15 +196,26 @@ class ProdutoEspc extends Component {
                         <div className="input-group-append">
                           <button type="button" className="btn btn-reset text-middle-brown">
                             <i class="fas fa-minus" onClick={() => {
-                              if (this.state.quantItem > 1) {
-                                this.setState({ quantItem: this.state.quantItem - 1 })
+
+                              if (this.state.data.QuantProd > 1) {
+                                this.setState(prevState => ({
+                                  data: { ...prevState.data, QuantProd: this.state.data.QuantProd - 1 }
+                                }));
+                                this.preco();
+
                               }
                             }}></i>
                           </button>
                         </div>
-                        <input type="text" className="input-quantity form-control-lg" name="quantidade" readonly="true" value={this.state.quantItem} />
+                        <input ref={this.handleInputRef}  type="text" className="input-quantity form-control-lg" name="quantItem" readonly="true" value={this.state.data.QuantProd} />
                         <div className="input-group-append">
-                          <button type="button" className="btn btn-reset text-middle-brown" onClick={() => { this.setState({ quantItem: this.state.quantItem + 1 }) }}>
+                          <button type="button" className="btn btn-reset text-middle-brown" onClick={() => {
+                            this.setState(prevState => ({
+                              data: { ...prevState.data, QuantProd: this.state.data.QuantProd + 1 }
+                            }));
+                            this.preco();
+
+                          }}>
                             <i class="fas fa-plus"></i>
                           </button>
                         </div>
@@ -228,6 +238,8 @@ class ProdutoEspc extends Component {
       }
     }
   }
+
+
   /*handleSubmit = event => {
     fetch("https://anorosa.com.br/Emporio037/api/itemcarrinhouser/add", {
       method: "post",
@@ -251,17 +263,11 @@ class ProdutoEspc extends Component {
       .catch(erro => this.setState({ erro: erro }));
     event.preventDefault();
   };
-  handleInputChange = event => {
-    const target = event.target;
-    const QuantProd = target.QuantProd;
-    const value = target.value;
-    this.setState(prevState => ({
-      data: { ...prevState.carrinho, [QuantProd]: value }
-    }))};
+  
   
   };*/
 
-  
+
   render() {
     const { redirect } = this.state;
 
@@ -294,8 +300,8 @@ function promocao(preco, desconto) {
     </div>);
   }
 }
-function gerarJson(json){
- return {
+function gerarJson(json) {
+  return {
     "id": json.data.id,
     "nomeprod": json.data.nomeprod,
     "descricao": json.data.descricao,
@@ -309,7 +315,7 @@ function gerarJson(json){
     "categoria_id": json.data.categoria_id,
     "created_at": json.data.created_at,
     "updated_at": json.data.updated_at,
-    "QuantProd":1,
-    "ValorTotal":0
-};
+    "QuantProd": 1,
+    "ValorTotal": 0
+  };
 }
