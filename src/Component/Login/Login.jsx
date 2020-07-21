@@ -85,6 +85,8 @@ class Login extends Component {
         console.log(token.access_token)
         console.log(token)
         localStorage.setItem("JWT_token",token.access_token);
+        window.location.reload('http://localhost:3000/')
+        
       })
       .catch(erro => this.setState({ erro: erro }));
     event.preventDefault();
