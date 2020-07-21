@@ -7,8 +7,8 @@ export default function HeaderMeio() {
     const [estado, setEstado] = useState(true);
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(localStorage.getItem("JWT_token"));
-    
-    
+
+
     /*constructor(props) {
         super(props);
         this.state = {
@@ -29,9 +29,9 @@ export default function HeaderMeio() {
         };
     };*/
     async function conexao() {
-        
+
         var response;
-        console.log(token + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaapora");
+        
         if (token != null) {
             const requestOptions = {
                 method: 'POST',
@@ -40,7 +40,7 @@ export default function HeaderMeio() {
             try {
                 response = await fetch("https://anorosa.com.br/Emporio037/api/me", requestOptions);
             } catch (error) {
-             
+
             }
             const json = await response.json();
             console.log(json);
@@ -48,25 +48,25 @@ export default function HeaderMeio() {
                 setUser(json);
                 console.log(user);
                 setLogado(true);
-            }else{
+            } else {
                 localStorage.removeItem("JWT_token");
             }
-        
+
         }
         setEstado(true);
     }
-    
+
     useEffect(() => {
         setEstado(false);
         setLogado(false);
-        
-        conexao();
-        
-      }, [token]);
-      
-      
 
-   function menu() {
+        conexao();
+
+    }, [token]);
+
+
+
+    function menu() {
         if (estado === true) {
             if (logado === false) {
                 return (
@@ -88,18 +88,32 @@ export default function HeaderMeio() {
             } else {
                 return (
                     <ul class="nav">
-                        
+
                         <li className="nav-item">
                             <Link className="nav-link text-dark-brown" to="/Carrinho">
                                 <i className="fas fa-shopping-cart mr-2"></i>
                                             Carrinho
-                        </Link>
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link text-dark-brown" to="" onClick={logout}>
-                                <i className="fas fa-sign-in-alt mr-2"></i>
-                                                Logout
+                            <div class="dropdown nav-link">
+                                <button className="btn-reset dropdown-toggle text-dark-brown" type="button" id="categorias" data-toggle="dropdown">
+                                    <i className="fas fa-user-circle mr-2"></i>
+                                               Conta
+                            </button>
+                                <div class="dropdown-menu bg-dark">
+                                    <Link className="dropdown-item text-light pl-4 py-2" to="/Carrinho">
+                                        <i className="fas fa-user-circle mr-2"></i>
+                                            Editar conta
                             </Link>
+                                    <a className="dropdown-item text-light pl-4 py-2" onClick={logout}>
+                                        <i className="fas fa-user-circle mr-2"></i>
+                                            Sair
+                                    </a>
+
+
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 )
@@ -117,46 +131,48 @@ export default function HeaderMeio() {
             )
         }
     }
-    
-     const logout =()=>{
+
+    const logout = () => {
         var response;
-        if (token != null) {
-            try {
-                response =  fetch("https://anorosa.com.br/Emporio037/api/logout?token=" + token, {method:'POST'}).then((resposta)=>{
-                if(resposta.ok){
-                    let confirma = window.confirm('Deseja mesmo deslogar');
-                    if(confirma){
-                    localStorage.removeItem("JWT_token");
-                setToken("");
-                    }
+        let confirma = window.confirm('Você está saindo de sua conta');
+        if (confirma) {
+
+
+
+            if (token != null) {
+                try {
+                    response = fetch("https://anorosa.com.br/Emporio037/api/logout?token=" + token, { method: 'POST' }).then((resposta) => {
+                        if (resposta.ok) {
+                            localStorage.removeItem("JWT_token");
+                            setToken("");
+                        }
+                    });
+                } catch (error) {
+
                 }
-                });
-            } catch (error) {
-                
             }
         }
-        
+
     }
-        return (
-            <div className="header-middle py-4 bg-middle-brown">
-                <div className="container">
-                    <div className="row align-items-center">
-                        <div className="col-4 col-lg-2">
-                            <Link to="/">
-                                <img src={logo} alt="Emporio 037" className="img-fluid" />
-                            </Link>
-                        </div>
-                        <div className="col">
-                            <div className="row justify-content-end">
-                                <div className="col-lg-6">
-                                    {menu()}
-                                    <div className="input-group shadow-sm">
-                                        <input type="text" className="form-control" />
-                                        <div className="input-group-append">
-                                            <button className="btn btn-primary" type="button">
-                                                <i className="fas fa-search"></i>
-                                            </button>
-                                        </div>
+    return (
+        <div className="header-middle py-4 bg-middle-brown">
+            <div className="container">
+                <div className="row align-items-center">
+                    <div className="col-4 col-lg-2">
+                        <Link to="/">
+                            <img src={logo} alt="Emporio 037" className="img-fluid" />
+                        </Link>
+                    </div>
+                    <div className="col">
+                        <div className="row justify-content-end">
+                            <div className="col-lg-6">
+                                {menu()}
+                                <div className="input-group shadow-sm">
+                                    <input type="text" className="form-control" />
+                                    <div className="input-group-append">
+                                        <button className="btn btn-primary" type="button">
+                                            <i className="fas fa-search"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -164,8 +180,9 @@ export default function HeaderMeio() {
                     </div>
                 </div>
             </div>
-        )
-    
-         
-    
+        </div>
+    )
+
+
+
 }
