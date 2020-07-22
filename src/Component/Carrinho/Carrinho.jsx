@@ -1,62 +1,151 @@
 import React, { useState, useEffect } from 'react';
 import { data } from 'jquery';
+import { Redirect } from 'react-router-dom';
+import './Carrinho.css'
 
 
 
 export default function Carrinho(props) {
-
   const [Prod, setProd] = useState(true);
-    const [count, setcount] = useState(true);
+  const [count, setcount] = useState(true);
+  const [Valor, setValor] = useState(true);
+  const [redirect, setredirect] = useState(false);
+  
+  
 
-    const prencherArray = () => {
-        var array = []
+  const prencherArray = () => {
+      var array = []
+      var array2 = []
+      for (let i = 0; i < 99; i++) {
+          let tranformador = sessionStorage.getItem(i);
+          if (tranformador != null) {
+              let tranformado = JSON.parse(tranformador);
+              array2.push(tranformado.ValorTotal);
+              array.push(tranformado);
+          }
+      }
+      setProd(array);
+      setValor(array2);
+  }
 
-        for (let i = 0; i < 10; i++) {
-            let tranformador = sessionStorage.getItem(i);
-            if (tranformador != null) {
-                
-                let tranformado = JSON.parse(tranformador);
-                array.push(tranformado);
-                
-            }
-        }
-        setProd(array);
-        console.log(array);
-    }
-    useEffect(() => {
+  useEffect(() => {
       prencherArray()
   }, [count]);
+
+  const carrinho = () => {
+      if (Prod && Prod.length) {
+         let verifica = window.confirm('Deseja finalizar a compra?');
+         setredirect(verifica);
+         if(verifica){
+             console.log(verifica);
+          return(
+          <div> 
+          <Redirect to="/ConfirmaCompra" />
+          </div>)
+         }
+      }
+      else {
+          alert( 'Nenhum Produto Cadastrado')
+      }
+  }
+  const redireciona =()=>{
+      if(redirect){
+       return(
+       <div> 
+       <Redirect to="/ConfirmaCompra" />
+       </div>)
+      }
+
+  }
+  const a = () => {
+      setcount(1)
+  }
+  const exibiTotal = () => {
+    var recebe = 0;
+    if (Valor && Valor.length) {
+        var valor
+        const colunaFinal = Valor.reduce(function (total, numero) {
+            valor = total + numero;
+            return valor;
+        }, 0);
+        recebe = colunaFinal + 0;
+    }
+    const HtmlTotal = (
+        <tr >
+            <th scope="row">Total</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>R$ {recebe.toFixed(2).replace(".", ",")}</td>
+            <td><button onClick={carrinho}   className="btn btn-success">Confirmar</button></td>
+
+        </tr>
+    )
+    return HtmlTotal;
+  }
+
   const exibiCarrinho = () => {
 
-    if (Prod && Prod.length) {
-        const ProdutoCarrinho = Prod.map((item, indice) =>
-            (
-              <div key={indice}>
-                <p>{item.ValorTotal}</p>
-                {console.log(Prod)}
-                ssss
-              </div>
-            )
-        )
+      if (Prod && Prod.length) {
+          const ProdutoCarrinho = Prod.map((item, indice) =>
+              (
 
-        return ProdutoCarrinho;
-    } else {
-        return (
-            <div>
-                <a>
-                    Nenhum produto encontrado no carrinho :(
-                </a>
+                  <tr key={indice}>
+                      <th scope="row">{indice + 1}</th>
+                      <td>
+                          <img src={`https://anorosa.com.br/Emporio037/storage/${item.foto}`} className="img-tamanho mr-3" alt="..." />
+                      </td>
+                      <td>{item.nomeprod}</td>
+                      <td>{item.QuantProd}</td>
+                      <td>R$ {item.ValorTotal.toFixed(2).replace(".", ",")}</td>
+                      <td><a onClick={() => {
+                          sessionStorage.removeItem(item.id);
+                          alert('Deletado com sucesso ')
+                      }} href="/Carrinho" className="btn btn-danger " role="button" aria-pressed="true">Excluir</a></td>
 
-            </div>)
-    }
+                  </tr>
+              )
+          )
 
-}
-  
-      return(
-      <div>
-        {exibiCarrinho()}
-      </div>
+          return ProdutoCarrinho;
+      } else {
+          return (
+              <tr>
+                  <th>
+                      Nenhum produto encontrado no carrinho :(
+                  </th>
+
+              </tr>)
+      }
+
+  }
+
+  function headTabela() {
+      const head = (
+          <thead className="thead-dark">
+              <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Imagem</th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Quantidade</th>
+                  <th scope="col">Valor total</th>
+                  <th scope="col">Excluir</th>
+              </tr>
+          </thead>
       )
-    
+      return head;
+  }
+
+  return (
+      <div>
+          {redireciona()}
+          <table className="table">
+              {headTabela()}
+              <tbody>
+                  {exibiCarrinho()}
+                  {exibiTotal()}
+              </tbody>
+          </table>
+      </div>)
 
 }
