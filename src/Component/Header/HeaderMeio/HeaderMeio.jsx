@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../../imagens/LOGO PRETA.png';
+import logo from '../../../imagens/LOGO PRETA.png';
 
 export default function HeaderMeio() {
     const [logado, setLogado] = useState(false);

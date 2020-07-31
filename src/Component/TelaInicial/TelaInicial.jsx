@@ -23,8 +23,8 @@ class TelaInicial extends Component {
                     <div className="container-md">
                         <Categorias />
                         <BestSellers/>
-                        <Promotions />
-                        <Releases />
+                        {/*<Promotions />
+                        <Releases />*/}
                     </div>
                 </main>
             </div>

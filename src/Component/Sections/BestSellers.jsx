@@ -13,47 +13,14 @@ class Section extends Component {
                         <a href="" class="ml-2">Ver tudo</a>
                     </div>
                     <div className="section-body">
-                        <Carousel fade="true">
-                            <Carousel.Item>
-                                <div className="form-row ">
-                                    <div className="col-sm-6 col-xl-3">
-                                        <Produto />
-                                    </div>
-                                    <div className="col-sm-6 col-xl-3">
-                                        <Produto />
-                                    </div>
-                                </div>
-                            </Carousel.Item>
-                            <Carousel.Item>
-                                <div className="form-row">
-                                    <div className="col-sm-6 col-xl-3">
-                                        <Produto />
-                                    </div>
-                                    <div className="col-sm-6 col-xl-3">
-                                        <Produto />
-                                    </div>
-                                    <div className="col-sm-6 col-xl-3">
-                                        <Produto />
-                                    </div>
-                                </div>
-                            </Carousel.Item>
-                            <Carousel.Item>
-                                <div className="form-row">
-                                    <div className="col-sm-6 col-xl-3">
-                                        <Produto />
-                                    </div>
-                                    <div className="col-sm-6 col-xl-3">
-                                        <Produto />
-                                    </div>
-                                    <div className="col-sm-6 col-xl-3">
-                                        <Produto />
-                                    </div>
-                                    <div className="col-sm-6 col-xl-3">
-                                        <Produto />
-                                    </div>
-                                </div>
-                            </Carousel.Item>
-                        </Carousel>
+                        
+                            
+                   
+                                        <Produto rtype={1}/>
+                    
+                           
+                            
+                       
                     </div>
             </section>
         );

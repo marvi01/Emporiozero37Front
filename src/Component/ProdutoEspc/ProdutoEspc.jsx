@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './EspProd.css';
-import HeaderMeio from '../HeaderMeio/HeaderMeio';
+//import HeaderMeio from '../Header/HeaderMeio/HeaderMeio';
 import { Redirect } from "react-router-dom";
 import Carrinho from '../Carrinho/Carrinho';
 
