@@ -6,7 +6,7 @@ import Header from './Component/Header/Header';
 
 import { Switch, Route } from 'react-router-dom';
 import Login from './Component/Login/Login';
-
+import Cadastro from './Component/Cadastro/Cadastro';
 
 function App() {
   return (
@@ -17,8 +17,8 @@ function App() {
           <Route path="/Produto/:id" exact component={Header} />
           <Route path="/Categoria/:id" component={Header} />
           <Route path="/Carrinho" exact component={Header} />
-          <Route path="/Cadastro" exact component={Header} />
           <Route path="/frete" exact component={Header} />
+          <Route path="/Cadastro" exact component={Cadastro} />
           <Route path="/Login" exact component={Login} />
           
       </Switch>
