@@ -46,18 +46,10 @@ class Login extends Component {
         <div className="col bg-light p-md-0" id="form-login" style={{backgroundImage: 'url('+ background +')'}}>
             <div className="col-sm-10 col-lg-8 col-xl-6">
                 <form action="" class="px-sm-5 pb-sm-5">
-                    <Link to="/" className="d-block mb-3">
-                        <i className="fas fa-long-arrow-alt-left mr-2"></i>
-                        Voltar
                     <Link className="d-block mb-3" to="/">
                         <i className="fas fa-long-arrow-alt-left mr-2"></i>
                           Voltar
                     </Link>
-
-                    <a href="" className="d-block mb-3">
-                        <i className="fas fa-long-arrow-alt-left mr-2"></i>
-                        Voltar
-                    </a>
                     <div className="form-group">
                         <label for="email" >Email</label>
                         <input type="email" id="email" className="form-control" required />
