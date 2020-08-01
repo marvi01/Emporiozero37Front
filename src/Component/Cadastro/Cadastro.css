@@ -1,0 +1,57 @@
+#content-cad {
+    min-height: 100vh;
+    padding: 0.5rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+#content-cad form {
+    border-radius: 0.25rem;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    background: #f8f9fa!important;
+}
+.container-logo {
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    color:#f8f9fa !important;
+    align-items: center;
+    order: -1;
+    padding:1.5rem 0;
+    background: #343a40 !important;
+}
+.link-active {
+    color:  #007bff !important;
+}
+.link-active:hover {
+    text-decoration: underline !important;
+}
+.form-title {
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
+}
+.form-heading {
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--dark-brown);
+}
+.carousel-body {
+    padding: 3rem 1.5rem;
+}
+#logo-cad {
+    display:block;
+    width: auto;
+    height: 120px;
+}
+@media only screen and (min-width: 992px) {
+    #logo-cad {
+        width: 75%;
+        height: auto;
+    }
+}
+@media only screen and (min-width: 578px) {
+    .carousel-body {
+        padding: 3rem;
+    }
+}

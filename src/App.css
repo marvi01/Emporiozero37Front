@@ -8,6 +8,9 @@
   --middle-gray: #cfc7ba;
   --light-gray: #f7f4f2;
 }
+.text-gray {
+  color: darkslategray;
+}
 .bg-middle-gray {
 background-color: var(--middle-gray) !important;
 }
