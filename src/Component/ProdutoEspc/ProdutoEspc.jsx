@@ -182,7 +182,7 @@ class ProdutoEspc extends Component {
                 </div>
               </div>
               <div className="order-first order-lg-0 mb-4 mb-lg-0 col-lg-5 col-xl-6">
-                <div className="bg-white">
+                <div className="bg-white shadow">
                   <img id="product-image" className="img-fluid rounded " src={`https://anorosa.com.br/Emporio037/storage/${this.state.data.foto}`} alt={this.state.data.nomeprod} />
                 </div>
               </div>
