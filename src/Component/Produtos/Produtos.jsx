@@ -54,7 +54,6 @@ class Produto extends Component {
                     }
                 }
             }
-
             try {
                 response = await fetch(`https://anorosa.com.br/Emporio037/api/${_url}`);
             } catch (error) {
@@ -65,7 +64,8 @@ class Produto extends Component {
 
             if (json != null) {
                 this.setState({ data: json.data, nulo: false });
-
+                console.log(_url);
+                console.log(json);
             }
             this.setState({ estado: true });
         }
@@ -89,15 +89,9 @@ class Produto extends Component {
                                         </div>
                                         <div className="col">
                                             <div className="product-info">
-                                                <h3 class="h6 my-3">Exercitation ex sit veniam commodo incididunt occaecat amet.</h3>
-                                                <div className="price mb-3">
-                                                    <div className="old-price">
-                                                        60,00
-                                    <span class="badge badge-success ml-2">20% OFF</span>
-                                                    </div>
-                                                    <span class="h4">R$ 50,00
-                                </span>
-                                                </div>
+                                                <h3 class="h6 my-3">{item.nomeprod}</h3>
+
+                                                {desconto(item.preco, item.desconto)}
                                             </div>
                                             <a href="#" class="btn btn-primary mb-3">Ver mais</a>
                                         </div>
@@ -107,42 +101,39 @@ class Produto extends Component {
 
                         )
                     });
-                    
-                    /*const carouselHTML = Prod.map((item, index) =>{
-                        
 
-                       
-                        var a = 0;
-                        var b = 0;
-                        if(Prod.length > 1 && dupli2 === 0){
-                        dupli2 = 1;
-                        var c = Prod.length/4;
-                            console.log(item);
-                            console.log(index);
-                            console.log(b + "   aaaaaaaaaaaaaaaaaaaaaaaa " + Prod.length)
-                            b++;
-                            return(
-                                <Carousel.Item key={b}>
-                                <div className="form-row">
-                                    {Prod[b*4-4]}
-                                    {Prod[b*4-3]}
-                                    {Prod[b*4-2]}
-                                    {Prod[b*4-1]}
-                                </div>
-                            </Carousel.Item>
+                    const carouselHTML = Prod.map((item, indice) => {
+
+                        if (Prod.length / 4 > indice) {
+                            return (
+                                <Carousel.Item>
+                                    <div className="form-row">
+                                        {Prod[indice * 4]}
+                                        {Prod[indice * 4 + 1]}
+                                        {Prod[indice * 4 + 2]}
+                                        {Prod[indice * 4 + 3]}
+                                    </div>
+                                </Carousel.Item>
                             )
                         }
-                    });*/
-                    if(Prod.length > 1 && dupli2 === 0){
-                        const a = carousel(Prod);
-                        return (
-                            <Carousel>
-                                {a}
-                            </Carousel>
-                        );
-                    }
-                    return null;
-                    
+
+
+                    });
+
+                    return (
+                        <Carousel>
+                            {
+                                carouselHTML
+                            }
+                        </Carousel>
+                    );
+
+
+
+                } else {
+                    return (
+                        <p>Nenhum produto nesta sessão :c</p>
+                    )
                 }
             }
         }
@@ -156,22 +147,26 @@ class Produto extends Component {
     }
 }
 export default Produto; //Aqui retorna o componente
-function carousel(Prod){
-    var b;
-    for(var i = 0; i < Prod.length+2;i+4 ){
-        
-       const a = ()=>{
-           return(
-            <Carousel.Item key={i}>
-                                <div className="form-row">
-                                    {Prod[i]}
-                                    {Prod[i+1]}
-                                    {Prod[i+2]}
-                                    {Prod[i+3]}
-                                </div>
-            </Carousel.Item>)
-        };
-        
+function desconto(preco, desconto) {
+    if (desconto !== 0) {
+        var valoratual = preco - preco * parseFloat(desconto) / 100;
+        return (<div className="price mb-3">
+            <div className="old-price">
+                R${parseFloat(preco).toFixed(2).replace(".", ",")}
+                <span class="badge badge-success ml-2">{desconto}%</span>
+            </div>
+            <span class="h4">R${parseFloat(valoratual).toFixed(2).replace(".", ",")}
+            </span>
+        </div>)
+    } else {
+        return (
+            <div className="price mb-3">
+                <div className="old-price">
+
+                    <span class="badge badge-success ml-2"></span>
+                </div>
+                <span class="h4">R${parseFloat(preco).toFixed(2).replace(".", ",")}</span>
+            </div>
+        )
     }
-    return b;
 }

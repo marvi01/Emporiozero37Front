@@ -22,9 +22,9 @@ class TelaInicial extends Component {
                 <main className="py-5">
                     <div className="container-md">
                         <Categorias />
-                        {/*<BestSellers/>
+                        <BestSellers/>
                         <Promotions />
-                        <Releases />*/}
+                        {/*<Releases />*/}
                     </div>
                 </main>
             </div>
