@@ -7,3 +7,34 @@
 .spinnersize{
     height: 30vw;
 }
+.page-title {
+    text-align: center;
+    position: relative;
+    margin: 3rem 0;
+}
+.page-title span {
+    background-color:#e9ebed;
+    display: inline-block;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+}
+.page-title::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color:brown;
+    z-index: 0;
+}
+.product-container {
+    margin-bottom: 1rem;
+}
+.order-products {
+    padding: 6px;
+    font-size: 14px;
+    border: 1px solid #eae1dc;
+    margin-left: 0.5rem;
+}

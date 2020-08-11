@@ -15,8 +15,8 @@ h3 {
     text-decoration: line-through;
 }
 .product-img-wrapper img {
-    height: 220px;
-    width: auto;
+    height: 240px;
+    max-width: 80px;
 }
 
 

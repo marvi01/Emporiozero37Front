@@ -22,11 +22,6 @@ class HeaderSuperior extends Component { //Nós temos um componente, que ao ser 
                         <div className="col-auto">
                             <ul className="nav social-icons">
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">
-                                        <i className="fab fa-facebook-f"></i>
-                                    </a>
-                                </li>
-                                <li className="nav-item">
                                     <a className="nav-link" href="https://www.instagram.com/emporiozero37" target="_blank" >
                                         <i className="fab fa-instagram"></i>
                                     </a>

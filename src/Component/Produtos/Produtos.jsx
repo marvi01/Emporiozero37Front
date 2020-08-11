@@ -84,7 +84,7 @@ class Produto extends Component {
                                     <div className="row align-items-center no-gutters">
                                         <div className="col-auto px-3">
                                             <div className="product-img-wrapper">
-                                                <img src={vodka} className="img-fluid" alt="" />
+                                                <img src={vodka} alt="" />
                                             </div>
                                         </div>
                                         <div className="col">
@@ -121,7 +121,7 @@ class Produto extends Component {
                     });
 
                     return (
-                        <Carousel>
+                        <Carousel interval={1000000000} fade="true">
                             {
                                 carouselHTML
                             }

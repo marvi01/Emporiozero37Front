@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../../../imagens/LOGO PRETA.png';
+import logo from '../../../imagens/LOGO BRANCA.png';
 
 export default function HeaderMeio() {
     const [logado, setLogado] = useState(false);
@@ -72,13 +72,13 @@ export default function HeaderMeio() {
                 return (
                     <ul class="nav">
                         <li className="nav-item">
-                            <Link className="nav-link text-dark-brown" to="/Login">
+                            <Link className="nav-link text-middle-brown" to="/Login">
                                 <i className="fas fa-sign-in-alt mr-2"></i>
                                                 Login
                                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link text-dark-brown" to="/Cadastro">
+                            <Link className="nav-link text-middle-brown" to="/Cadastro">
                                 <i className="fas fa-user-plus mr-2"></i>
                                             Cadastro
                         </Link>
@@ -155,7 +155,7 @@ export default function HeaderMeio() {
 
     }
     return (
-        <div className="header-middle py-4 bg-middle-brown">
+        <div className="header-middle py-4 bg-dark">
             <div className="container">
                 <div className="row align-items-center">
                     <div className="col-4 col-lg-2">
@@ -168,7 +168,7 @@ export default function HeaderMeio() {
                             <div className="col-lg-6">
                                 {menu()}
                                 <div className="input-group shadow-sm">
-                                    <input type="text" className="form-control" />
+                                    <input type="text" className="form-control" placeholder="Vodka absolut..." />
                                     <div className="input-group-append">
                                         <button className="btn btn-primary" type="button">
                                             <i className="fas fa-search"></i>
