@@ -3,7 +3,8 @@ import './Sections.css';
 import '../Produtos/Produtos.css';
 //import Produto from '../Produtos/Produtos';
 import Carousel from 'react-bootstrap/Carousel';
-import vodka from "../../imagens/vodka2.png"
+import vodka from "../../imagens/vodka2.png";
+import { Link } from 'react-router-dom';
 var duplicado;
 
 class Section extends Component {
@@ -73,7 +74,7 @@ class Section extends Component {
 
                                                 {desconto(item.preco, item.desconto)}
                                             </div>
-                                            <a href="#" class="btn btn-primary mb-3">Ver mais</a>
+                                            <Link to={"/Produto/"+item.id} class="btn btn-primary mb-3">Ver mais</Link>
                                         </div>
                                     </div>
                                 </div>

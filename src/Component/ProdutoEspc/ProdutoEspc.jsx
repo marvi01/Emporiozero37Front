@@ -105,7 +105,7 @@ class ProdutoEspc extends Component {
     } else {
       return (
 
-        <button onClick={this.carrinho} type="submit" className="btn d-block mx-auto text-white" >Adicionar</button>
+        <button onClick={this.carrinho} type="submit" className="btn d-block mx-auto text-white" disabled >Adicionar</button>
 
       )
     }

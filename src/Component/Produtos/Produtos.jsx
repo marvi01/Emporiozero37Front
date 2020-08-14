@@ -2,6 +2,7 @@ import React, { Component } from 'react'; //Importa o método componente e react
 import './Produtos.css';//Importa css
 import vodka from "../../imagens/vodka2.png"
 import Carousel from 'react-bootstrap/Carousel';
+import { Link } from 'react-router-dom';
 
 var duplicado = 0;
 var dupli2 = 0;
@@ -93,7 +94,7 @@ class Produto extends Component {
 
                                                 {desconto(item.preco, item.desconto)}
                                             </div>
-                                            <a href="#" class="btn btn-primary mb-3">Ver mais</a>
+                                            <Link to={"/Produto/"+item.id} class="btn btn-primary mb-3">Ver mais</Link>
                                         </div>
                                     </div>
                                 </div>

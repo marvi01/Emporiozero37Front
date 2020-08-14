@@ -13,9 +13,10 @@ class Cadastro extends Component {
                 "nome": "",
                 "type": 0,
                 "telefone": "",
+                "nasc": "",
+                "email": "",
                 "password": "",
-                "nasc": "",//Data de Nascimento 
-                "email": ""
+                "email_verified_at":null
             },
             status: true,
             erro: null,
@@ -164,7 +165,8 @@ class Cadastro extends Component {
             .then(data => {
                 if (data.ok) {
                     this.setState({ redirect: true });
-                    console.log(data.status);
+                    console.log(JSON.stringify(data));
+                    alert("Cadastrado com sucesso!")
                 } else {
                     data.json().then(data => {
                         if (data.error) {
