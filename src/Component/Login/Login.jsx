@@ -45,18 +45,18 @@ class Login extends Component {
         </div>
         <div className="col bg-light p-md-0" id="form-login" style={{backgroundImage: 'url('+ background +')'}}>
             <div className="col-sm-10 col-lg-8 col-xl-6">
-                <form action="" class="px-sm-5 pb-sm-5">
+                <form onSubmit={this.handleSubmit} class="px-sm-5 pb-sm-5">
                     <Link className="d-block mb-3" to="/">
                         <i className="fas fa-long-arrow-alt-left mr-2"></i>
                           Voltar
                     </Link>
                     <div className="form-group">
                         <label for="email" >Email</label>
-                        <input type="email" id="email" className="form-control" required />
+                        <input type="email" id="email" onChange={this.handleInputChange} className="form-control" name="email" required />
                     </div>
                     <div className="form-group">
                         <label for="password" >Senha</label>
-                        <input type="password" id="password" className="form-control mb-2" required />
+                        <input name="password" type="password" id="password" onChange={this.handleInputChange} className="form-control mb-2" required />
                         <div className="custom-control custom-checkbox">
                             <input type="checkbox" name="keepMe" className="custom-control-input" id="keepMe" />
                             <label className="custom-control-label" for="keepMe">Mantenha-me conectado</label>
@@ -126,6 +126,7 @@ class Login extends Component {
     this.setState(prevState => ({
       data: { ...prevState.data, [name]: value }
     }));
+    console.log(this.state.data);
   };
   render() {
     const { redirect } = this.state;
