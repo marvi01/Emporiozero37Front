@@ -62,21 +62,24 @@ class Produto extends Component {
                 this.setState({ error })
             }
             const json = await response.json();
-
-            if (json != null) {
+            
+            
+            if (json.error === null) {
                 this.setState({ data: json.data, nulo: false });
                 console.log(_url);
-                console.log(json);
+                console.log(":DDDDDDDDDDD");
             }
             this.setState({ estado: true });
         }
     }
     exibirProd() {
+        console.log(this.state.nulo);
+        console.log("+++++++++++++++++++++++++++++++");
         if (this.state.erro !== null) {
 
         } else {
             if (this.state.estado === true) {
-                if (this.state.nulo === false) {
+                if (this.state.nulo === true) {
                     const Prod = this.state.data.map((item, indice) => {
                         return (
 

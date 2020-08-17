@@ -1,10 +1,9 @@
 import React, { Component } from 'react'; //Importa o método componente e react
 import './Sections.css';
 import '../Produtos/Produtos.css';
-//import Produto from '../Produtos/Produtos';
-import Carousel from 'react-bootstrap/Carousel';
-import vodka from "../../imagens/vodka2.png";
 import { Link } from 'react-router-dom';
+import Carousel from 'react-bootstrap/Carousel';
+
 var duplicado;
 
 class Section extends Component {
@@ -44,7 +43,7 @@ class Section extends Component {
             }
             const json = await response.json();
 
-            if (json != null) {
+            if (json.error === null || json.error === undefined ) {
                 this.setState({ data: json.data, nulo: false });
                 console.log(json);
             }
@@ -74,7 +73,7 @@ class Section extends Component {
 
                                                 {desconto(item.preco, item.desconto)}
                                             </div>
-                                            <Link to={"/Produto/"+item.id} class="btn btn-primary mb-3">Ver mais</Link>
+                                            <Link to={`/Produto/${item.id}`}  class="btn btn-primary mb-3">Ver mais</Link>
                                         </div>
                                     </div>
                                 </div>
@@ -102,7 +101,7 @@ class Section extends Component {
                     });
 
                     return (
-                        <Carousel>
+                        <Carousel interval={1000000000}>
                             {
                                 carouselHTML
                             }
