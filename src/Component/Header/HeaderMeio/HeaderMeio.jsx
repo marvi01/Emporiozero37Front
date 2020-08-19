@@ -181,6 +181,7 @@ export default function HeaderMeio() {
 
                 }
             }
+            window.location.reload(false);
         }
 
     }
