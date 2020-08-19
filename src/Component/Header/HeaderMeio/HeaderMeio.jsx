@@ -173,6 +173,7 @@ export default function HeaderMeio() {
                     response = fetch("https://anorosa.com.br/Emporio037/api/logout?token=" + token, { method: 'POST' }).then((resposta) => {
                         if (resposta.ok) {
                             localStorage.removeItem("JWT_token");
+                            localStorage.removeItem("users");
                             setToken("");
                         }
                     });
