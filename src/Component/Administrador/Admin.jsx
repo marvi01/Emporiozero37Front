@@ -34,7 +34,8 @@ class Admin extends Component {
                     <Link to="/Admin/Produto" className="list-group-item list-group-item-action" id="list-home-list" role="tab" aria-controls="home"  >Produtos</Link>
                     <Link to="/Admin/Categoria" className="list-group-item list-group-item-action" id="list-profile-list" href="#list-profile" role="tab" aria-controls="profile" >Categorias</Link>
                     <Link to="/Admin/Destaque" className="list-group-item list-group-item-action" id="list-messages-list" href="#list-messages" role="tab" aria-controls="messages" >Destaques</Link>
-                    <Link to="/Admin/Promoções" className="list-group-item list-group-item-action" id="list-settings-list" href="#list-settings" role="tab" aria-controls="settings" >Promoções</Link>
+                    <Link to="/Admin/Carrossel" className="list-group-item list-group-item-action" id="list-settings-list" href="#list-settings" role="tab" aria-controls="settings" >Carrossel</Link>
+        
                 </div>
             );
 

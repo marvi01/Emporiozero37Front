@@ -22,17 +22,21 @@ class ListProd extends Component {
                 "created_at": "",
                 "updated_at": ""
             },
-            status: false
+            status: false,
+            next: false,
+            prev:false
         }
     }
 
 
     componentDidMount() {
-        fetch("https://anorosa.com.br/Emporio037/api/produto/list")
+        fetch("http://anorosa.com.br/Emporio037/api/produto/list/alphabetic")
             .then(data => data.json().then(data => {
-                this.setState({ produto: data.data })
-                this.setState({ status: data.status })
-                console.log(data);
+                this.setState({ produto: data.data });
+                this.setState({ status: data.total});
+                this.setState({next:data.next_page_url});
+                this.setState({prev:data.prev_page_url});
+                console.log(data.total);
             }))
             .catch(erro => this.setState(erro));
     }
@@ -55,7 +59,7 @@ class ListProd extends Component {
         const Prod = this.state.produto;
         const End = this.state.status;
         console.log(this.state);
-        if (End) {
+        if (End>0) {
             const ProdutoCarrinho = Prod.map((item, indice) =>
                 (
 
@@ -96,6 +100,41 @@ class ListProd extends Component {
             </td>
         </tr>
     )
+    paginas =(url)=>{
+        fetch(url)
+        .then(data => data.json().then(data => {
+            this.setState({ produto: data.data });
+            this.setState({ status: data.total});
+            this.setState({next:data.next_page_url});
+            this.setState({prev:data.prev_page_url});
+            console.log(data.total);
+        }))
+        .catch(erro => this.setState(erro));
+    }
+    NextPrev=()=>{
+        return(
+            <tr>
+            <td><button onClick={()=>{
+                if(this.state.prev!==null){
+                this.setState({status:false}); 
+                this.paginas(this.state.prev)
+                }
+            }} className="btn btn-primary">Anterior</button></td>
+            <td ><button onClick={()=>{
+                if(this.state.next!==null){
+                this.setState({status:false}); 
+                this.paginas(this.state.next)
+                }
+            }} className="btn btn-primary">Proxima</button></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td >
+
+            </td>
+        </tr> 
+        )
+    }
     render() {
         return (
             <div>
@@ -104,6 +143,7 @@ class ListProd extends Component {
                     {this.headTabela()}
                     {this.trAddProd()}
                     {this.tableProduto()}
+                    {this.NextPrev()}
                 </table>
             </div>
         );

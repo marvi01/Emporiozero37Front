@@ -15,7 +15,8 @@ class Categorias extends Component {
         this.state = {
             "data": {
                 "id": 0,
-                "nomecategoria": ""
+                "nomecategoria": "",
+                "img":""
             },
             "status": false
         }
@@ -36,58 +37,25 @@ class Categorias extends Component {
         const status = this.state.status;
         if (status) {
             const exibiCateg = categorias.map((item, indice) => (
-                <div key={indice} className="col">
-                    <Link to={"/Categoria/"+item.id}>
-                        <div className="categoria">
-                            <div classNameName="img-categoria" style={{ backgroundImage: 'url(' + item.nomecategoria + ')' }}></div>
-                            <h3 className="h6">{item.nomecategoria}</h3>
-                        </div>
-                    </Link>
-                </div>
+                <div className="col">
+                <a href="">
+                    <div className="categoria">
+                        <div className="img-categoria" style={{ backgroundImage: 'url(' + 'https://anorosa.com.br/Emporio037/storage/' +item.img+ ')' }}></div>
+            <h3 className="h6">{item.nomecategoria}</h3>
+                    </div>
+                </a>
+            </div>
             ))
+            return exibiCateg
         }
     }
     render() {//Aqui acontece a renderização da página
         return (
-
             <section className="categorias mb-5">
                 {console.log(this.state.data)}
                 <h2 className="mb-3 h4">Categorias</h2>
                 <div className="form-row">
-                    <div className="col">
-                        <a href="">
-                            <div className="categoria">
-                                <div className="img-categoria" style={{ backgroundImage: 'url(' + vodka + ')' }}></div>
-                                <h3 className="h6">vodka</h3>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="col">
-                        <a href="">
-                            <div className="categoria">
-                                <div className="img-categoria" style={{ backgroundImage: 'url(' + whisky + ')' }}></div>
-                                <h3 className="h6">whisky</h3>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="w-100 d-md-none"></div>
-                    <div className="col">
-                        <a href="">
-                            <div className="categoria ">
-                                <div className="img-categoria" style={{ backgroundImage: 'url(' + gin + ')' }}></div>
-                                <h3 className="h6">gin</h3>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="col">
-                        <a href="">
-                            <div className="categoria ">
-                                <div className="img-categoria" style={{ backgroundImage: 'url(' + energetico + ')' }}></div>
-                                <h3 className="h6">energético</h3>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="w-100 d-md-none"></div>
+                {this.htmlCateg()}
                     <div className="col">
                         <a href="">
                             <div className="show-more flex-md-column justify-content-md-center">
