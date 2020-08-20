@@ -105,10 +105,7 @@ class Login extends Component {
           });
         }
       }).then(token =>{ 
-        console.log(token.user)
-        console.log(token)
         localStorage.setItem("JWT_token",token.data.access_token);
-        localStorage.setItem("users",JSON.stringify(token.data.user))
         window.location.reload('http://localhost:3000/');
       })
       .catch(erro => this.setState({ erro: erro }));
@@ -137,7 +134,6 @@ class Login extends Component {
         console.log(token.user)
         console.log(token)
         localStorage.setItem("JWT_token",token.data.access_token);
-        localStorage.setItem("users",JSON.stringify(token.data.user))
         window.location.reload('http://localhost:3000/');
         
       })

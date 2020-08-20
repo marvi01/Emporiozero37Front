@@ -32,7 +32,7 @@ export default function HeaderMeio() {
 
         var response;
         
-        if (token != null) {
+        if (token !== null) {
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Authorization': 'Bearer ' + token },
@@ -44,7 +44,7 @@ export default function HeaderMeio() {
             }
             const json = await response.json();
             console.log(json);
-            if (json.status != false) {
+            if (json.status !== false) {
                 setUser(json);
                 setLogado(true);
             } else {
@@ -162,6 +162,31 @@ export default function HeaderMeio() {
     }
 
     const logout = () => {
+        var response;
+        let confirma = window.confirm('Você está saindo de sua conta');
+        if (confirma) {
+
+
+
+            if (token != null) {
+                try {
+                    response = fetch("https://anorosa.com.br/Emporio037/api/logout?token=" + token, { method: 'POST' }).then((resposta) => {
+                        if (resposta.ok) {
+                            localStorage.removeItem("JWT_token");
+                            localStorage.removeItem("users");
+                            setUser(true);
+                            window.location.reload();
+                        }
+                    });
+                } catch (error) {
+
+                }
+            }
+            window.location.reload(false);
+        }
+
+    }
+    const logoutAdmin = () => {
         var response;
         let confirma = window.confirm('Você está saindo de sua conta');
         if (confirma) {

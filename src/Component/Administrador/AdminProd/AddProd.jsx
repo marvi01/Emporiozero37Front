@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Admin from '../Admin';
 
 class AddProd extends Component {
     constructor(props) {
@@ -35,8 +36,9 @@ class AddProd extends Component {
     render() {
         return (
             <div>
+                <Admin/>
                 {console.log(this.state)}
-                Ola
+                Criar o Formulario para cadastrar Produtos
             </div>
         );
     }

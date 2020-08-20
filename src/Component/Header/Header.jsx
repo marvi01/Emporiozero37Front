@@ -35,8 +35,8 @@ function Header() {
           <Route path="/Carrinho" exact component={Carrinho} />
           <Route path="/Cadastro" exact component={Cadastro} />
           <Route path="/frete" exact component={CalcularFrete} />
-          <Route path="/AddProd" exact component={AddProd}/>
-          <Route path="/AdminProd" exact component={ListProd}/>
+          <Route path="/Admin/AdicionaProduto" exact component={AddProd}/>
+          <Route path="/Admin/Produto" exact component={ListProd}/>
           <Route path="/Admin" exact component={Admin} />
       </Switch>
     </div>
