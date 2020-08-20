@@ -78,7 +78,9 @@ button, a, input[type="submit"] {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+.bg-header{
+  background-color: #343a40 !important;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

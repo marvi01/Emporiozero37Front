@@ -20,7 +20,9 @@ function App() {
           <Route path="/frete" exact component={Header} />
           <Route path="/Cadastro" exact component={Cadastro} />
           <Route path="/Login" exact component={Login} />
-          
+          <Route path="/AddProd" exact component={Header}/>
+          <Route path="/AdminProd" exact component={Header}/>
+          <Route path="/Admin" exact component={Header} />
       </Switch>
     </div>
   );

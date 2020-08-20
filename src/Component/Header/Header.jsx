@@ -14,6 +14,9 @@ import Cadastro from '../Cadastro/Cadastro';
 import { Switch, Route } from 'react-router-dom';
 import Carrinho from '../Carrinho/Carrinho';
 import CalcularFrete from '../CalcularFrete/CalcularFrete';
+import AddProd from '../Administrador/AdminProd/AddProd';
+import ListProd from '../Administrador/AdminProd/ListProd';
+import Admin from '../Administrador/Admin';
 
 function Header() {
   return (
@@ -32,6 +35,9 @@ function Header() {
           <Route path="/Carrinho" exact component={Carrinho} />
           <Route path="/Cadastro" exact component={Cadastro} />
           <Route path="/frete" exact component={CalcularFrete} />
+          <Route path="/AddProd" exact component={AddProd}/>
+          <Route path="/AdminProd" exact component={ListProd}/>
+          <Route path="/Admin" exact component={Admin} />
       </Switch>
     </div>
   );
