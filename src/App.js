@@ -23,6 +23,9 @@ function App() {
           <Route path="/Admin/AdicionaProduto" exact component={Header}/>
           <Route path="/Admin/Produto" exact component={Header}/>
           <Route path="/Admin" exact component={Header} />
+          <Route path="/Admin/Categoria" exact component={Header} />
+          <Route path="/Admin/Destaque" exact component={Header} />
+          <Route path="/Admin/Carrossel" exact component={Header} />
       </Switch>
     </div>
   );
