@@ -78,7 +78,7 @@ class HeaderInferior extends Component {
             if(this.state.type !== 0){
             return(
                 <li className="nav-item">
-                    <Link to="/yeye" className="nav-link">Administração</Link>
+                    <Link to="/Admin" className="nav-link">Administração</Link>
                 </li>
             );
             }

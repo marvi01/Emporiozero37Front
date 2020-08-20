@@ -14,7 +14,7 @@ class Login extends Component {
         "password": "",
       },
       redirect: false,
-      lembrar: "off",
+      lembrar: false,
       erro: null,
     }
   }
@@ -58,8 +58,16 @@ class Login extends Component {
                         <label for="password" >Senha</label>
                         <input name="password" type="password" id="password" onChange={this.handleInputChange} className="form-control mb-2" required />
                         <div className="custom-control custom-checkbox">
-                            <input type="checkbox" name="keepMe" className="custom-control-input" id="keepMe" />
-                            <label className="custom-control-label" for="keepMe">Mantenha-me conectado</label>
+                            <input onChange={()=>{
+                              if(!this.state.lembrar){
+                                this.setState({lembrar:true})
+                                console.log(this.state.lembrar);
+                              }else {
+                                this.setState({lembrar:false})
+                                console.log(this.state.lembrar);
+                              }
+                            }} type="checkbox" name="keepMe" className="custom-control-input" id="keepMe" />
+                            <label  className="custom-control-label" for="keepMe">Mantenha-me conectado</label>
                         </div>
                     </div>
                     <button type="submit" className="btn btn-block btn-success">Logar</button>
@@ -76,7 +84,33 @@ class Login extends Component {
     );
   }
   handleSubmit = event => {
+    if(this.state.lembrar){
     fetch("https://anorosa.com.br/Emporio037/api/remember", {
+      method: "post",
+      body: JSON.stringify(this.state.data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(data => {
+        if (data.ok) {
+            this.setState({ redirect: true });
+            return data.json();
+
+        } else {
+          data.json().then(data => {
+            if (data.error) {
+              this.setState({ erro: data.error });
+            }
+          });
+        }
+      }).then(token =>{ 
+        localStorage.setItem("JWT_token",token.data.access_token);
+        window.location.reload('http://localhost:3000/');
+      })
+      .catch(erro => this.setState({ erro: erro }));
+    }else if(!this.state.lembrar){
+      fetch("https://anorosa.com.br/Emporio037/api/login", {
       method: "post",
       body: JSON.stringify(this.state.data),
       headers: {
@@ -100,26 +134,14 @@ class Login extends Component {
         console.log(token.user)
         console.log(token)
         localStorage.setItem("JWT_token",token.data.access_token);
-        localStorage.setItem("users",JSON.stringify(token.data.user))
         window.location.reload('http://localhost:3000/');
         
       })
       .catch(erro => this.setState({ erro: erro }));
+
+    }
     event.preventDefault();
   };
-  handleInputCheck = event => {
-    if (this.state.lembrar == "off") {
-      const target = event.target;
-      const name = target.name;
-      let value = target.value;
-      this.setState({ lembrar: value });
-      console.log(this.state.lembrar)
-    } else {
-      this.setState({ lembrar: "off" });
-      console.log(this.state.lembrar)
-    }
-
-  }
   handleInputChange = event => {
     const target = event.target;
     const name = target.name;
@@ -135,7 +157,6 @@ class Login extends Component {
     if (redirect) {
       return <Redirect to="/" />;
     } else {
-      console.log(this.state.erro)
       return (
         <div>
           {  this.htmlLogin()}
