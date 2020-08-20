@@ -3,6 +3,7 @@ import './Login.css';
 import { Link, Redirect } from "react-router-dom";
 import logo from '../../imagens/LOGO BRANCA.png';
 import background from '../../imagens/background.jpg';
+import { data } from 'jquery';
 
 
 class Login extends Component {
@@ -16,6 +17,7 @@ class Login extends Component {
       redirect: false,
       lembrar: false,
       erro: null,
+      loading: false,
     }
   }
   exibeErro() {
@@ -31,7 +33,6 @@ class Login extends Component {
   }
 
   htmlLogin() {
-
     return (
       <div className="row no-gutters" id="content">
           <div className="container-logo col-md-4">
@@ -45,8 +46,19 @@ class Login extends Component {
         </div>
         <div className="col bg-light p-md-0" id="form-login" style={{backgroundImage: 'url('+ background +')'}}>
             <div className="col-sm-10 col-lg-8 col-xl-6">
-                <form onSubmit={this.handleSubmit} class="px-sm-5 pb-sm-5">
-                    <Link className="d-block mb-3" to="/">
+                
+                    {this.loginform()}
+                
+            </div>
+        </div>
+      </div>
+    );
+  }
+  loginform(){
+    if(this.state.loading === false){
+      return(
+        <form onSubmit={this.handleSubmit} class="px-sm-5 pb-sm-5">
+              <Link className="d-block mb-3" to="/">
                         <i className="fas fa-long-arrow-alt-left mr-2"></i>
                           Voltar
                     </Link>
@@ -77,36 +89,52 @@ class Login extends Component {
                     <Link className="btn btn-block btn-outline-primary" to="/Cadastro">
                           Cadastre-se
                     </Link>
-                </form>
-            </div>
-        </div>
-      </div>
-    );
+                  </form>
+      )
+    }else{
+      return(
+        <form onSubmit={null} class="px-sm-5 pb-sm-5">
+        <div className="text-center loading">
+                    <div className="spinner-border" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </div>
+          </div>
+      </form>
+      )
+      
+    }
   }
   handleSubmit = event => {
-    if(this.state.lembrar){
+    this.setState({loading: true});
+    console.log(this.state.lembrar);
+    if(this.state.lembrar === true){
     fetch("https://anorosa.com.br/Emporio037/api/remember", {
       method: "post",
       body: JSON.stringify(this.state.data),
       headers: {
         "Content-Type": "application/json"
       }
-    })
-      .then(data => {
-        if (data.ok) {
-            this.setState({ redirect: true });
-            return data.json();
+    }).then(async token =>{
+        this.setState({loading: false});
+        if(token.ok){
+        var json = await token.json();
+        if(json.authenticated === false){
 
-        } else {
+          window.confirm('Credenciais inválidas');
+          
+        }else{
+          localStorage.setItem("JWT_token",json.data.access_token);
+          this.setState({ redirect: true });
+          window.location.reload('http://localhost:3000/');
+        }
+        }else{
+          window.confirm('Erro no banco de dados');
           data.json().then(data => {
             if (data.error) {
               this.setState({ erro: data.error });
             }
           });
         }
-      }).then(token =>{ 
-        localStorage.setItem("JWT_token",token.data.access_token);
-        window.location.reload('http://localhost:3000/');
       })
       .catch(erro => this.setState({ erro: erro }));
     }else if(!this.state.lembrar){
@@ -116,27 +144,26 @@ class Login extends Component {
       headers: {
         "Content-Type": "application/json"
       }
-    })
-      .then(data => {
-        if (data.ok) {
-            this.setState({ redirect: true });
-            return data.json();
-
-        } else {
-          data.json().then(data => {
-            if (data.error) {
-              this.setState({ erro: data.error });
-            }
-          });
-        }
-      }).then(token =>{ 
-
-        console.log(token.user)
-        console.log(token)
-        localStorage.setItem("JWT_token",token.data.access_token);
+    }).then(async token =>{
+      this.setState({loading: false});
+      if(token.ok){
+      var json = await token.json();
+      if(json.authenticated === false){
+        window.confirm('Credenciais inválidas');
+      }else{
+        localStorage.setItem("JWT_token",json.data.access_token);
+        this.setState({ redirect: true });
         window.location.reload('http://localhost:3000/');
-        
-      })
+      }
+      }else{
+        window.confirm('Erro no banco de dados :C');
+        data.json().then(data => {
+          if (data.error) {
+            this.setState({ erro: data.error});
+          }
+        });
+      }
+    })
       .catch(erro => this.setState({ erro: erro }));
 
     }

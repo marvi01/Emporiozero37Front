@@ -1,6 +1,11 @@
 #content {
     min-height: 100vh;
 }
+.loading{
+    margin-top: 150px;
+    margin-bottom: 100px;
+   
+}
 .or {
     position: relative;
     text-align: center;

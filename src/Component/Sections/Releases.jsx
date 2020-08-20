@@ -109,7 +109,7 @@ class Section extends Component {
         return (
             <section className="section">
                     <div className="section-header mb-3">
-                        <h2 className="h4 section-title d-inline">Mais compradas</h2>
+                        <h2 className="h4 section-title d-inline">Lançamentos</h2>
                         <a href="" className="ml-2">Ver tudo</a>
                     </div>
                     <div className="section-body">
