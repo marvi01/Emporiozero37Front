@@ -6,10 +6,8 @@ import BestSellers from '../Sections/BestSellers';
 
 
 import Categorias from '../Categorias/Categorias';
+//import ExibeCategoria from '../ExibeCategoria/ExibeCategoria';
 
-{/*}
-import ExibeCategoria from '../ExibeCategoria/ExibeCategoria';
-*/}
 
 class TelaInicial extends Component {
     render() {

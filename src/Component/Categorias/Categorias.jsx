@@ -39,8 +39,8 @@ class Categorias extends Component {
                 <div key={indice} className="col">
                     <Link to={"/Categoria/"+item.id}>
                         <div className="categoria">
-                            <div className="img-categoria" style={{ backgroundImage: 'url(' + item.nomecategoria + ')' }}></div>
-                            <h3 class="h6">{item.nomecategoria}</h3>
+                            <div classNameName="img-categoria" style={{ backgroundImage: 'url(' + item.nomecategoria + ')' }}></div>
+                            <h3 className="h6">{item.nomecategoria}</h3>
                         </div>
                     </Link>
                 </div>
@@ -52,13 +52,13 @@ class Categorias extends Component {
 
             <section className="categorias mb-5">
                 {console.log(this.state.data)}
-                <h2 class="mb-3 h4">Categorias</h2>
+                <h2 className="mb-3 h4">Categorias</h2>
                 <div className="form-row">
                     <div className="col">
                         <a href="">
                             <div className="categoria">
                                 <div className="img-categoria" style={{ backgroundImage: 'url(' + vodka + ')' }}></div>
-                                <h3 class="h6">vodka</h3>
+                                <h3 className="h6">vodka</h3>
                             </div>
                         </a>
                     </div>
@@ -66,7 +66,7 @@ class Categorias extends Component {
                         <a href="">
                             <div className="categoria">
                                 <div className="img-categoria" style={{ backgroundImage: 'url(' + whisky + ')' }}></div>
-                                <h3 class="h6">whisky</h3>
+                                <h3 className="h6">whisky</h3>
                             </div>
                         </a>
                     </div>
@@ -75,7 +75,7 @@ class Categorias extends Component {
                         <a href="">
                             <div className="categoria ">
                                 <div className="img-categoria" style={{ backgroundImage: 'url(' + gin + ')' }}></div>
-                                <h3 class="h6">gin</h3>
+                                <h3 className="h6">gin</h3>
                             </div>
                         </a>
                     </div>
@@ -83,7 +83,7 @@ class Categorias extends Component {
                         <a href="">
                             <div className="categoria ">
                                 <div className="img-categoria" style={{ backgroundImage: 'url(' + energetico + ')' }}></div>
-                                <h3 class="h6">energético</h3>
+                                <h3 className="h6">energético</h3>
                             </div>
                         </a>
                     </div>
@@ -91,8 +91,8 @@ class Categorias extends Component {
                     <div className="col">
                         <a href="">
                             <div className="show-more flex-md-column justify-content-md-center">
-                                <i class="fas fa-angle-right mb-md-2 order-md-0"></i>
-                                <h3 class="h6 ">Ver todas</h3>
+                                <i className="fas fa-angle-right mb-md-2 order-md-0"></i>
+                                <h3 className="h6 ">Ver todas</h3>
                             </div>
                         </a>
                     </div>

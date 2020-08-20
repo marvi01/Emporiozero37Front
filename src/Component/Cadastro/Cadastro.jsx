@@ -72,9 +72,9 @@ class Cadastro extends Component {
                                             <label htmlFor="nome">Nome</label>
                                             <input onChange={this.handleInputChange} id="nome" name="nome" className="form-control form-control-lg" type="text" required minLength="3" maxLength="45" />
                                         </div>
-                                        <a class="btn btn-primary text-white float-right mb-4" onClick={() => this.toggleCarousel('next')}>
+                                        <span class="btn btn-primary text-white float-right mb-4" onClick={() => this.toggleCarousel('next')}>
                                             Próximo
-                                        </a>
+                                        </span>
                                         <div className="clearfix"></div>
                                         <p className="text-center mb-0">Já possui uma conta? <Link to="/Login">Realizar login</Link></p>
                                     </div>
@@ -85,10 +85,10 @@ class Cadastro extends Component {
                                             <h1 className="form-heading">
                                                 Cadastro
                                             </h1>
-                                            <a className="link-active" onClick={() => this.toggleCarousel('prev')}>
+                                            <span className="link-active" onClick={() => this.toggleCarousel('prev')}>
                                                 <i className="fas fa-long-arrow-alt-left mr-2"></i>
                                             Anterior
-                                            </a>
+                                            </span>
                                         </div>
                                         <hr />
                                         <h2 className="h5 text-gray">Prazer, {this.state.data.nome}!</h2>
@@ -101,9 +101,9 @@ class Cadastro extends Component {
                                             <label htmlFor="tel">Telefone</label>
                                             <input onChange={this.handleInputChange} id="telefone" name="telefone" className="form-control" type="tel" pattern="[0-9]{11}" />
                                         </div>
-                                        <a class="btn btn-primary float-right text-white" onClick={() => this.toggleCarousel('next')}>
+                                        <span class="btn btn-primary float-right text-white" onClick={() => this.toggleCarousel('next')}>
                                             Próximo
-                                        </a>
+                                        </span>
                                         <div className="clearfix"></div>
                                     </div>
                                 </Carousel.Item>
@@ -113,10 +113,10 @@ class Cadastro extends Component {
                                             <h1 className="form-heading">
                                                 Cadastro
                                             </h1>
-                                            <a className="link-active" onClick={() => this.toggleCarousel('prev')}>
+                                            <span className="link-active" onClick={() => this.toggleCarousel('prev')}>
                                                 <i className="fas fa-long-arrow-alt-left mr-2"></i>
                                             Anterior
-                                            </a>
+                                            </span>
                                         </div>
                                         <hr />
                                         <h2 className="h5 text-gray">Estamos quase lá!</h2>

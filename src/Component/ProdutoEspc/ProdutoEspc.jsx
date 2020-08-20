@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import './EspProd.css';
-//import HeaderMeio from '../Header/HeaderMeio/HeaderMeio';
 import { Redirect } from "react-router-dom";
-import Carrinho from '../Carrinho/Carrinho';
+//import { Link } from 'react-router-dom';
+//import HeaderMeio from '../Header/HeaderMeio/HeaderMeio';
+//import Carrinho from '../Carrinho/Carrinho';
 
 class ProdutoEspc extends Component {
 

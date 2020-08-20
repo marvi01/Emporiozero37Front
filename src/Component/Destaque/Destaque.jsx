@@ -16,7 +16,6 @@ class Destaque extends Component {
             indicators: true,
             arrows: true,
             pauseOnHover: true,
-            indicators: true,
           }
         return (
             <div className="disan" >

@@ -64,7 +64,7 @@ class HeaderInferior extends Component {
                 if (this.state.nulo === false) {
                     const CatCod = data.map((item, indice) => {
                         return (
-                            <Link to={`/Categoria/${item.id}`} className="dropdown-item text-light pl-4 py-2">{item.nomecategoria}</Link>
+                            <Link key={indice} to={`/Categoria/${item.id}`} className="dropdown-item text-light pl-4 py-2">{item.nomecategoria}</Link>
                         )
                     })
                     return CatCod;
@@ -100,12 +100,12 @@ class HeaderInferior extends Component {
                                 </li>
                                 {this.admin()}
                                 <li className="nav-item">
-                                    <div class="dropdown nav-link">
-                                        <button class="btn-reset dropdown-toggle" type="button" id="categorias" data-toggle="dropdown">
+                                    <div className="dropdown nav-link">
+                                        <button className="btn-reset dropdown-toggle" type="button" id="categorias" data-toggle="dropdown">
                                             Categorias
                                         </button>
-                                        <div class="dropdown-menu bg-dark">
-                                            <h6 class="dropdown-header">Bebidas</h6>
+                                        <div className="dropdown-menu bg-dark">
+                                            <h6 className="dropdown-header">Bebidas</h6>
                                             {this.exibeListarCategoria()}
                                         </div>
                                     </div>

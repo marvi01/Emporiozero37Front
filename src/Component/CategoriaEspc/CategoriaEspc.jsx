@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import HeaderMeio from '../Header/HeaderMeio/HeaderMeio';
 import './CategoriaEspc.css';
 
 function desconto(preco, desconto) {
@@ -31,13 +30,13 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
     //Criação das constantes e seus estados
     const { id } = props.match.params; //Pegando um valor que foi mandado pela url
     const [prod, setProd] = useState(null); //Objeto produto
-    const [nulo, setNulo] = useState(true);//bool que indica se o resultado da api foi != null
-    const [countconexao, setCountconexao] = useState(0);
-    const [erro, setErro] = useState(null);
+    //const [nulo, setNulo] = useState(true);//bool que indica se o resultado da api foi != null
+    //const [countconexao, setCountconexao] = useState(0);
+    const [/*erro*/, setErro] = useState(null);
     const [status, setstatus] = useState(null);
     const [Paginate, setPaginate] = useState(15);
-    const [Promocao, setPromocao] = useState(0);
-    const [Volume, setVolume] = useState(0);
+    const [Promocao, /*setPromocao*/] = useState(0);
+    const [Volume, /*setVolume*/] = useState(0);
     const [Order, setOrder] = useState(0);
     const [Paginas, setPaginas] = useState(true);
     const [Next, setNext] = useState(true);
@@ -63,23 +62,23 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
         const json = await response.json();
         const json2 = await response2.json();
         console.log(json2);
-        if (json2.status==true) {
+        if (json2.status===true) {
             setCategoria(json2.data);
             console.log(categ);
             console.log(json2);
             setStatusCateg(200);
 
-            if (json.data != null) {
+            if (json.data !== null) {
                 console.log(json2);
                 console.log(json2);
                 setProd(json.data);
-                setNulo(false);
+                //setNulo(false);
                 setstatus(200);
                 setPaginas(json.last_page);
                 setNext(json.next_page_url);
                 setPrev(json.prev_page_url);
                 setTotal(json.total);
-            } else if (json.status == false) {
+            } else if (json.status === false) {
                 setstatus(403);
                 setTotal(0);
             };
@@ -100,16 +99,16 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
             setErro(error);
         }
         const json = await response.json();
-        if (json.data != null) {
+        if (json.data !== null) {
             setProd(json.data);
-            setNulo(false);
+            //setNulo(false);
             setstatus(200);
             setPaginas(json.last_page)
             setNext(json.next_page_url);
             setPrev(json.prev_page_url);
             console.log(json.prev_page_url);
             setTotal(json.total);
-        } else if (json.status == false) {
+        } else if (json.status === false) {
             setstatus(403);
             setTotal(0);
         }
@@ -126,14 +125,14 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
             setErro(error);
         }
         const json = await response.json();
-        if (json.data != null) {
+        if (json.data !== null) {
             setProd(json.data);
-            setNulo(false);
+            //setNulo(false);
             setstatus(200);
             setTotal(json.total);
             console.log(json.total);
             console.log(Paginate);
-        } else if (json.status == false) {
+        } else if (json.status === false) {
             setstatus(403);
             setTotal(0);
         };
@@ -157,13 +156,13 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
             setErro(error);
         }
         const json = await response.json();
-        if (json.status != false) {
+        if (json.status !== false) {
             setProd(json.data);
-            setNulo(false);
+            //setNulo(false);
             setstatus(200);
             setTotal(json.total);
             console.log(json);
-        } else if (json.status == false) {
+        } else if (json.status === false) {
             setstatus(403);
             setTotal(0);
         };
@@ -180,12 +179,12 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
             setErro(error);
         }
         const json = await response.json();
-        if (json.data != "Nenhum produto encontrado") {
+        if (json.data !== "Nenhum produto encontrado") {
             setProd(json.data);
-            setNulo(false);
+            //setNulo(false);
             setstatus(200);
             console.log(json);
-        } else if (json.status == false) {
+        } else if (json.status === false) {
             setstatus(403);
             setTotal(0);
         };
@@ -201,7 +200,7 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
     }
     async function nextPage(url) {
         var response;
-        const categ = props.match.params;
+        //const categ = props.match.params;
         console.log(Paginate);
         try {
             response = await fetch(url)
@@ -209,13 +208,13 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
             setErro(error);
         }
         const json = await response.json();
-        if (json.data != "Nenhum produto encontrado") {
+        if (json.data !== "Nenhum produto encontrado") {
             setProd(json.data);
-            setNulo(false);
+            //setNulo(false);
             setstatus(200);
             setPrev(json.prev_page_url);
             console.log(json);
-        } else if (json.status == false) {
+        } else if (json.status === false) {
             setTotal(0);
             setstatus(403);
         };
@@ -232,13 +231,13 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
             setErro(error);
         }
         const json = await response.json();
-        if (json.data != "Nenhum produto encontrado") {
+        if (json.data !== "Nenhum produto encontrado") {
             setProd(json.data);
-            setNulo(false);
+            //setNulo(false);
             setstatus(200);
             setPrev(json.prev_page_url);
             console.log(json);
-        } else if (json.status == false) {
+        } else if (json.status === false) {
             setstatus(403);
         };
 
@@ -246,7 +245,7 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
     };
     async function prevPage(url) {
         var response;
-        const categ = props.match.params;
+        //const categ = props.match.params;
         console.log(Paginate);
         try {
             response = await fetch(url)
@@ -254,19 +253,19 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
             setErro(error);
         }
         const json = await response.json();
-        if (json.data != "Nenhum produto encontrado") {
+        if (json.data !== "Nenhum produto encontrado") {
             setProd(json.data);
-            setNulo(false);
+            //setNulo(false);
             setstatus(200);
             console.log(url);
-        } else if (json.status == false) {
+        } else if (json.status === false) {
             setstatus(403);
         };
 
 
     };
     useEffect(() => {
-        setNulo(true);
+        //setNulo(true);
         conexao();
     }, [id]);
     const numPage = () => {
@@ -276,10 +275,10 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
         }
         const numeros = array.map((item, indice) => (
             <div key={indice}>
-                <li className="page-item "><a className="page-link" onClick={() => {
+                <li className="page-item "><p className="page-link" onClick={() => {
                     setstatus(true);
                     EspecPage(item);
-                }}>{item}</a></li>
+                }}>{item}</p></li>
             </div>
         ))
         return numeros
@@ -311,7 +310,7 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
             )
         } else if (status === 403) {
             return <div>
-                <a>Nenhum produto cadastrado nesta categoria :c</a>
+                <p>Nenhum produto cadastrado nesta categoria :c</p>
             </div>
         } else {
             return (
@@ -376,7 +375,7 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
                     </div>
                     <div className="col mb-4 mb-lg-0 order-first order-lg-0">
                         <nav className="navbar navbar-expand-lg navbar-light bg-light rounded p-3 pt-lg-4 pb-lg-5">
-                            <a className="navbar-brand d-lg-none" href="#">Filtros</a>
+                            <span className="navbar-brand d-lg-none">Filtros</span>
                             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#filter-groups-container" aria-controls="filter-groups-container" aria-expanded="false" aria-label="Toggle navigation">
                                 <span className="navbar-toggler-icon"></span>
                             </button>
@@ -436,11 +435,11 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
                                 <nav aria-label="Page navigation">
                                     <ul className="pagination justify-content-center">
                                         <li className="page-item =">
-                                            <a className="page-link" onClick={() => { setstatus(true); prevPage(Prev) }}>Anterior</a>
+                                            <p className="page-link" onClick={() => { setstatus(true); prevPage(Prev) }}>Anterior</p>
                                         </li>
                                         {numPage()}
                                         <li className="page-item">
-                                            <a className="page-link" onClick={() => { setstatus(true); nextPage(Next) }} >Próxima</a>
+                                            <p className="page-link" onClick={() => { setstatus(true); nextPage(Next) }} >Próxima</p>
                                         </li>
                                     </ul>
                                 </nav>
@@ -452,7 +451,7 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
         )
     } else if (StatusCateg === 403) {
         return (<div>
-            <a>Categoria não encontrada :c</a>
+            <p>Categoria não encontrada :c</p>
         </div>)
     } else {
         return (

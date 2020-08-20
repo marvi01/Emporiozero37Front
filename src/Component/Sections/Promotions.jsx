@@ -69,11 +69,11 @@ class Section extends Component {
                                         </div>
                                         <div className="col">
                                             <div className="product-info">
-                                                <h3 class="h6 my-3">{item.nomeprod}</h3>
+                                                <h3 className="h6 my-3">{item.nomeprod}</h3>
 
                                                 {desconto(item.preco, item.desconto)}
                                             </div>
-                                            <Link to={`/Produto/${item.id}`}  class="btn btn-primary mb-3">Ver mais</Link>
+                                            <Link to={`/Produto/${item.id}`}  className="btn btn-primary mb-3">Ver mais</Link>
                                         </div>
                                     </div>
                                 </div>
@@ -86,7 +86,7 @@ class Section extends Component {
 
                         if (Prod.length / 4 > indice) {
                             return (
-                                <Carousel.Item>
+                                <Carousel.Item key={indice}>
                                     <div className="form-row">
                                         {Prod[indice * 4]}
                                         {Prod[indice * 4 + 1]}
@@ -124,10 +124,10 @@ class Section extends Component {
     render() {//Aqui acontece a renderização da página
         
         return (
-            <section class="section">
+            <section className="section">
                     <div className="section-header mb-3">
                         <h2 className="h4 section-title d-inline">Promoções</h2>
-                        <a href="" class="ml-2">Ver tudo</a>
+                        <a href="" className="ml-2">Ver tudo</a>
                     </div>
                     <div className="section-body">
                     {this.exibirProd()}
@@ -144,9 +144,9 @@ function desconto(preco, desconto) {
         return (<div className="price mb-3">
             <div className="old-price">
                 R${parseFloat(preco).toFixed(2).replace(".", ",")}
-                <span class="badge badge-success ml-2">{desconto}%</span>
+                <span className="badge badge-success ml-2">{desconto}%</span>
             </div>
-            <span class="h4">R${parseFloat(valoratual).toFixed(2).replace(".", ",")}
+            <span className="h4">R${parseFloat(valoratual).toFixed(2).replace(".", ",")}
             </span>
         </div>)
     } else {
@@ -154,9 +154,9 @@ function desconto(preco, desconto) {
             <div className="price mb-3">
                 <div className="old-price">
 
-                    <span class="badge badge-success ml-2"></span>
+                    <span className="badge badge-success ml-2"></span>
                 </div>
-                <span class="h4">R${parseFloat(preco).toFixed(2).replace(".", ",")}</span>
+                <span className="h4">R${parseFloat(preco).toFixed(2).replace(".", ",")}</span>
             </div>
         )
     }

@@ -70,7 +70,7 @@ export default function HeaderMeio() {
             if (logado === false) {
          //       
                 return (
-                    <ul class="nav">
+                    <ul className="nav">
                         <li className="nav-item">
                             <Link className="nav-link text-middle-brown" to="/Login">
                                 <i className="fas fa-sign-in-alt mr-2"></i>
@@ -88,7 +88,7 @@ export default function HeaderMeio() {
             } else {
                 if(user.type ===0){
                 return (
-                    <ul class="nav">
+                    <ul className="nav">
                         <li className="nav-item">
                             <Link className="nav-link text-dark-brown" to="/Carrinho">
                                 <i className="fas fa-shopping-cart mr-2"></i>
@@ -96,20 +96,20 @@ export default function HeaderMeio() {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <div class="dropdown nav-link">
+                            <div className="dropdown nav-link">
                                 <button className="btn-reset dropdown-toggle text-dark-brown" type="button" id="categorias" data-toggle="dropdown">
                                     <i className="fas fa-user-circle mr-2"></i>
                                                Conta
                             </button>
-                                <div class="dropdown-menu bg-dark">
+                                <div className="dropdown-menu bg-dark">
                                     <Link className="dropdown-item text-light pl-4 py-2" to="/Carrinho">
                                         <i className="fas fa-user-circle mr-2"></i>
                                             Editar conta
                             </Link>
-                                    <a className="dropdown-item text-light pl-4 py-2" onClick={logout}>
+                                    <span className="dropdown-item text-light pl-4 py-2" onClick={logout}>
                                         <i className="fas fa-user-circle mr-2"></i>
                                             Sair
-                                    </a>
+                                    </span>
                                 </div>
                             </div>
                         </li>
@@ -118,7 +118,7 @@ export default function HeaderMeio() {
             }else if(user.type ===1){
                 //Header Meio de Administrador
                 return (
-                    <ul class="nav">
+                    <ul className="nav">
                         <li className="nav-item">
                             <Link className="nav-link text-dark-brown" to="/Carrinho">
                                 <i className="fas fa-shopping-cart mr-2"></i>
@@ -131,15 +131,15 @@ export default function HeaderMeio() {
                                     <i className="fas fa-user-circle mr-2"></i>
                                                Conta
                             </button>
-                                <div class="dropdown-menu bg-dark">
+                                <div className="dropdown-menu bg-dark">
                                     <Link className="dropdown-item text-light pl-4 py-2" to="/Carrinho">
                                         <i className="fas fa-user-circle mr-2"></i>
                                             Editar conta
                             </Link>
-                                    <a className="dropdown-item text-light pl-4 py-2" onClick={logout}>
+                                    <span className="dropdown-item text-light pl-4 py-2" onClick={logout}>
                                         <i className="fas fa-user-circle mr-2"></i>
                                             Sair
-                                    </a>
+                                    </span>
                                 </div>
                             </div>
                         </li>
@@ -149,7 +149,7 @@ export default function HeaderMeio() {
         }
         } else {
             return (
-                <ul class="nav">
+                <ul className="nav">
                     <li className="nav-item">
                         <Link className="nav-link text-dark-brown" to="/">
                             <i className="fas fa-spinner mr-2"></i>
@@ -161,7 +161,7 @@ export default function HeaderMeio() {
         }
     }
 
-    const logout = () => {
+   async function logout() {
         var response;
         let confirma = window.confirm('Você está saindo de sua conta');
         if (confirma) {
@@ -170,7 +170,7 @@ export default function HeaderMeio() {
 
             if (token != null) {
                 try {
-                    response = fetch("https://anorosa.com.br/Emporio037/api/logout?token=" + token, { method: 'POST' }).then((resposta) => {
+                    response = await fetch("https://anorosa.com.br/Emporio037/api/logout?token=" + token, { method: 'POST' }).then((resposta) => {
                         if (resposta.ok) {
                             localStorage.removeItem("JWT_token");
                             localStorage.removeItem("users");
@@ -181,32 +181,12 @@ export default function HeaderMeio() {
                 } catch (error) {
 
                 }
-            }
-            window.location.reload(false);
-        }
-
-    }
-    const logoutAdmin = () => {
-        var response;
-        let confirma = window.confirm('Você está saindo de sua conta');
-        if (confirma) {
-
-
-
-            if (token != null) {
-                try {
-                    response = fetch("https://anorosa.com.br/Emporio037/api/logout?token=" + token, { method: 'POST' }).then((resposta) => {
-                        if (resposta.ok) {
-                            localStorage.removeItem("JWT_token");
-                            localStorage.removeItem("users");
-                            setToken("");
-                        }
-                    });
-                } catch (error) {
-
+                const json = await response.json();
+                if(json.status === false){
                 }
+                window.location.reload(false);
             }
-            window.location.reload(false);
+            
         }
 
     }
