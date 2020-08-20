@@ -2,6 +2,7 @@ import React, { Component } from 'react'; //Importa o método componente e react
 import './Produtos.css';//Importa css
 import vodka from "../../imagens/vodka2.png"
 import Carousel from 'react-bootstrap/Carousel';
+import { Link } from 'react-router-dom';
 
 var duplicado = 0;
 var dupli2 = 0;
@@ -61,21 +62,24 @@ class Produto extends Component {
                 this.setState({ error })
             }
             const json = await response.json();
-
-            if (json != null) {
+            
+            
+            if (json.error === null) {
                 this.setState({ data: json.data, nulo: false });
                 console.log(_url);
-                console.log(json);
+                console.log(":DDDDDDDDDDD");
             }
             this.setState({ estado: true });
         }
     }
     exibirProd() {
+        console.log(this.state.nulo);
+        console.log("+++++++++++++++++++++++++++++++");
         if (this.state.erro !== null) {
 
         } else {
             if (this.state.estado === true) {
-                if (this.state.nulo === false) {
+                if (this.state.nulo === true) {
                     const Prod = this.state.data.map((item, indice) => {
                         return (
 
@@ -93,7 +97,7 @@ class Produto extends Component {
 
                                                 {desconto(item.preco, item.desconto)}
                                             </div>
-                                            <a href="#" class="btn btn-primary mb-3">Ver mais</a>
+                                            <Link to={"/Produto/"+item.id} class="btn btn-primary mb-3">Ver mais</Link>
                                         </div>
                                     </div>
                                 </div>

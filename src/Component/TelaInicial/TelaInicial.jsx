@@ -24,7 +24,7 @@ class TelaInicial extends Component {
                         <Categorias />
                         <BestSellers/>
                         <Promotions />
-                        {/*<Releases />*/}
+                        <Releases />
                     </div>
                 </main>
             </div>

@@ -46,7 +46,6 @@ export default function HeaderMeio() {
             console.log(json);
             if (json.status != false) {
                 setUser(json);
-                console.log(user);
                 setLogado(true);
             } else {
                 localStorage.removeItem("JWT_token");
@@ -69,6 +68,7 @@ export default function HeaderMeio() {
     function menu() {
         if (estado === true) {
             if (logado === false) {
+         //       
                 return (
                     <ul class="nav">
                         <li className="nav-item">
@@ -84,11 +84,11 @@ export default function HeaderMeio() {
                         </Link>
                         </li>
                     </ul>
-                )
+                )//}
             } else {
+                if(user.type ===0){
                 return (
                     <ul class="nav">
-
                         <li className="nav-item">
                             <Link className="nav-link text-dark-brown" to="/Carrinho">
                                 <i className="fas fa-shopping-cart mr-2"></i>
@@ -110,14 +110,43 @@ export default function HeaderMeio() {
                                         <i className="fas fa-user-circle mr-2"></i>
                                             Sair
                                     </a>
-
-
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                )
+            }else if(user.type ===1){
+                //Header Meio de Administrador
+                return (
+                    <ul class="nav">
+                        <li className="nav-item">
+                            <Link className="nav-link text-dark-brown" to="/Carrinho">
+                                <i className="fas fa-shopping-cart mr-2"></i>
+                                            Admin
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <div class="dropdown nav-link">
+                                <button className="btn-reset dropdown-toggle text-dark-brown" type="button" id="categorias" data-toggle="dropdown">
+                                    <i className="fas fa-user-circle mr-2"></i>
+                                               Conta
+                            </button>
+                                <div class="dropdown-menu bg-dark">
+                                    <Link className="dropdown-item text-light pl-4 py-2" to="/Carrinho">
+                                        <i className="fas fa-user-circle mr-2"></i>
+                                            Editar conta
+                            </Link>
+                                    <a className="dropdown-item text-light pl-4 py-2" onClick={logout}>
+                                        <i className="fas fa-user-circle mr-2"></i>
+                                            Sair
+                                    </a>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 )
             }
+        }
         } else {
             return (
                 <ul class="nav">
@@ -144,6 +173,7 @@ export default function HeaderMeio() {
                     response = fetch("https://anorosa.com.br/Emporio037/api/logout?token=" + token, { method: 'POST' }).then((resposta) => {
                         if (resposta.ok) {
                             localStorage.removeItem("JWT_token");
+                            localStorage.removeItem("users");
                             setToken("");
                         }
                     });
@@ -151,6 +181,7 @@ export default function HeaderMeio() {
 
                 }
             }
+            window.location.reload(false);
         }
 
     }

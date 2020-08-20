@@ -1,8 +1,8 @@
 import React, { Component } from 'react'; //Importa o método componente e react
 import './HeaderInferior.css';
 import { Link } from 'react-router-dom';
-
 class HeaderInferior extends Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -14,10 +14,13 @@ class HeaderInferior extends Component {
                 "created_at": "",
                 "updated_at": ""
             }],
+            type: 0,
             status: false,
         };
     };
     async componentDidMount() {
+        
+        
         var response;
         try {
             response = await fetch("https://anorosa.com.br/Emporio037/api/categoria/list");
@@ -27,9 +30,26 @@ class HeaderInferior extends Component {
             this.setState({ error })
         }
         const json = await response.json();
-       
         if (json.data != null) {
             this.setState({ data: json, nulo: false });
+        }
+        if(localStorage.getItem("JWT_token") !== null){
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem("JWT_token") },
+            };
+            try {
+                response = await fetch("https://anorosa.com.br/Emporio037/api/me", requestOptions);
+            } catch (error) {
+
+            }
+            const json2 = await response.json();
+            if (json2.nome !== null) {
+                this.setState({ type: json2.type });
+                
+            } else {
+                localStorage.removeItem("JWT_token");
+            }
         }
         this.setState({ estado: true });
     }
@@ -37,7 +57,6 @@ class HeaderInferior extends Component {
     exibeListarCategoria() {
         const { erro } = this.state;
         const { data } = this.state.data;
-       
         if (erro) {
 
         } else {
@@ -54,6 +73,17 @@ class HeaderInferior extends Component {
             }
         }
     }
+    admin(){
+        if(localStorage.getItem("JWT_token") !== null){
+            if(this.state.type !== 0){
+            return(
+                <li className="nav-item">
+                    <Link to="/yeye" className="nav-link">Administração</Link>
+                </li>
+            );
+            }
+    }
+    }
     render() {//Aqui acontece a renderização da página
         return (
             <div className="header-bottom  bg-dark-brown ">
@@ -68,6 +98,7 @@ class HeaderInferior extends Component {
                                 <li className="nav-item">
                                     <Link to="/" className="nav-link">Inicio</Link>
                                 </li>
+                                {this.admin()}
                                 <li className="nav-item">
                                     <div class="dropdown nav-link">
                                         <button class="btn-reset dropdown-toggle" type="button" id="categorias" data-toggle="dropdown">

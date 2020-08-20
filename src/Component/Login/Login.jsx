@@ -14,7 +14,7 @@ class Login extends Component {
         "password": "",
       },
       redirect: false,
-      lembrar: "off",
+      lembrar: false,
       erro: null,
     }
   }
@@ -45,21 +45,29 @@ class Login extends Component {
         </div>
         <div className="col bg-light p-md-0" id="form-login" style={{backgroundImage: 'url('+ background +')'}}>
             <div className="col-sm-10 col-lg-8 col-xl-6">
-                <form action="" class="px-sm-5 pb-sm-5">
+                <form onSubmit={this.handleSubmit} class="px-sm-5 pb-sm-5">
                     <Link className="d-block mb-3" to="/">
                         <i className="fas fa-long-arrow-alt-left mr-2"></i>
                           Voltar
                     </Link>
                     <div className="form-group">
                         <label for="email" >Email</label>
-                        <input type="email" id="email" className="form-control" required />
+                        <input type="email" id="email" onChange={this.handleInputChange} className="form-control" name="email" required />
                     </div>
                     <div className="form-group">
                         <label for="password" >Senha</label>
-                        <input type="password" id="password" className="form-control mb-2" required />
+                        <input name="password" type="password" id="password" onChange={this.handleInputChange} className="form-control mb-2" required />
                         <div className="custom-control custom-checkbox">
-                            <input type="checkbox" name="keepMe" className="custom-control-input" id="keepMe" />
-                            <label className="custom-control-label" for="keepMe">Mantenha-me conectado</label>
+                            <input onChange={()=>{
+                              if(!this.state.lembrar){
+                                this.setState({lembrar:true})
+                                console.log(this.state.lembrar);
+                              }else {
+                                this.setState({lembrar:false})
+                                console.log(this.state.lembrar);
+                              }
+                            }} type="checkbox" name="keepMe" className="custom-control-input" id="keepMe" />
+                            <label  className="custom-control-label" for="keepMe">Mantenha-me conectado</label>
                         </div>
                     </div>
                     <button type="submit" className="btn btn-block btn-success">Logar</button>
@@ -76,6 +84,7 @@ class Login extends Component {
     );
   }
   handleSubmit = event => {
+    if(this.state.lembrar){
     fetch("https://anorosa.com.br/Emporio037/api/remember", {
       method: "post",
       body: JSON.stringify(this.state.data),
@@ -96,29 +105,47 @@ class Login extends Component {
           });
         }
       }).then(token =>{ 
-
-        console.log(token.access_token)
+        console.log(token.user)
         console.log(token)
-        localStorage.setItem("JWT_token",token.access_token);
-        window.location.reload('http://localhost:3000/')
+        localStorage.setItem("JWT_token",token.data.access_token);
+        localStorage.setItem("users",JSON.stringify(token.data.user))
+        window.location.reload('http://localhost:3000/');
+      })
+      .catch(erro => this.setState({ erro: erro }));
+    }else if(!this.state.lembrar){
+      fetch("https://anorosa.com.br/Emporio037/api/login", {
+      method: "post",
+      body: JSON.stringify(this.state.data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(data => {
+        if (data.ok) {
+            this.setState({ redirect: true });
+            return data.json();
+
+        } else {
+          data.json().then(data => {
+            if (data.error) {
+              this.setState({ erro: data.error });
+            }
+          });
+        }
+      }).then(token =>{ 
+
+        console.log(token.user)
+        console.log(token)
+        localStorage.setItem("JWT_token",token.data.access_token);
+        localStorage.setItem("users",JSON.stringify(token.data.user))
+        window.location.reload('http://localhost:3000/');
         
       })
       .catch(erro => this.setState({ erro: erro }));
+
+    }
     event.preventDefault();
   };
-  handleInputCheck = event => {
-    if (this.state.lembrar == "off") {
-      const target = event.target;
-      const name = target.name;
-      let value = target.value;
-      this.setState({ lembrar: value });
-      console.log(this.state.lembrar)
-    } else {
-      this.setState({ lembrar: "off" });
-      console.log(this.state.lembrar)
-    }
-
-  }
   handleInputChange = event => {
     const target = event.target;
     const name = target.name;
@@ -126,6 +153,7 @@ class Login extends Component {
     this.setState(prevState => ({
       data: { ...prevState.data, [name]: value }
     }));
+    console.log(this.state.data);
   };
   render() {
     const { redirect } = this.state;
@@ -133,7 +161,6 @@ class Login extends Component {
     if (redirect) {
       return <Redirect to="/" />;
     } else {
-      console.log(this.state.erro)
       return (
         <div>
           {  this.htmlLogin()}
