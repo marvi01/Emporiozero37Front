@@ -16,7 +16,7 @@ class Cadastro extends Component {
                 "nasc": "",
                 "email": "",
                 "password": "",
-                "email_verified_at":null
+                "email_verified_at": null
             },
             status: true,
             erro: null,
@@ -155,18 +155,44 @@ class Cadastro extends Component {
         return htmlCadastro;
     }
     handleSubmit = event => {
-        fetch("https://anorosa.com.br/Emporio037/api/usuario/add", {
+         fetch("https://anorosa.com.br/Emporio037/api/usuario/add", {
             method: "post",
             body: JSON.stringify(this.state.data),
             headers: {
                 "Content-Type": "application/json"
             }
         })
-            .then(data => {
+            .then( data => {
                 if (data.ok) {
+                     fetch("https://anorosa.com.br/Emporio037/api/login", {
+                        method: "post",
+                        body: JSON.stringify(this.state.data),
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    }).then(async token => {
+                        this.setState({ loading: false });
+                        if (token.ok) {
+                            var json = await token.json();
+                            if (json.authenticated === false) {
+                                window.confirm('Credenciais inválidas');
+                            } else {
+                                localStorage.setItem("JWT_token", json.data.access_token);
+                                this.setState({ redirect: true });
+                                window.location.reload('http://localhost:3000/');
+                            }
+                        } else {
+                            window.confirm('Erro no banco de dados :C');
+                            data.json().then(data => {
+                                if (data.error) {
+                                    this.setState({ erro: data.error });
+                                }
+                            });
+                        }
+                    })
+                        .catch(erro => this.setState({ erro: erro }));
                     this.setState({ redirect: true });
                     console.log(JSON.stringify(data));
-                    alert("Cadastrado com sucesso!")
                 } else {
                     data.json().then(data => {
                         if (data.error) {
