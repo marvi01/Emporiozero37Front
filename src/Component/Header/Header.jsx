@@ -21,6 +21,7 @@ import AdminCateg from '../Administrador/AdminCateg/AdminCateg';
 import AdminDestaque from '../Administrador/AdminDestaque/AdminDestaque';
 import EditCarrossel from '../Administrador/EditCarrossel/EditCarrossel';
 import AddCateg from '../Administrador/AdminCateg/AddCateg';
+import Checkout from '../Checkout/Checkout';
 
 function Header() {
   return (
@@ -46,6 +47,7 @@ function Header() {
           <Route path="/Admin/Destaque" exact component={AdminDestaque} />
           <Route path="/Admin/Carrossel" exact component={EditCarrossel} />
           <Route path="/Admin/AdicionarCategoria" exact component={AddCateg} />
+          <Route path="/FinalizarCompra" exact component={Checkout} />
       </Switch>
     </div>
   );
