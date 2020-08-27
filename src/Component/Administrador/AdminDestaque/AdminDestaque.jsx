@@ -53,6 +53,11 @@ class AdminDestaque extends Component {
         const Prod = this.state.produto;
         const End = this.state.status;
         console.log(this.state);
+        const token = localStorage.getItem("JWT_token");
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Authorization': 'Bearer ' + token },
+        };
         if (End) {
             const ProdutoCarrinho = Prod.map((item, indice) => {
                 let desta;
@@ -61,24 +66,25 @@ class AdminDestaque extends Component {
                     desta=(
                         <input onChange={()=>{
                             if(item.destaque===1){
-                                fetch("http://anorosa.com.br/Emporio037/api/produto/removerdestaque/"+item.id)
+                                fetch("http://anorosa.com.br/Emporio037/api/produto/removerdestaque/"+item.id,requestOptions)
                             }else if(item.destaque===0){
-                                fetch("http://anorosa.com.br/Emporio037/api/produto/removerdestaque/"+item.id)
+                                fetch("http://anorosa.com.br/Emporio037/api/produto/removerdestaque/"+item.id, requestOptions)
                             }
                         }}  type="checkbox" defaultChecked/>
                     )
                 }else{
                     desta=(
                         <input onChange={()=>{
+
                             if(item.destaque===1){
-                                fetch("http://anorosa.com.br/Emporio037/api/produto/removerdestaque/"+item.id)
+                                fetch("http://anorosa.com.br/Emporio037/api/produto/removerdestaque/"+item.id, requestOptions)
                                 .then(data => data.json().then(data => {
                                     console.log(data);
                                     //window.location.reload()
                                 }))
                                 .catch(erro => this.setState(erro));
                             }else if(item.destaque===0){
-                                fetch("http://anorosa.com.br/Emporio037/api/produto/destaque/"+item.id)
+                                fetch("http://anorosa.com.br/Emporio037/api/produto/destaque/"+item.id,requestOptions)
                                 .then(data => data.json().then(data => {
                                     console.log(data);
                                     //window.location.reload()

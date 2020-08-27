@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import './EspProd.css';
 import { Redirect } from "react-router-dom";
+import { createPortal } from 'react-dom';
 //import { Link } from 'react-router-dom';
 //import HeaderMeio from '../Header/HeaderMeio/HeaderMeio';
 //import Carrinho from '../Carrinho/Carrinho';
@@ -61,6 +62,7 @@ class ProdutoEspc extends Component {
       // this.setState(Object.assign(this.state.carrinho,{produto_id:id}));
     }
     this.setState({ estado: true });
+    this.promocao()
   }
 
   //função para fazer acesso ao Input 
@@ -69,15 +71,15 @@ class ProdutoEspc extends Component {
   };
   //Função para calcular o falor total do produto 
   preco = () => {
-    let qde =parseFloat(`${this.input.value}`);
-    qde= qde+1;
-    var valorDesc=0;
+    let qde = parseFloat(`${this.input.value}`);
+    qde = qde + 1;
+    var valorDesc = 0;
     var preco = parseFloat(this.state.data.preco);
     if (this.state.data.desconto !== 0) {
       var desconto = parseFloat(this.state.data.desconto);
       valorDesc = ((preco) * desconto / 100) * qde;
-    } 
-    let valor = (preco*qde)-valorDesc;
+    }
+    let valor = (preco * qde) - valorDesc;
     console.log(qde);
     this.setState(prevState => ({
       data: { ...prevState.data, ValorTotal: valor }
@@ -94,26 +96,7 @@ class ProdutoEspc extends Component {
       );
     }
   }
-  logado = () => {
-    let log = localStorage.getItem("JWT_token");
-    if (log && log.length) {
-      return (
-
-        <button onClick={this.carrinho} type="submit" className="btn d-block mx-auto text-white" >Adicionar</button>
-
-      )
-    } else {
-      return (
-
-        <button onClick={this.carrinho} type="submit" className="btn d-block mx-auto text-white" disabled >Adicionar</button>
-
-      )
-    }
-  }
   carrinho = () => {
-
-
-
     console.log(this.state.data);
     let qde = this.state.data.quantItem;
     let obj = sessionStorage.getItem(this.state.data.id)
@@ -141,44 +124,77 @@ class ProdutoEspc extends Component {
       }
     }
   }
+  promocao = () => {
+    const preco = this.state.data.preco;
+    const desconto = this.state.data.desconto;
+    let valorr = 0;
+    var obj;
+    if (desconto === 0 || desconto === null) {
+      valorr = preco;
+      this.setState(prevState => ({
+        data: { ...prevState.data, ValorTotal:valorr }
+      }));
+    } else {
+      var valoratual = preco - preco * parseFloat(desconto) / 100;
+      this.setState(prevState => ({
+        data: { ...prevState.data, ValorTotal: valoratual }
+      }));
+      
+    }
+    
+    return obj;
+  }
   //HTML do Produto 
   exibeProduto() {
     if (this.state.estado !== false) {
       if (this.state.nulo !== true) {
-
+        var valor;
+        if (this.state.data.desconto === 0) {
+          valor= (
+            <div className="bg-light p-4 mb-2 text-center">
+              <h2 className="mb-0">R$ {parseFloat(this.state.data.ValorTotal).toFixed(2).replace(".", ",")}</h2>
+            </div>
+          )
+        } else {
+          valor= (<div className="bg-light p-4 mb-2 text-center">
+          <span class="old-price text-muted">R${this.state.data.preco.toFixed(2).replace(".", ",")}</span>
+          <span className="badge badge-success ml-2">{this.state.data.desconto}% OFF</span>
+          <h2 className="mb-0">R${this.state.data.ValorTotal.toFixed(2).replace(".", ",")}</h2>
+        </div>)
+        }
         return (
           <div className="container py-5">
             <h1 className="h3 text-center">{this.state.data.nomeprod}</h1>
             <hr className="mb-5" />
-           <div className="row">
-             
-             <div className="order-last order-md-0 order-lg-first col-md-6 col-lg">
-               <div className="product-esp-info">
-                    <div className="product-info-icon">
-                        <i class="fas fa-info"></i>
-                    </div>
-                    <div className="product-info-text">
-                        <h2 className="h6">Descrição:</h2>
-                        <p>{this.state.data.descricao}</p>
-                    </div>
+            <div className="row">
+
+              <div className="order-last order-md-0 order-lg-first col-md-6 col-lg">
+                <div className="product-esp-info">
+                  <div className="product-info-icon">
+                    <i class="fas fa-info"></i>
+                  </div>
+                  <div className="product-info-text">
+                    <h2 className="h6">Descrição:</h2>
+                    <p>{this.state.data.descricao}</p>
+                  </div>
                 </div>
                 <div className="product-esp-info">
-                    <div className="product-info-icon">
-                        <i class="fas fa-percentage"></i>
-                    </div>
-                    <div className="product-info-text">
-                        <h2 className="h6">Teor Alcoólico</h2>
-                        <p>{this.state.data.teor}%</p>
-                    </div>
+                  <div className="product-info-icon">
+                    <i class="fas fa-percentage"></i>
+                  </div>
+                  <div className="product-info-text">
+                    <h2 className="h6">Teor Alcoólico</h2>
+                    <p>{this.state.data.teor}%</p>
+                  </div>
                 </div>
                 <div className="product-esp-info">
-                    <div className="product-info-icon">
-                        <i className="fas fa-wine-bottle"></i>
-                    </div>
-                    <div className="product-info-text">
-                        <h2 className="h6 p-0">Volume</h2>
-                        <p>{this.state.data.ml} ml</p>
-                    </div>
+                  <div className="product-info-icon">
+                    <i className="fas fa-wine-bottle"></i>
+                  </div>
+                  <div className="product-info-text">
+                    <h2 className="h6 p-0">Volume</h2>
+                    <p>{this.state.data.ml} ml</p>
+                  </div>
                 </div>
               </div>
               <div className="order-first order-lg-0 mb-4 mb-lg-0 col-lg-5 col-xl-6">
@@ -188,10 +204,10 @@ class ProdutoEspc extends Component {
               </div>
               <div className="col-md-6 col-lg mb-4 mb-md-0">
 
-                {promocao(this.state.data.preco, this.state.data.desconto)}
+                {valor}
                 <div id="form-quantity" className="py-2 bg-dark-brown rounded">
                   <div className="row no-gutters align-items-center py-2 bg-dark-brown rounded">
-                    <div className="col-auto">
+                  <div className="col-auto">
                       <div className="input-group" id="quantity">
                         <div className="input-group-append">
                           <button type="button" className="btn btn-reset text-middle-brown">
@@ -207,7 +223,7 @@ class ProdutoEspc extends Component {
                             }}></i>
                           </button>
                         </div>
-                        <input ref={this.handleInputRef}  type="text" className="input-quantity form-control-lg" name="quantItem" readonly="true" value={this.state.data.QuantProd} />
+                        <input ref={this.handleInputRef} type="text" className="input-quantity form-control-lg" name="quantItem" readonly="true" value={this.state.data.QuantProd} />
                         <div className="input-group-append">
                           <button type="button" className="btn btn-reset text-middle-brown" onClick={() => {
                             this.setState(prevState => ({
@@ -222,7 +238,7 @@ class ProdutoEspc extends Component {
                       </div>
                     </div>
                     <div className="col">
-                      {this.logado()}
+                    <button onClick={this.carrinho} type="submit" className="btn d-block mx-auto text-white" >Adicionar</button>
                     </div>
                   </div>
                 </div>
@@ -238,34 +254,6 @@ class ProdutoEspc extends Component {
       }
     }
   }
-
-
-  /*handleSubmit = event => {
-    fetch("https://anorosa.com.br/Emporio037/api/itemcarrinhouser/add", {
-      method: "post",
-      body: JSON.stringify(this.state.carrinho),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(data => {
-        if (data.ok) {
-          this.setState({ redirect: true });
-          console.log(this.state.carrinho);
-        } else {
-          data.json().then(data => {
-            if (data.error) {
-              this.setState({ erro: data.error });
-            }
-          });
-        }
-      })
-      .catch(erro => this.setState({ erro: erro }));
-    event.preventDefault();
-  };
-  
-  
-  };*/
 
 
   render() {
@@ -286,20 +274,7 @@ class ProdutoEspc extends Component {
 };
 export default ProdutoEspc;
 
-function promocao(preco, desconto) {
-  if (desconto === 0 || desconto === null) {
-    return (<div className="bg-light p-4 mb-2 text-center">
-      <h2 className="mb-0">R$ {parseFloat(preco).toFixed(2).replace(".", ",")}</h2>
-    </div>);
-  } else {
-    var valoratual = preco - preco * parseFloat(desconto) / 100;
-    return (<div className="bg-light p-4 mb-2 text-center">
-      <span class="old-price text-muted">R${preco.toFixed(2).replace(".", ",")}</span>
-      <span className="badge badge-success ml-2">{desconto}% OFF</span>
-      <h2 className="mb-0">R${valoratual.toFixed(2).replace(".", ",")}</h2>
-    </div>);
-  }
-}
+
 function gerarJson(json) {
   return {
     "id": json.data.id,
@@ -319,3 +294,6 @@ function gerarJson(json) {
     "ValorTotal": 0
   };
 }
+/**
+ * 
+ */

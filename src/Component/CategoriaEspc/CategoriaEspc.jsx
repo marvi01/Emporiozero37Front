@@ -435,11 +435,11 @@ export default function CategoriaEspec(props) {//Este é um hook, ele retorna al
                                 <nav aria-label="Page navigation">
                                     <ul className="pagination justify-content-center">
                                         <li className="page-item =">
-                                            <p className="page-link" onClick={() => { setstatus(true); prevPage(Prev) }}>Anterior</p>
+                                            <p className="page-link" onClick={() => {if(Prev!==null) setstatus(true); prevPage(Prev) }}>Anterior</p>
                                         </li>
                                         {numPage()}
                                         <li className="page-item">
-                                            <p className="page-link" onClick={() => { setstatus(true); nextPage(Next) }} >Próxima</p>
+                                            <p className="page-link" onClick={() => { if(Next!==null) setstatus(true); nextPage(Next) }} >Próxima</p>
                                         </li>
                                     </ul>
                                 </nav>
