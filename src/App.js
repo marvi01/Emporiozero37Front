@@ -26,6 +26,7 @@ function App() {
           <Route path="/Admin/Categoria" exact component={Header} />
           <Route path="/Admin/Destaque" exact component={Header} />
           <Route path="/Admin/Carrossel" exact component={Header} />
+          <Route path="/Admin/AdicionarCategoria" exact component={Header} />
       </Switch>
     </div>
   );
