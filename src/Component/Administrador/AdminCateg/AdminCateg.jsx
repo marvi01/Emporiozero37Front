@@ -71,7 +71,7 @@ class AdminCateg extends Component {
             <td></td>
             <td ></td>
             <td >
-                <Link to="/Admin/AdicionaProduto" className="btn btn-primary">Criar Categoria</Link>
+                <Link to="/Admin/AdicionarCategoria" className="btn btn-primary">Criar Categoria</Link>
             </td>
         </tr>
     )
