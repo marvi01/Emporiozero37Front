@@ -1,0 +1,435 @@
+#checkout {
+    align-items: start;
+}
+#row-content {
+    background:white;
+    align-items:start;
+}
+.checkout {
+    box-shadow: 0 .25rem 0.5rem rgba(0,0,0,.15)!important;
+}
+.col {
+    min-width: unset !important;
+}
+/* FORMULÁRIO */
+#checkout .step-title {
+    font-size: 1.5rem;
+    margin-left: 1rem;
+    margin-bottom: 0;
+}
+#checkout .form-step {
+    background-color:white;
+    padding:1rem;
+    min-height: 350px;
+}
+#checkout .form-step p:first-child {
+    margin-bottom: 2rem;
+}
+#checkout .form-step-title {
+    font-size: 1.25rem;
+    margin-bottom: 0;
+}
+#checkout .step-actions {
+    display:flex;
+    justify-content: flex-end;
+}
+
+
+/* CONTROLE CUSTOMIZADO DE CHECKBOX */
+#checkout .custom-controls-container {
+    margin-bottom: 2rem;
+}
+#checkout .custom-checkbox-control {
+    display:flex;
+    margin-bottom: 2rem;
+    padding:0;
+    padding-top: 1rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 .125rem 0.25rem rgba(0,0,0,.15)!important;
+    position: relative;
+}
+#checkout .custom-checkbox-input {
+    align-self:center;
+    order: 13;
+    margin-right: 1rem;
+}
+#checkout .custom-checkbox-label {
+    flex:1;
+    margin: 0;
+    cursor:pointer;
+}
+#checkout .custom-checkbox-label-content {
+    min-height:75px;
+    padding: 0.5rem 0;
+}
+#checkout .custom-checkbox-label-text {
+    align-self: center;
+    margin-left: 1rem;
+}
+#checkout .custom-checkbox-label-icon {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color:brown;
+    transition: all 0.3s ease-out;
+}
+#checkout .custom-checkbox-icon {
+    font-size: 20pt;
+    height: 100%;
+    display:flex;
+    justify-content:center;
+    align-items: center;
+}
+#checkout .custom-checkbox-input:checked + label .custom-checkbox-label-icon {
+    background-color: brown;
+    color:white !important;
+}
+#checkout .custom-checkbox-input:checked + label .custom-checkbox-icon {
+    font-size: 15pt;
+}
+
+
+/* CONTAINER PARA EXIBIR AS INFORMAÇÕES */
+#checkout .show-info-container {
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.15);
+    margin-bottom: 3rem;
+}
+#checkout .show-info-container .list-group-item {
+    padding:0;
+}
+#checkout .show-info-content {
+    min-height: 100px;
+    align-items:center;
+}
+#checkout .show-info-icon {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    text-align:center;
+    font-size: 20pt;
+    margin:0 .5rem;
+    color:brown;
+}
+#checkout .show-info-icon i {
+    margin-bottom: 0;
+}
+#checkout .show-info-text {
+    padding: .5rem 0;
+    align-items: center;;
+}
+
+/* ANIMAÇÃO DE FLIP NO CARTÃO */
+#checkout .flip-card {
+    width: 100%;
+    perspective: 1000px;
+    margin: 1rem auto;
+}
+#checkout .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+#checkout .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+#checkout .flip-card img {
+    width: 100%;
+    height: auto;
+}
+#checkout .flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+#checkout .flip-card-back {
+    transform: rotateY(180deg);
+}
+
+/* ESTILO PARA CONTROLE DE OPÇÃO DE FRETE */
+address {
+    margin:0;
+    margin-bottom: 0.5rem;
+    padding: 0;
+}
+#checkout .shipping-name {
+    margin-bottom: 0.25rem;
+    display:inline-block;
+    font-size: 1rem;
+}
+#checkout .shipping-price {
+    margin-left: 0.5rem; 
+}
+#checkout .shipping-info {
+    margin-bottom: 0;
+}
+#checkout .shipping-price-confirm {
+    width: 100px;
+}
+#checkout .price-confirm {
+    font-size: 1.25rem;
+    margin-bottom: 0;
+}
+
+
+/* PASSOS DO FORMULÁRIO */
+#checkout .steps {
+    display:flex;
+    margin-bottom: 1rem;
+}
+#checkout .step {
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    text-align:center;
+    justify-content:center;
+    flex: 1;
+    position: relative;
+}
+#checkout .step-info {
+    font-weight: 600;
+    font-size: 8pt;
+    display:block;
+    color: darkgray;
+}
+#checkout .step-indicator {
+    background-color: darkgray;
+    display:inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    line-height: 30px;
+    text-align: center;
+    margin-top: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+#checkout .step-indicator i {
+    font-size: .75rem;
+}
+#checkout .step-line {
+    position: absolute;
+    z-index: 0;
+    bottom: 15px;
+    left: 50%;
+    height: 4px;
+    width: 100%;
+    transform: translateY(2px);
+    background-color: darkgray;
+}
+#checkout .step.completed .step-info {
+    color: green;
+}
+#checkout .step .icon-default {
+    display:inline-block;
+}
+#checkout .step .icon-active {
+    display:none;
+}
+#checkout .step.completed .step-indicator {
+    background-color: green;
+    color: white;
+}
+#checkout .step.completed .icon-default {
+    display:none;
+}
+#checkout .step.completed .icon-active {
+    display:inline-block;
+}
+#checkout .step.completed .step-line {
+    background-color:green;
+}
+#checkout .step.active .step-line {
+    background-color: blue;
+}
+#checkout .step.active .step-info {
+    color:blue;
+}
+#checkout .step.active .step-indicator {
+    color:white;
+    background-color: blue;
+}
+
+
+ /* CARRINHO DE COMRPAS */
+#checkout .checkout-cart-details {
+    order: -1;
+    position: relative;
+    color: #f8f9fa!important;
+    margin-bottom: 1.5rem;
+}
+#checkout .checkout-cart-details::before {
+    content:"";
+    display:none;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    width: calc(100% - 0.5rem);
+    height: calc(100% + 5.5rem);
+    background-color: #343a40!important;
+    z-index: 0;
+    border-radius: 0.25rem;
+}
+#checkout .checkout-cart-details-info {
+    width:100%;
+    position: relative;
+    z-index: 1;
+    padding:1.5rem 0;
+    border-radius: 0.5rem;
+    background-color: #343a40!important;
+}
+#checkout .cart-product-details-container {
+    margin-bottom: 1rem;
+}
+#checkout .cart-product-details {
+    margin-bottom: 0.5rem;
+    display:flex;
+    justify-content:space-between;
+}
+#checkout .cart-product-details span {
+    display:block;
+}
+#checkout .cart-value-info {
+    display:flex;
+    justify-content:space-between;
+    margin-bottom: 1rem;
+}
+@media only screen and (min-width: 576px) {
+    #checkout {
+        background:transparent !important;
+    }
+    #row-content {
+        background-color: #f8f9fa!important;
+    }
+    #checkout .form-step {
+        padding: 1.5rem;
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+        border-radius:0.25rem;
+    }
+    #checkout .step-title {
+        margin-left: 0;
+        margin-bottom: 0.5rem;
+    }
+    #checkout .form-step p:first-child {
+        margin-bottom:1rem;
+    }
+    #checkout .form-step-title {
+        margin-bottom: 1.5rem;
+    }
+    #checkout .step-info {
+        font-size: 11pt;
+    }
+    #checkout .step-indicator {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+    }
+    #checkout .step-indicator i {
+        font-size: 1rem;
+    }
+    #checkout .step-line {
+        bottom: 20px;
+    }
+    #checkout .custom-checkbox-control {
+        overflow:hidden;
+        margin-bottom: 1rem;
+        padding-top: 0;
+    }
+    #checkout .custom-checkbox-label-content {
+        padding: 0; 
+    }
+    #checkout .custom-checkbox-label-text {
+        padding: 0.5rem 0;
+    }
+    #checkout .custom-checkbox-label-icon {
+        position: unset;
+        left: unset;
+        top: unset;
+        transform:unset;
+        width: unset;
+        height: unset;
+        border-radius: unset;
+    }
+    #checkout .custom-checkbox-icon {
+        width: 60px;
+    }
+    #checkout .custom-checkbox-input:checked + label .custom-checkbox-icon {
+        font-size: 20pt;
+    }
+    #checkout .show-info-container .list-group-item {
+        padding: 0 1rem !important;
+    }
+    #checkout .show-info-icon {
+        margin-right: 1rem;
+        margin-left: 0;
+    }
+}
+@media only screen and (min-width: 768px) {
+    #checkout .step-info {
+        font-size: 12pt;
+    }
+    #checkout .checkout-cart-details {
+        order:13;
+        margin-bottom: 0;
+    }
+    #checkout .cart-product-details-container {
+        margin-bottom: 0;
+    }
+    #checkout .cart-product-details {
+        display:block;
+        justify-content: unset;
+    }
+    #checkout .checkout-cart-details-info {
+        padding: 3rem 0;
+    }
+    #checkout .custom-checkbox-label-content {
+        min-height:100px;
+    }
+}
+@media only screen and (min-width: 992px) {
+    #checkout .steps {
+        margin-right: 2rem;
+        margin-bottom: 0;
+    }
+    #checkout .step {
+        margin-bottom: 2rem;
+        justify-content:flex-end;
+        text-align: left;
+        flex-direction: row;
+    }
+    #checkout .step-info {
+        width: 125px;
+    }
+    #checkout .step-indicator {
+        margin-top: 0;
+    }
+    #checkout .step-line {
+        top: 100%;
+        right: 15px;
+        bottom: unset;
+        left: unset;
+        height: 100%;
+        width: 4px;
+        transform: translate(-2px, -4px);
+    }
+    #checkout .checkout-cart-details-info {
+        transform: translateY(-2.25rem);
+        padding-top: 0;
+    }
+    #checkout .checkout-cart-details::before {
+        display:block;
+        transform: translate(0.25rem, -5.5rem);
+    }
+}
