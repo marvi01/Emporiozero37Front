@@ -23,6 +23,7 @@ import EditCarrossel from '../Administrador/EditCarrossel/EditCarrossel';
 import AddCateg from '../Administrador/AdminCateg/AddCateg';
 import Checkout from '../Checkout/Checkout';
 import EditCateg from '../Administrador/AdminCateg/EditCateg';
+import EditProd from '../Administrador/AdminProd/EditProd';
 
 function Header() {
   return (
@@ -50,6 +51,7 @@ function Header() {
           <Route path="/Admin/AdicionarCategoria" exact component={AddCateg} />
           <Route path="/FinalizarCompra" exact component={Checkout} />
           <Route path ="/Admin/AtualizarCategoria/:id" exact component={EditCateg}/>
+          <Route path ="/Admin/AtualizarProduto/:id" exact component={EditProd}/>
       </Switch>
     </div>
   );
