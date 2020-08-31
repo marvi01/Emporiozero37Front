@@ -4,6 +4,7 @@ import logo from '../../imagens/LOGO BRANCA.png';
 import background from '../../imagens/background.jpg';
 import Carousel from 'react-bootstrap/Carousel';
 import './Cadastro.css';
+import {$,mask} from 'jquery';
 
 class Cadastro extends Component {
     constructor(props) {
@@ -49,26 +50,8 @@ class Cadastro extends Component {
     }
     
     //Validações de input
-    telefonevalidation(e) {
-        e.target.value = e.target.value 
-                .replace(/\D/g, '');
-                 
-        const data = this.state.data;
-        const numberRegex = RegExp(/[0-9][0-9][9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/g)
-        if(e.target.value.length != 0){
-            const isValid = numberRegex.test(e.target.value);
-            if(isValid){
-                if(e.target.value.length == 11){
-                console.log('valido')
-                this.setState({telefoneerror: ''});
-                }else{
-                    this.setState({telefoneerror: 'Número inválido'});
-                }
-                
-            }else{
-                this.setState({telefoneerror: 'Número inválido'});
-            }
-        }
+    isValidPhone=event=>{
+    $("#telefone").mask("(00) 0000-00009");
     }
     ExibiCadastro() {
         //ESCREVA O HTML AQUI 
@@ -76,7 +59,7 @@ class Cadastro extends Component {
             <div className="container-fluid center-flex" id="content-cad" style={{ backgroundImage: 'url(' + background + ')' }}>
                 <div className="row justify-content-center no-gutters">
                     <div className="col-sm-10 col-lg-6 col-xl-4 bg-light">
-                        <form onSubmit={this.handleSubmit}>
+                        <form onSubmit={this.handleSubmit} >
                             <Carousel length={3}
                                 controls={false}
                                 interval={null}
@@ -123,7 +106,7 @@ class Cadastro extends Component {
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="tel">Telefone</label>
-                                            <input onChange={(e)=>this.telefonevalidation(e)} id="telefone" placeholder="98998989898" name="telefone" className={`form-control ${this.state.telefoneerror ? "wError" : null}`}  type="tel" pattern="[0-9]{11}" />
+                                            <input onkeypress={"$(this).mask('(00) 0000-00009')"} id="telefone" placeholder="98998989898" name="telefone" className="form-control"   type="text" pattern="[0-9]{11}" />
                                             <span className="errorspan">{this.state.telefoneerror}</span>
                                         </div>
                                         <span class="btn btn-primary float-right text-white" onClick={() => this.toggleCarousel('next')}>
