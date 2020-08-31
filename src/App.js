@@ -29,6 +29,7 @@ function App() {
           <Route path="/Admin/AdicionarCategoria" exact component={Header} />
           <Route path="/FinalizarCompra" exact component={Header} />
           <Route path="/Admin/AtualizarCategoria/:id" exact component={Header}/>
+          <Route path="/Admin/AtualizarProduto/:id" exact component = {Header}/>
       </Switch>
     </div>
   );

@@ -70,8 +70,23 @@ class ListProd extends Component {
                         <td >{item.quantidade}</td>
                         <td >{item.desconto + "%"}</td>
                         <td >
-                            <Link className="btn btn-warning">Editar</Link>
-                            <button href="/Perfil" className="btn btn-danger">Deletar</button>
+                            <Link to={"/Admin/AtualizarProduto/"+item.id} className="btn btn-warning">Editar</Link>
+                            <button onClick={() => {
+                                const token = localStorage.getItem("JWT_token");
+                                fetch("https://anorosa.com.br/Emporio037/api/produto/delete/"+ item.id, {
+                                    method: "delete",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        "Authorization": "Bearer " + token
+                                    }
+                                })
+                                    .then(data => data.json().then(data => {
+                                        console.log(data);
+                                        alert("Deletado com sucesso");
+                                        window.location.reload();
+                                    }))
+                                    .catch(erro => this.setState(erro));
+                            }} className="btn btn-danger">Deletar</button>
                         </td>
                     </tr>
                 )
