@@ -28,6 +28,7 @@ function App() {
           <Route path="/Admin/Carrossel" exact component={Header} />
           <Route path="/Admin/AdicionarCategoria" exact component={Header} />
           <Route path="/FinalizarCompra" exact component={Header} />
+          <Route path="/Admin/AtualizarCategoria/:id" exact component={Header}/>
       </Switch>
     </div>
   );
