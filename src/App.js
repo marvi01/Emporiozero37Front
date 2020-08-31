@@ -30,6 +30,10 @@ function App() {
           <Route path="/FinalizarCompra" exact component={Header} />
           <Route path="/Admin/AtualizarCategoria/:id" exact component={Header}/>
           <Route path="/Admin/AtualizarProduto/:id" exact component = {Header}/>
+          <Route path="/Perfil" exact component = {Header}/>
+          <Route path="/Perfil/Enderecos/Cadastrar" exact component = {Header}/>
+          <Route path="/Perfil/Senha/Editar" exact component = {Header}/>
+          <Route path="/Perfil/Editar" exact component = {Header}/>
       </Switch>
     </div>
   );
