@@ -22,13 +22,16 @@ class AddCateg extends Component {
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputPassword4">Imagem</label>
-                            <input onChange={this.handleInputChange} name="img" type="file" class="form-control" id="inputPassword4" />
+                            <input onChange={(e) => this.onChangeImg(e.target.files[0])} enctype="multipart/form-data" name="img" type="file" class="form-control" id="inputPassword4" />
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Cadastrar Categoria</button>
                 </form>
             </div>
         )
+     }
+     onChangeImg(file){
+       this.setState({categoria: {img: file}})
      }
      handleInputChange = event => {
         const target = event.target;
@@ -41,7 +44,8 @@ class AddCateg extends Component {
       };
       handleSubmit = event => {
         const token = localStorage.getItem("JWT_token")
-        fetch("https://anorosa.com.br/Emporio037/api/categoria/add", {
+        console.log(token);
+        fetch("http://127.0.0.1:8000/api/categoria/add", {
           method: "post",
           body: JSON.stringify(this.state.categoria),
           headers: {
@@ -49,10 +53,10 @@ class AddCateg extends Component {
             "Authorization": "Bearer " + token
           }
         })
-          .then(data => {
+          .then(async data => {
             if (data.ok) {
               this.setState({ redirect: true });
-              console.log(data);
+              console.log(await data.json());
               alert('Cadastrado com sucesso')
               return data.json();
             } else {

@@ -23,7 +23,8 @@ class Cadastro extends Component {
             redirect: false,
             index: 0,
             direction: null,
-            carouselItemCount: 3
+            carouselItemCount: 3,
+            telefoneerror: ''
         }
     }
 
@@ -45,6 +46,29 @@ class Cadastro extends Component {
             direction,
             index
         })
+    }
+    
+    //Validações de input
+    telefonevalidation(e) {
+        e.target.value = e.target.value 
+                .replace(/\D/g, '');
+                 
+        const data = this.state.data;
+        const numberRegex = RegExp(/[0-9][0-9][9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/g)
+        if(e.target.value.length != 0){
+            const isValid = numberRegex.test(e.target.value);
+            if(isValid){
+                if(e.target.value.length == 11){
+                console.log('valido')
+                this.setState({telefoneerror: ''});
+                }else{
+                    this.setState({telefoneerror: 'Número inválido'});
+                }
+                
+            }else{
+                this.setState({telefoneerror: 'Número inválido'});
+            }
+        }
     }
     ExibiCadastro() {
         //ESCREVA O HTML AQUI 
@@ -99,7 +123,8 @@ class Cadastro extends Component {
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="tel">Telefone</label>
-                                            <input onChange={this.handleInputChange} id="telefone" name="telefone" className="form-control" type="tel" pattern="[0-9]{11}" />
+                                            <input onChange={(e)=>this.telefonevalidation(e)} id="telefone" placeholder="98998989898" name="telefone" className={`form-control ${this.state.telefoneerror ? "wError" : null}`}  type="tel" pattern="[0-9]{11}" />
+                                            <span className="errorspan">{this.state.telefoneerror}</span>
                                         </div>
                                         <span class="btn btn-primary float-right text-white" onClick={() => this.toggleCarousel('next')}>
                                             Próximo

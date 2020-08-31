@@ -39,6 +39,11 @@
 .carousel-body {
     padding: 3rem 1.5rem;
 }
+.errorspan{
+    color: red;
+    font-size: 0.8rem;
+    padding-left: 1rem;
+}
 #logo-cad {
     display:block;
     width: auto;
