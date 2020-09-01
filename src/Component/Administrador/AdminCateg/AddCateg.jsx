@@ -30,8 +30,19 @@ class AddCateg extends Component {
             </div>
         )
      }
-     onChangeImg(file){
-       this.setState({categoria: {img: file}})
+     async onChangeImg(file){
+        var base64 = null;
+        var reader = new FileReader();
+         await reader.readAsDataURL(file);
+          reader.onload = await function () {
+          base64 = reader.result;
+          console.log(base64);
+          this.setState({categoria: {img: base64}})
+         }.bind(this);
+         reader.onerror = function (error) {
+           console.log('Error: ', error);
+         };
+        
      }
      handleInputChange = event => {
         const target = event.target;
@@ -45,7 +56,7 @@ class AddCateg extends Component {
       handleSubmit = event => {
         const token = localStorage.getItem("JWT_token")
         console.log(token);
-        fetch("http://127.0.0.1:8000/api/categoria/add", {
+        fetch("http://anorosa.com.br/Emporio037/api/categoria/add", {
           method: "post",
           body: JSON.stringify(this.state.categoria),
           headers: {
