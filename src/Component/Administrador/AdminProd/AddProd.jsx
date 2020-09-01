@@ -127,9 +127,9 @@ class AddProd extends Component {
                                 {this.categMap()}
                             </select>
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-control-file col-md-2">
                             <label for="inputZip">Imagem</label>
-                            <input onChange={this.handleInputChange} name="foto" type="file" class="form-control" id="inputZip" />
+                            <input onChange={this.handleInputChange} name="foto" type="file" class="form-control-file" id="inputZip" />
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Sign in</button>

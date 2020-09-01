@@ -24,6 +24,12 @@ import AddCateg from '../Administrador/AdminCateg/AddCateg';
 import Checkout from '../Checkout/Checkout';
 import EditCateg from '../Administrador/AdminCateg/EditCateg';
 import EditProd from '../Administrador/AdminProd/EditProd';
+import Perfil from '../Usuario/UserProfile';
+import Endereco from '../Usuario/ProfileForms/UserAddress';
+import Senha from '../Usuario/ProfileForms/UpdateUserPassword';
+import EditarPerfil from '../Usuario/ProfileForms/UpdateUserInfo';
+
+
 
 function Header() {
   return (
@@ -52,6 +58,11 @@ function Header() {
           <Route path="/FinalizarCompra" exact component={Checkout} />
           <Route path ="/Admin/AtualizarCategoria/:id" exact component={EditCateg}/>
           <Route path ="/Admin/AtualizarProduto/:id" exact component={EditProd}/>
+          <Route path ="/Perfil" exact component={Perfil}/>
+          <Route path ="/Perfil/Enderecos/Cadastrar" exact component={Endereco}/>
+          <Route path ="/Perfil/Senha/Editar" exact component={Senha}/>
+          <Route path ="/Perfil/Editar" exact component={EditarPerfil}/>
+
       </Switch>
     </div>
   );
