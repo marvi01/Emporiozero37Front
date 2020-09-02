@@ -64,7 +64,7 @@ class EditCarrossel extends Component {
             <td></td>
             <td ></td>
             <td >
-                <Link to="/Admin/AdicionarCategoria" className="btn btn-primary">Criar destaque</Link>
+                <Link to="/Admin/AdicionarCarousel" className="btn btn-primary">Criar Carrossel</Link>
             </td>
         </tr>
     )

@@ -36,14 +36,14 @@ class Section extends Component {
         var response;
 
             try {
-                response = await fetch(`https://anorosa.com.br/Emporio037/api/produto/list/promocao`);
+                response = await fetch(`https://anorosa.com.br/Emporio037/api/destaque/list`);
             } catch (error) {
                 console.log(error);
                 this.setState({ error })
             }
             const json = await response.json();
 
-            if (json.error === null || json.error === undefined ) {
+            if (json.error === null || json.error === undefined || json.status === true) {
                 this.setState({ data: json.data, nulo: false });
                 console.log(json);
             }

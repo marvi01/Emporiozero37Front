@@ -14,16 +14,21 @@ import Cadastro from '../Cadastro/Cadastro';
 import { Switch, Route } from 'react-router-dom';
 import Carrinho from '../Carrinho/Carrinho';
 import CalcularFrete from '../CalcularFrete/CalcularFrete';
+
+
+import AddCateg from '../Administrador/AdminCateg/AddCateg';
+import Checkout from '../Checkout/Checkout';
+
 import AddProd from '../Administrador/AdminProd/AddProd';
 import ListProd from '../Administrador/AdminProd/ListProd';
 import Admin from '../Administrador/Admin';
 import AdminCateg from '../Administrador/AdminCateg/AdminCateg';
-import AdminDestaque from '../Administrador/AdminDestaque/AdminDestaque';
-import EditCarrossel from '../Administrador/EditCarrossel/EditCarrossel';
-import AddCateg from '../Administrador/AdminCateg/AddCateg';
-import Checkout from '../Checkout/Checkout';
 import EditCateg from '../Administrador/AdminCateg/EditCateg';
 import EditProd from '../Administrador/AdminProd/EditProd';
+import AdminDestaque from '../Administrador/AdminDestaque/AdminDestaque';
+import EditCarrossel from '../Administrador/EditCarrossel/EditCarrossel';
+import AddCarrousel from '../Administrador/EditCarrossel/AddCarrossel';
+
 import Perfil from '../Usuario/UserProfile';
 import Endereco from '../Usuario/ProfileForms/UserAddress';
 import Senha from '../Usuario/ProfileForms/UpdateUserPassword';
@@ -58,6 +63,7 @@ function Header() {
           <Route path="/FinalizarCompra" exact component={Checkout} />
           <Route path ="/Admin/AtualizarCategoria/:id" exact component={EditCateg}/>
           <Route path ="/Admin/AtualizarProduto/:id" exact component={EditProd}/>
+          <Route path ="/Admin/AdicionarCarousel" exact component={AddCarrousel}/>
           <Route path ="/Perfil" exact component={Perfil}/>
           <Route path ="/Perfil/Enderecos/Cadastrar" exact component={Endereco}/>
           <Route path ="/Perfil/Senha/Editar" exact component={Senha}/>

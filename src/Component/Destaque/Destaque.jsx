@@ -7,7 +7,51 @@ import destaque3  from "../../imagens/destaque3.webp";
 
 import { Slide } from 'react-slideshow-image';
 class Destaque extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+        data: [{
+            "id": 0,
+            "fotodestaque": "",
+        }],
 
+        erro: null,
+        nulo: true,
+        estado: false,
+        status: false
+    };
+  };
+  async componentDidMount() {
+    var response;
+
+        try {
+            response = await fetch(`https://anorosa.com.br/Emporio037/api/destaque/list`);
+        } catch (error) {
+            console.log(error);
+            this.setState({ error })
+        }
+        const json = await response.json();
+
+        if (json.error === null || json.error === undefined || json.status === true) {
+            this.setState({ data: json.data, nulo: false });
+            console.log(json);
+        }
+        this.setState({ estado: true });
+    }
+    exibirDestaque(){
+      if(this.state.error === null && this.state.status === true && this.state.nulo === false){
+        const Destaq = this.state.data.map((item, indice) => {
+          return(
+          <div className="each-slide" key={indice}>
+                  <div >
+                    <img src={`https://anorosa.com.br/Emporio037/storage/${item.fotodestaque}`} className="img-fluid" alt="..."></img>
+                  </div>
+          </div>
+          )
+        });
+        return Destaq;
+      }
+    }
     render() {
           const properties = {
             duration: 5000,
@@ -25,16 +69,7 @@ class Destaque extends Component {
                     <img src={destaque1} className="img-fluid" alt="..."></img>
                   </div>
                 </div>
-                <div className="each-slide">
-                  <div >
-                  <img src={destaque2} className="img-fluid" alt="..."></img>
-                  </div>
-                </div>
-                <div className="each-slide">
-                  <div >
-                  <img src={destaque3} className="img-fluid" alt="..."></img>
-                  </div>
-                </div>
+                {this.exibirDestaque()}
                 
               </Slide>
               
