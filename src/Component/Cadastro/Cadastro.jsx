@@ -4,12 +4,13 @@ import logo from '../../imagens/LOGO BRANCA.png';
 import background from '../../imagens/background.jpg';
 import Carousel from 'react-bootstrap/Carousel';
 import './Cadastro.css';
-import {$,mask} from 'jquery';
+import { $, mask } from 'jquery';
 
 class Cadastro extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            tel: null,
             "data": {
                 "nome": "",
                 "type": 0,
@@ -25,7 +26,12 @@ class Cadastro extends Component {
             index: 0,
             direction: null,
             carouselItemCount: 3,
-            telefoneerror: ''
+            telefoneerror: '',
+            nomeerror:'',
+            dataerror:'',
+            confirmSenha:null,
+            senhaerror:null,
+            confirmError:null
         }
     }
 
@@ -48,18 +54,33 @@ class Cadastro extends Component {
             index
         })
     }
-    
-    //Validações de input
-    isValidPhone=event=>{
-    $("#telefone").mask("(00) 0000-00009");
+    confirmSenha = event=>{
+        const target = event.target;
+        const value = target.value;
+        this.setState({confirmSenha:value})
+
     }
+    //Validações de input
+    inputTelefone = (input) => {
+        this.input = input;
+    };
+    teste = () => {
+        let numero = `${this.input.value}`;
+        let numeroMask = `${this.input.value}`;
+        numeroMask = numero.replace(/\(|\)|-/g, '').replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1)$2-$3');
+        this.setState(prevState => ({
+            data: { ...prevState.data, telefone: numero }
+        }));
+        this.setState({ tel: numeroMask })
+    }
+
     ExibiCadastro() {
         //ESCREVA O HTML AQUI 
         const htmlCadastro = (
             <div className="container-fluid center-flex" id="content-cad" style={{ backgroundImage: 'url(' + background + ')' }}>
                 <div className="row justify-content-center no-gutters">
                     <div className="col-sm-10 col-lg-6 col-xl-4 bg-light">
-                        <form onSubmit={this.handleSubmit} >
+                        <form  >
                             <Carousel length={3}
                                 controls={false}
                                 interval={null}
@@ -78,8 +99,14 @@ class Cadastro extends Component {
                                         <div className="form-group">
                                             <label htmlFor="nome">Nome</label>
                                             <input onChange={this.handleInputChange} id="nome" name="nome" className="form-control form-control-lg" type="text" required minLength="3" maxLength="45" />
+                                            <span className="errorspan">{this.state.nomeerror}</span>
                                         </div>
-                                        <span class="btn btn-primary text-white float-right mb-4" onClick={() => this.toggleCarousel('next')}>
+                                        <span class="btn btn-primary text-white float-right mb-4" onClick={() => {
+                                            if(this.state.data.nome.length >= 3 && this.state.data.nome.length <= 44 ){
+                                            this.toggleCarousel('next');} else{
+                                                this.setState({nomeerror:'Nome invalido'});
+                                            }
+                                        }}>
                                             Próximo
                                         </span>
                                         <div className="clearfix"></div>
@@ -103,13 +130,30 @@ class Cadastro extends Component {
                                         <div className="form-group">
                                             <label htmlFor="nascimento">Nascimento</label>
                                             <input onChange={this.handleInputChange} id="nascimento" name="nasc" className="form-control" type="date" required />
+                                            <span className="errorspan">{this.state.dataerror}</span>
                                         </div>
                                         <div className="form-group">
-                                            <label htmlFor="tel">Telefone</label>
-                                            <input onkeypress={"$(this).mask('(00) 0000-00009')"} id="telefone" placeholder="98998989898" name="telefone" className="form-control"   type="text" pattern="[0-9]{11}" />
+                                            <label htmlFor="tel">DDD+Telefone</label>
+                                            <input value={this.state.tel} onChange={this.teste} ref={this.inputTelefone} id="telefone" placeholder="98998989898" name="telefone" className="form-control" type="text" pattern="[0-9]{11}" required />
                                             <span className="errorspan">{this.state.telefoneerror}</span>
                                         </div>
-                                        <span class="btn btn-primary float-right text-white" onClick={() => this.toggleCarousel('next')}>
+                                        <span class="btn btn-primary float-right text-white" onClick={() => {
+                                            const date = new Date(this.state.data.nasc);
+                                            const dateAtual = new Date();
+                                            let ano = dateAtual.getFullYear()- date.getFullYear();
+                                            let mes =dateAtual.getMonth()- date.getMonth();
+                                            if((ano ===18 && mes>0 || (ano ===18 && mes === 0 && dateAtual.getDate() >= date.getDate()))||ano>18  ){
+                                                this.setState({dataerror:null})
+                                            if(this.state.data.telefone.length === 11  ){
+                                                this.toggleCarousel('next')
+                                                this.setState({telefoneerror:''})
+                                            }else{
+                                                this.setState({telefoneerror:'Telefone invalido! Veja se digitou todos os numeros corretamente'})
+                                            }
+                                        } else{
+                                                this.setState({dataerror:'Você não tem idade ainda para isso'})
+                                            }
+                                        }}>
                                             Próximo
                                         </span>
                                         <div className="clearfix"></div>
@@ -137,13 +181,32 @@ class Cadastro extends Component {
                                             <div className="form-group col-lg">
                                                 <label htmlFor="senha" >Senha</label>
                                                 <input onChange={this.handleInputChange} type="password" id="senha" name="password" className="form-control" required minLength="5" maxLength="45" />
+                                                <span className="errorspan">{this.state.senhaerror}</span>
                                             </div>
                                             <div className="form-group col-lg">
                                                 <label htmlFor="confirmarSenha" >Confirmar senha</label>
-                                                <input type="password" id="confirmarSenha" className="form-control" required minLength="5" maxLength="45" />
+                                                <input onChange={this.confirmSenha}  type="password" id="confirmarSenha" className="form-control" required minLength="5" maxLength="45" />
+                                                <span className="errorspan">{this.state.confirmError}</span>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-success float-right text-white">
+                                        <button onClick={()=>{
+                                            const senha = this.state.data.password;
+                                            const confirma= this.state.confirmSenha;
+                                            if(senha.length >= 6){
+                                                this.setState({senhaerror:null})
+                                                if(senha===confirma){
+                                                    
+                                                    this.setState({confirmError:null})
+                                                    this.handleSubmit();
+                                                }else{
+                                                    console.log(senha);
+                                                    console.log(confirma);
+                                                    this.setState({confirmError:'As senhas não são iguais'})
+                                                }
+                                            }else{
+                                                this.setState({senhaerror:'Senha invalida!'})
+                                            }
+                                        }} type="submit" class="btn btn-success float-right text-white">
                                             Finalizar cadastro
                                         </button>
                                         <div className="clearfix"></div>
@@ -163,16 +226,16 @@ class Cadastro extends Component {
         return htmlCadastro;
     }
     handleSubmit = event => {
-         fetch("https://anorosa.com.br/Emporio037/api/usuario/add", {
+        fetch("https://anorosa.com.br/Emporio037/api/usuario/add", {
             method: "post",
             body: JSON.stringify(this.state.data),
             headers: {
                 "Content-Type": "application/json"
             }
         })
-            .then( data => {
+            .then(data => {
                 if (data.ok) {
-                     fetch("https://anorosa.com.br/Emporio037/api/login", {
+                    fetch("https://anorosa.com.br/Emporio037/api/login", {
                         method: "post",
                         body: JSON.stringify(this.state.data),
                         headers: {
