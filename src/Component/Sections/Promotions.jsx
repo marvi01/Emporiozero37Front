@@ -36,7 +36,7 @@ class Section extends Component {
         var response;
 
             try {
-                response = await fetch(`https://anorosa.com.br/Emporio037/api/destaque/list`);
+                response = await fetch(`https://anorosa.com.br/Emporio037/api/produto/list/promocao`);
             } catch (error) {
                 console.log(error);
                 this.setState({ error })
