@@ -48,22 +48,25 @@ class AdminCateg extends Component {
                         <td><img className="img-tamanho mr-3" src={"https://anorosa.com.br/Emporio037/storage/" + item.img} /></td>
                         <td >{item.nomecategoria}</td>
                         <td >
-                            <Link to={"/Admin/AtualizarCategoria/"+item.id} className="btn btn-warning">Editar</Link>
+                            <Link to={"/Admin/AtualizarCategoria/" + item.id} className="btn btn-warning">Editar</Link>
                             <button onClick={() => {
-                                const token = localStorage.getItem("JWT_token");
-                                fetch("https://anorosa.com.br/Emporio037/api/categoria/delete/"+ item.id, {
-                                    method: "delete",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                        "Authorization": "Bearer " + token
-                                    }
-                                })
-                                    .then(data => data.json().then(data => {
-                                        console.log(data);
-                                        alert("Deletado com sucesso");
-                                        window.location.reload();
-                                    }))
-                                    .catch(erro => this.setState(erro));
+                                let confirm = window.confirm("Ao deletar esta categoria você deletará todos os produtos contidos nela.");
+                                if (confirm) {
+                                    const token = localStorage.getItem("JWT_token");
+                                    fetch("https://anorosa.com.br/Emporio037/api/categoria/delete/" + item.id, {
+                                        method: "delete",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                            "Authorization": "Bearer " + token
+                                        }
+                                    })
+                                        .then(data => data.json().then(data => {
+                                            console.log(data);
+                                            alert("Deletado com sucesso");
+                                            window.location.reload();
+                                        }))
+                                        .catch(erro => this.setState(erro));
+                                }
                             }} className="btn btn-danger">Deletar</button>
                         </td>
                     </tr>
