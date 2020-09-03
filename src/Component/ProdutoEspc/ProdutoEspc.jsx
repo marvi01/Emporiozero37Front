@@ -226,9 +226,13 @@ class ProdutoEspc extends Component {
                         <input ref={this.handleInputRef} type="text" className="input-quantity form-control-lg" name="quantItem" readonly="true" value={this.state.data.QuantProd} />
                         <div className="input-group-append">
                           <button type="button" className="btn btn-reset text-middle-brown" onClick={() => {
+                            if(this.state.data.QuantProd < this.state.data.quantidade){
                             this.setState(prevState => ({
-                              data: { ...prevState.data, QuantProd: this.state.data.QuantProd + 1 }
+                                data: { ...prevState.data, QuantProd: this.state.data.QuantProd + 1 }              
                             }));
+                            }else{
+                              alert("Não há mais produtos deste tipo no estoque.")
+                            }
                             this.preco();
 
                           }}>
