@@ -37,6 +37,10 @@ class Checkout extends Component {
                 cpf: null,
                 birth: null,
             },
+            isAdressRegistered: false,
+            RegisteredAdress: [{
+
+            }],
             //Variáveis para o funcionamento da interface
             index: 0,
             direction: null,
@@ -50,11 +54,15 @@ class Checkout extends Component {
                 method: 'POST',
                 headers: { 'Authorization': 'Bearer ' + token },
             };
-            fetch("https://anorosa.com.br/Emporio037/api/me", requestOptions)
+            fetch("https://anorosa.com.br/Emporio037/api/me&adress", requestOptions)
                 .then(data => data.json().then(data => {
                     if (data.status !== false) {
-                        this.setState({ loggedInUser: data, isUserLoggedIn: true });
+                        this.setState({ loggedInUser: data.user, isUserLoggedIn: true });
+                        if(data.adress.length !== 0){
+                            this.setState({ Adress: , isUserLoggedIn: true });
+                        }
                     }
+                    
                 }))
                 .catch(erro => this.setState(erro))
         }
@@ -220,20 +228,32 @@ class Checkout extends Component {
                                                     <label for="nome">Nome completo</label>
                                                     {this.state.loggedInUser.nome !== ""
                                                         ? <input type="text" className="form-control" id="nome" value={this.state.loggedInUser.nome} readonly disabled />
-                                                        : <input type="text" onChange={(e) => this.setState(prevState => ({ ...prevState.user, nome: e.target.value }))} className="form-control" id="nome" placeholder="Ryan W. Fonseca" />
+                                                        : <input type="text" id="nome" name="nome" onChange={this.handleUserInputChange} className="form-control" id="nome" placeholder="Ryan W. Fonseca" />
+                                                    }
+                                                    {this.state.userInputErrors.name
+                                                        ?<span className="errorSpan">{this.state.userInputErrors.name}</span>
+                                                        :null
                                                     }
                                                 </div>
                                                 <div className="form-group col-sm">
                                                     <label for="cpf">CPF</label>
-                                                    <input type="text" onChange={(e) => this.CpfMask(e)} className="form-control" id="cpf" placeholder="999.999.999-99" />
+                                                    <input type="text" autocomplete="off" onChange={(e) => this.CpfMask(e)} className="form-control" id="cpf" placeholder="999.999.999-99" />
+                                                    {this.state.userInputErrors.cpf
+                                                        ?<span className="errorSpan">{this.state.userInputErrors.cpf}</span>
+                                                        :null
+                                                    }
                                                 </div>
                                             </div>
                                             <div className="form-group">
                                                 <label for="email">Email</label>
                                                 {this.state.loggedInUser.email != ""
                                                     ? <input type="email" className="form-control" id="email" name="email" readonly disabled value={this.state.loggedInUser.email} />
-                                                    : <input type="email" onChange={(e) => this.setState(prevState => ({ ...prevState.user, email: e.target.value }))} className="form-control" id="email" name="email" />
+                                                    : <input type="email" onChange={this.handleUserInputChange} className="form-control" id="email" name="email" />
                                                 }
+                                                {this.state.userInputErrors.email
+                                                        ?<span className="errorSpan">{this.state.userInputErrors.email}</span>
+                                                        :null
+                                                    }
                                             </div>
                                             <div className="form-row mb-4">
                                                 <div className="form-group col-sm">
@@ -242,17 +262,26 @@ class Checkout extends Component {
                                                         ? <input type="text" className="form-control" id="celular" name="celular" readonly disabled value={this.state.loggedInUser.telefone.replace(/\(|\)|-/g, '').replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1)$2-$3')} />
                                                         : <input type="text" onChange={(e) => this.TelephoneMask(e)} className="form-control" id="celular" name="celular" />
                                                     }
+                                                    {this.state.userInputErrors.tel
+                                                        ?<span className="errorSpan">{this.state.userInputErrors.tel}</span>
+                                                        :null
+                                                    }
                                                 </div>
                                                 <div className="form-group col-sm">
                                                     <label for="nascimento">Nascimento</label>
                                                     {this.state.loggedInUser.nasc !== ""
                                                         ? <input type="date" className="form-control" id="nascimento" name="nascimento" value={this.state.loggedInUser.nasc} readonly disabled />
-                                                        : <input onChange={(e) => this.setState(prevState => ({ ...prevState.user, nasc: e.target.value }))} type="date" className="form-control" id="nascimento" name="nascimento" />
+                                                        : <input onChange={this.handleUserInputChange} type="date" className="form-control" id="nasc" name="nasc" />
+                                                    }
+                                                    {this.state.userInputErrors.birth
+                                                        ?<span className="errorSpan">{this.state.userInputErrors.birth}</span>
+                                                        :null
                                                     }
                                                 </div>
                                             </div>
                                             <div className="step-actions">
                                                 <span className="btn btn-primary" onClick={() => {
+                                                   console.log(this.state.user);
                                                     if (this.isUserLoggedIn) {
                                                         this.setState(prevState => ({
                                                             user: {
@@ -265,10 +294,12 @@ class Checkout extends Component {
                                                             }
                                                         }));
                                                         if (this.validateUserInfo()) {
-
+                                                            this.toggleCarousel('next')
                                                         }
                                                     } else {
-
+                                                        if (this.validateUserInfo()) {
+                                                            this.toggleCarousel('next')
+                                                        }
                                                     }
                                                 }}>
                                                     Próximo
@@ -760,32 +791,84 @@ class Checkout extends Component {
         );
     }
 
+    
+
     //User form validations and masks
 
     validateUserInfo() {
         const user = this.state.user;
+        
         var validate = true;
         this.setState({ userInputErrors: { name: null, tel: null, email: null, cpf: null, birth: null, } });
-        if (user.nome.length < 3 || user.nome.length > 44) {
-            this.setState(prevState => ({
-                userInputErrors: { ...prevState.userInputErrors, name: "O nome deve ter entre 3 e 42 caracteres" }
-            }));
+
+        if (user.nome !== null) {//namevalidation
+            if (user.nome.length < 3 || user.nome.length > 44) {
+                this.UserInputSetError("name", "O nome deve ter entre 3 e 44 caracteres.");
+                validate = false;
+            }
+        } else {
+            this.UserInputSetError("name", "Insira um nome");
             validate = false;
         }
-        if (user.nasc !== null) {
+        if (user.nasc !== null) {//birthvalidation
+            var birth = user.nasc;
             var regEx = /^\d{4}-\d{2}-\d{2}$/;
-            if (!dateString.match(regEx)){
-                this.setState(prevState => ({
-                    userInputErrors: { ...prevState.userInputErrors, birth: "Insira uma formatação de data válida" }
-                }));
+            if (!birth.match(regEx)) {
+                this.UserInputSetError("birth", "Insira uma formatação de data válida");
                 validate = false;
             };
-            var d = new Date(dateString);
-            var dNum = d.getTime();
-            if (!dNum && dNum !== 0) return false;
-            return d.toISOString().slice(0, 10) === dateString;
+            let nasc = birth.split("-").map(Number);
+            let depois18Anos = new Date(nasc[0] + 18, nasc[1] - 1, nasc[2]);
+            let agora = new Date();
+
+            if (depois18Anos >= agora) {
+                this.UserInputSetError("birth", "Somente maiores de 18 anos podem comprar este tipo de produto")
+                validate = false;
+            }
+        } else {
+            this.UserInputSetError("birth", "Insira uma data de nascimento");
+            validate = false;
+        }
+        if (user.cpf !== null) {//Cpf validation
+            if (user.cpf.length !== 11) {
+                this.UserInputSetError("cpf", "Insira um cpf válido");
+                validate = false;
+            }
+        } else {
+            this.UserInputSetError("cpf", "Insira o seu cpf");
+            validate = false;
+        }
+        if (user.email !== null) {//Email validation
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if (!re.test(user.email.toLowerCase())) {
+                this.UserInputSetError("email", "Email inválido");
+                validate = false;
+            }
+        } else {
+            this.UserInputSetError("email", "Insira um email");
+            validate = false;
+        }
+        if (user.telefone !== null) {
+            if (user.telefone.length !== 11) {
+                this.UserInputSetError("tel", "Número de telefone inválido");
+                validate = false;
+            } else {
+                if (!/^[0-9]+$/.test(user.telefone)) {
+                    this.UserInputSetError("tel", "Digite apenas números para seu telefone.")
+                    validate = false;
+                }
+            }
+        } else {
+            this.UserInputSetError("tel", "Insira um número de telefone");
+            validate = false;
         }
 
+        return validate;
+    }
+    UserInputSetError(input, errormsg) {
+        this.setState(prevState => ({
+            userInputErrors: { ...prevState.userInputErrors, [input]: errormsg }
+        }));
     }
 
     TelephoneMask = (e) => {
@@ -818,6 +901,14 @@ class Checkout extends Component {
             }));
         }
     }
+    handleUserInputChange = event => {
+        const target = event.target;
+        const name = target.name;
+        const value = target.value;
+        this.setState(prevState => ({
+            user: { ...prevState.user, [name]: value }
+        }));
+    };
 }
 
 export default Checkout;
