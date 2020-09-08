@@ -278,19 +278,21 @@ class Checkout extends Component {
                                                 </div>
                                             </div>
                                             <div className="step-actions">
-                                                <span className="btn btn-primary" onClick={() => {
-                                                   console.log(this.state.user);
-                                                    if (this.isUserLoggedIn) {
-                                                        this.setState(prevState => ({
-                                                            user: {
-                                                                ...prevState.user,
+                                                <span className="btn btn-primary" onClick={async () => {
+                                                    if (this.state.isUserLoggedIn) {
+
+                                                       await this.setState(prevState => ({ //Não discuta cmg, aqui tem q ser await se nn dá erro ok? Ok.
+                                                            user: { ...prevState.user,
                                                                 email: this.state.loggedInUser.email,
                                                                 nasc: this.state.loggedInUser.nasc,
-                                                                nome: this.state.isUserLoggedIn.nome,
+                                                                nome: this.state.loggedInUser.nome,
                                                                 telefone: this.state.loggedInUser.telefone,
-                                                                id: this.state.loggedInUser.id
-                                                            }
+                                                                id: this.state.loggedInUser.id 
+                                                                }
                                                         }));
+                                                        console.log("yeye");
+                                                        console.log(this.state.user);
+                                                        //console.log(this.state.user);
                                                         if (this.validateUserInfo()) {
                                                             this.toggleCarousel('next')
                                                         }
