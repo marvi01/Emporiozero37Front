@@ -1,11 +1,6 @@
 import React, { Component } from 'react'; //Importa o método componente e react
 import './Categorias.css';//Importa css
 
-import vodka from "../../imagens/vodka.jpg";
-import whisky from "../../imagens/whisky.jpg";
-import gin from "../../imagens/gin.jpg";
-import energetico from "../../imagens/energetico.jpg";
-import combos from "../../imagens/combo.jpg";
 import { Link } from 'react-router-dom';
 
 

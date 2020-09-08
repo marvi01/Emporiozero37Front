@@ -44,6 +44,22 @@ class EditCarrossel extends Component {
                     <tr key={indice}>
                         <td>{indice}</td>
                         <td ><img className="img-tamanho mr-3" src={"https://anorosa.com.br/Emporio037/storage/" + item.fotodestaque} /></td>
+                        <td><button onClick={() => {
+                                const token = localStorage.getItem("JWT_token");
+                                fetch("https://anorosa.com.br/Emporio037/api/destaque/delete/"+ item.id, {
+                                    method: "delete",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        "Authorization": "Bearer " + token
+                                    }
+                                })
+                                    .then(data => data.json().then(data => {
+                                        console.log(data);
+                                        alert("Foto em destaque removida com sucesso!");
+                                        window.location.reload();
+                                    }))
+                                    .catch(erro => this.setState(erro));
+                            }} className="btn btn-danger">Deletar</button></td>
                     </tr>
                 )
             )

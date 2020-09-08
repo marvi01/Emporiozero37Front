@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import '../Destaque/Destaque.css';
-import destaque1 from "../../imagens/destaque1.webp";
-import destaque2 from "../../imagens/destaque2.webp";
-import destaque3 from "../../imagens/destaque3.webp";
+import destaque1 from "../../imagens/LOGO BRANCA.png";
+
 
 
 import { Slide } from 'react-slideshow-image';
@@ -39,6 +38,14 @@ class Destaque extends Component {
     this.setState({ estado: true });
   }
   exibirDestaque() {
+    const properties = {
+      duration: 5000,
+      transitionDuration: 500,
+      infinite: true,
+      indicators: true,
+      arrows: true,
+      pauseOnHover: true,
+    }
     if (this.state.erro === null && this.state.estado === true && this.state.nulo === false) {
       const Destaq = this.state.data.map((item, indice) => {
         return (
@@ -48,31 +55,41 @@ class Destaque extends Component {
 
         )
       });
-      console.log(Destaq)
-      return Destaq;
-    }
-  }
-  render() {
-    const properties = {
-      duration: 5000,
-      transitionDuration: 500,
-      infinite: true,
-      indicators: true,
-      arrows: true,
-      pauseOnHover: true,
-    }
-    const destaques = this.exibirDestaque();
-    return (
-      <div className="disan" >
+      var i = Destaq.length;
+     while(i < 3){
+       Destaq[i]=null;
+       i++;
+      }
+      
+      console.log(Destaq[3])
+      return (
+        <Slide {...properties}>
+          {Destaq[0]}
+          {Destaq[1] ? Destaq[1] : Destaq[0]}
+          {Destaq[2] ? Destaq[2] : Destaq[0]}  
+        </Slide>
+      );
+    }else{
+      return (
         <Slide {...properties}>
           <div className="each-slide">
             <div >
               <img src={destaque1} className="img-fluid" alt="..."></img>
             </div>
           </div>
-          {destaques}
-
+          <div className="each-slide">
+            <div >
+              <img src={destaque1} className="img-fluid" alt="..."></img>
+            </div>
+          </div>
         </Slide>
+      );
+    }
+  }
+  render() {
+    return (
+      <div className="disan" >
+        {this.exibirDestaque()}
 
       </div>
     );

@@ -70,16 +70,13 @@ class ProdutoEspc extends Component {
     this.input = input;
   };
   //Função para calcular o falor total do produto 
-  preco = () => {
-    let qde = parseFloat(`${this.input.value}`);
-    qde = qde + 1;
-    var valorDesc = 0;
+  preco = (qde) => {
+    console.log(qde);
+    //qde = qde + 1;
     var preco = parseFloat(this.state.data.preco);
-    if (this.state.data.desconto !== 0) {
-      var desconto = parseFloat(this.state.data.desconto);
-      valorDesc = ((preco) * desconto / 100) * qde;
-    }
-    let valor = (preco * qde) - valorDesc;
+    var desconto = parseFloat(this.state.data.desconto)/100;
+    var valordescontado = preco * desconto * qde;
+    let valor = preco * qde - valordescontado;
     console.log(qde);
     this.setState(prevState => ({
       data: { ...prevState.data, ValorTotal: valor }
@@ -217,7 +214,7 @@ class ProdutoEspc extends Component {
                                 this.setState(prevState => ({
                                   data: { ...prevState.data, QuantProd: this.state.data.QuantProd - 1 }
                                 }));
-                                this.preco();
+                                this.preco(parseFloat(this.state.data.QuantProd) - 1);
 
                               }
                             }}></i>
@@ -226,10 +223,15 @@ class ProdutoEspc extends Component {
                         <input ref={this.handleInputRef} type="text" className="input-quantity form-control-lg" name="quantItem" readonly="true" value={this.state.data.QuantProd} />
                         <div className="input-group-append">
                           <button type="button" className="btn btn-reset text-middle-brown" onClick={() => {
+                            if(this.state.data.QuantProd < this.state.data.quantidade){
                             this.setState(prevState => ({
-                              data: { ...prevState.data, QuantProd: this.state.data.QuantProd + 1 }
+                                data: { ...prevState.data, QuantProd: this.state.data.QuantProd + 1 }              
                             }));
-                            this.preco();
+                            this.preco(parseFloat(this.state.data.QuantProd) + 1);
+                            }else{
+                              alert("Não há mais produtos deste tipo no estoque.")
+                            }
+                            
 
                           }}>
                             <i class="fas fa-plus"></i>
