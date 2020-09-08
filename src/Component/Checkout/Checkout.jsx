@@ -38,9 +38,7 @@ class Checkout extends Component {
                 birth: null,
             },
             isAdressRegistered: false,
-            RegisteredAdress: [{
-
-            }],
+            RegisteredAdress: [{}],
             //Variáveis para o funcionamento da interface
             index: 0,
             direction: null,
@@ -59,7 +57,7 @@ class Checkout extends Component {
                     if (data.status !== false) {
                         this.setState({ loggedInUser: data.user, isUserLoggedIn: true });
                         if(data.adress.length !== 0){
-                            this.setState({ Adress: , isUserLoggedIn: true });
+                            this.setState({ Adress: data.adress, isUserLoggedIn: true });
                         }
                     }
                     
