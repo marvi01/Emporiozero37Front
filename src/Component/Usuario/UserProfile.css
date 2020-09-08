@@ -56,6 +56,9 @@
     font-size: 80%;
     font-weight: 400;
 }
+.input-clean{
+    border: transparent;
+}
 @media only screen and (min-width:578px) {
     .icon {
         position: unset;

@@ -102,9 +102,9 @@ export default function HeaderMeio() {
                                                Conta
                             </button>
                                 <div className="dropdown-menu bg-dark">
-                                    <Link className="dropdown-item text-light pl-4 py-2" to="/Carrinho">
+                                    <Link className="dropdown-item text-light pl-4 py-2" to="/Perfil">
                                         <i className="fas fa-user-circle mr-2"></i>
-                                            Editar conta
+                                            Conta
                             </Link>
                                     <span className="dropdown-item text-light pl-4 py-2" onClick={logout}>
                                         <i className="fas fa-user-circle mr-2"></i>
@@ -132,9 +132,9 @@ export default function HeaderMeio() {
                                                Conta
                             </button>
                                 <div className="dropdown-menu bg-dark">
-                                    <Link className="dropdown-item text-light pl-4 py-2" to="/Carrinho">
+                                    <Link className="dropdown-item text-light pl-4 py-2" to="/Perfil">
                                         <i className="fas fa-user-circle mr-2"></i>
-                                            Editar conta
+                                             Conta
                             </Link>
                                     <span className="dropdown-item text-light pl-4 py-2" onClick={logout}>
                                         <i className="fas fa-user-circle mr-2"></i>
