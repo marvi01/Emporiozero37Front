@@ -32,7 +32,11 @@ class AdressList extends Component {
         }))
             .catch(erro => this.setState(erro));
     }
-
+    
+    maskCEP =(numero)=>{
+        let numeroMask = numero.substring(0,5)+"-"+numero.substring(5)     
+        return numeroMask;
+    }
 
     listEnd = () => {
         const endereco = this.state.endereco;
@@ -44,7 +48,7 @@ class AdressList extends Component {
                             <address>
                                 <strong> {item.rua}, {item.numero}</strong><br />
                                 {item.bairro}<br />
-                                {item.cidade}, {item.uf} {item.cep}<br />
+                                {item.cidade}, {item.uf} {this.maskCEP(item.cep)}<br />
                                 {item.complemento}
                             </address>
                         </div>
@@ -54,15 +58,16 @@ class AdressList extends Component {
                                     <i className="fas fa-ellipsis-v"></i>
                                 </button>
                                 <div className="dropdown-menu">
-                                    <a className="dropdown-item"  >Editar</a>
+                                    <Link className="dropdown-item" to={"/Perfil/Enderecos/Editar/"+item.id}  >Editar</Link>
                                     <a className="dropdown-item" onClick={() => {
                                         const token = localStorage.getItem('JWT_token');
                                         console.log(token);
-                                        fetch("https://anorosa.com.br/Emporio037/delen", {
-                                            method: 'POST',
+                                        fetch("https://anorosa.com.br/Emporio037/api/delendereco/userid="+item.user_id+"&&enderecoid="+item.id , {
+                                            method: 'delete',
                                             headers: { 'Authorization': 'Bearer ' + token },
                                         }).then(data => data.json().then(data => {
-
+                                            console.log(data);
+                                        //    window.location.reload();
                                          }))
                                     }}>Deletar</a>
                                 </div>

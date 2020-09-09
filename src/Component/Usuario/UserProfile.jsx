@@ -34,6 +34,12 @@ class UserProfile extends Component {
         }))
             .catch(erro => this.setState(erro));
     }
+   
+maskTelefone =(numero)=>{
+    let numeroMask = numero.replace(/\(|\)|-/g, '').replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1)$2-$3');     
+    return numeroMask;
+}
+
     render() {//Aqui acontece a renderização da página
         //O metodo return define o que vai ser renderizado no site
         return (
@@ -136,7 +142,7 @@ class UserProfile extends Component {
                                                     <h3 className="h6">Celular</h3>
                                                 </div>
                                                 <div className="col">
-                                                    <span>{this.state.user.telefone}</span>
+                                                    <span>{this.maskTelefone(this.state.user.telefone)}</span>
                                                 </div>
                                             </div>
                                         </li>
