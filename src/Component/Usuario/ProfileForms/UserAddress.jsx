@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; //Importa o método componente e react
+import { Link } from 'react-router-dom';
 import '../UserProfile.css';//Importa css
-
+import './AdressForm.css';
 
 class UserAddress extends Component {
     constructor(props) {
@@ -15,11 +16,20 @@ class UserAddress extends Component {
                 "numero": "",
                 "complemento": ""
             },
+            adressInputErrors: {
+                "cep": null,
+                "uf": null,
+                "cidade": null,
+                "bairro": null,
+                "rua": null,
+                "numero": null,
+                "complemento": null
+            },
             status: 200
 
         }
     }
-   
+
 
     handleInputChange = event => {
         const target = event.target;
@@ -41,21 +51,32 @@ class UserAddress extends Component {
                 "Authorization": "Bearer " + token
             }
         })
-            .then(data => {
-                if (data.ok) {
-                    
-                    this.props.history.goBack();
+            .then(data => data.json().then(data => {
+                console.log(data);
+                if (data.errorcode) {
+                    switch (data.errorcode) {
+                        case 1:
+                            this.setState({ adressInputErrors: data.error });
+                            break;
+                        case 3:
+                            alert("Erro interno");
+                            break;
+                        default:
+                            alert(data.erro)
+                            break;
+                    }
                 } else {
-                    data.json().then(data => {
-                        if (data.error) {
-                            this.setState({ erro: data.error });
-                        }
-                    });
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        this.props.history.goBack();
+                    }
                 }
-            }).catch(erro => this.setState({ erro: erro }));
+            })).catch(erro => this.setState({ erro: erro }));
     };
 
     render() {//Aqui acontece a renderização da página
+        var inputErrors = this.state.adressInputErrors;
         return (
             <div>
                 <div className="user-page-title">
@@ -73,6 +94,10 @@ class UserAddress extends Component {
                                 <div className="form-group col-sm-6">
                                     <label for="cep">CEP</label>
                                     <input autocomplete="off" onChange={(e) => this.CepMask(e)} type="text" className="form-control mb-2" id="cep" />
+                                    {inputErrors.cep
+                                        ? <div><span className="errorSpan">{inputErrors.cep}</span> <br /></div>
+                                        : null
+                                    }
                                     <a href="" target="_blank">Não sei meu CEP</a>
                                 </div>
                                 <div className="w-100"></div>
@@ -108,34 +133,58 @@ class UserAddress extends Component {
                                         <option value="SE">Sergipe</option>
                                         <option value="TO">Tocantins</option>
                                     </select>
+                                    {inputErrors.uf
+                                        ? <span className="errorSpan">{inputErrors.uf}</span>
+                                        : null
+                                    }
                                 </div>
                                 <div className="form-group col-sm">
                                     <label for="cidade">Cidade</label>
                                     <input onChange={this.handleInputChange} type="text" className="form-control" id="cidade" readonly />
+                                    {inputErrors.cidade
+                                        ? <span className="errorSpan">{inputErrors.cidade}</span>
+                                        : null
+                                    }
                                 </div>
                                 <div className="w-100"></div>
                                 <div className="form-group col-sm-7">
                                     <label for="bairro">Bairro</label>
                                     <input onChange={this.handleInputChange} type="text" className="form-control" id="bairro" />
+                                    {inputErrors.bairro
+                                        ? <span className="errorSpan">{inputErrors.bairro}</span>
+                                        : null
+                                    }
                                 </div>
                                 <div className="form-group col-sm-5">
                                     <label for="bairro">Complemento</label>
                                     <input onChange={this.handleInputChange} type="text" className="form-control" id="complemento" />
+                                    {inputErrors.complemento
+                                        ? <span className="errorSpan">{inputErrors.complemento}</span>
+                                        : null
+                                    }
                                 </div>
                                 <div className="w-100"></div>
                                 <div className="form-group col-sm-8">
                                     <label for="rua">Rua</label>
                                     <input onChange={this.handleInputChange} type="text" className="form-control" id="rua" />
+                                    {inputErrors.rua
+                                        ? <span className="errorSpan">{inputErrors.rua}</span>
+                                        : null
+                                    }
                                 </div>
                                 <div className="form-group col mb-5">
                                     <label for="numero">Número</label>
                                     <input onChange={this.handleInputChange} type="text" className="form-control" id="numero" />
+                                    {inputErrors.numero
+                                        ? <span className="errorSpan">{inputErrors.numero}</span>
+                                        : null
+                                    }
                                 </div>
                                 <div className="w-100"></div>
                                 <div className="col-6 col-md-3">
-                                    <button className="btn btn-block btn-lg btn-outline-secondary">
+                                    <Link to={"/Perfil"} className="btn btn-block btn-lg btn-outline-secondary">
                                         Cancelar
-                                        </button>
+                                        </Link>
                                 </div>
                                 <div className="col-6 col-md-3">
                                     <button onClick={() => {

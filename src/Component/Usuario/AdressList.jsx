@@ -58,11 +58,11 @@ class AdressList extends Component {
                                         fetch("https://anorosa.com.br/Emporio037/api/delendereco/" + item.id, {
                                             method: 'delete',
                                             headers: { 'Authorization': 'Bearer ' + token },
-                                        }).then(data => data.json().then(data => {
+                                        }).then(data => data.json().then(async data => {
                                                 if(data.status){
                                                     var array = [this.state.endereco];
                                                     array.splice(indice, 1);
-                                                    this.setState({
+                                                    await this.setState({ //Se não tiver o await a tela trava :)
                                                         endereco: array 
                                                     });
                                                 }
