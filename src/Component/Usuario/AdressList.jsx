@@ -9,38 +9,32 @@ class AdressList extends Component {
         const id = props;
         this.state = {
             id: id.id,
-            endereco: false
+            endereco: null,
+            loading: true
         }
     }
 
     componentDidMount() {
         const token = localStorage.getItem('JWT_token');
-        console.log(token);
-        fetch("https://anorosa.com.br/Emporio037/api/me", {
+        fetch("https://anorosa.com.br/Emporio037/api/me&adress", {
             method: 'POST',
             headers: { 'Authorization': 'Bearer ' + token },
         }).then(data => data.json().then(data => {
-            fetch("https://anorosa.com.br/Emporio037/api/endereco/list/" + data.id, {
-                headers: { 'Authorization': 'Bearer ' + token },
-            }).then(data => data.json().then(endereco => {
-                console.log(endereco);
-                this.setState({ endereco: endereco });
-                this.setState({ status: 200 })
-
-            }))
-                .catch(erro => this.setState(erro));
+            console.log(data);
+           this.setState({ endereco: data.adress, status: 200, loading:false });
         }))
             .catch(erro => this.setState(erro));
     }
-    
-    maskCEP =(numero)=>{
-        let numeroMask = numero.substring(0,5)+"-"+numero.substring(5)     
+
+    maskCEP = (numero) => {
+        let numeroMask = numero.substring(0, 5) + "-" + numero.substring(5)
         return numeroMask;
     }
 
     listEnd = () => {
         const endereco = this.state.endereco;
-        if (endereco && endereco.length) {
+        console.log(endereco);
+        if (endereco !==  null && endereco.length !== 0) {
             const htmlEnd = endereco.map((item, indice) => (
                 <li key={indice} className="list-group-item">
                     <div className="form-row flex-nowrap align-items-center">
@@ -58,17 +52,21 @@ class AdressList extends Component {
                                     <i className="fas fa-ellipsis-v"></i>
                                 </button>
                                 <div className="dropdown-menu">
-                                    <Link className="dropdown-item" to={"/Perfil/Enderecos/Editar/"+item.id}  >Editar</Link>
+                                    <Link className="dropdown-item" to={"/Perfil/Enderecos/Editar/" + item.id}  >Editar</Link>
                                     <a className="dropdown-item" onClick={() => {
                                         const token = localStorage.getItem('JWT_token');
-                                        console.log(token);
-                                        fetch("https://anorosa.com.br/Emporio037/api/delendereco/userid="+item.user_id+"&&enderecoid="+item.id , {
+                                        fetch("https://anorosa.com.br/Emporio037/api/delendereco/" + item.id, {
                                             method: 'delete',
                                             headers: { 'Authorization': 'Bearer ' + token },
                                         }).then(data => data.json().then(data => {
-                                            console.log(data);
-                                        //    window.location.reload();
-                                         }))
+                                                if(data.status){
+                                                    var array = [this.state.endereco];
+                                                    array.splice(indice, 1);
+                                                    this.setState({
+                                                        endereco: array 
+                                                    });
+                                                }
+                                        }))
                                     }}>Deletar</a>
                                 </div>
                             </div>
@@ -77,7 +75,7 @@ class AdressList extends Component {
                 </li>
             ))
             return htmlEnd
-        } else if (!this.state.endereco) {
+        } else if (this.state.loading) {
             return (
                 <div>
                     <div className="text-center">
@@ -106,7 +104,6 @@ class AdressList extends Component {
 
     }
     render() {
-        console.log(this.state.endereco);
         return (
 
             <div className="card-body p-0">

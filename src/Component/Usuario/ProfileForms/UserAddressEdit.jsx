@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+
 class UserAddressEdit extends Component {
     constructor(props) {
         super(props);
         this.state={
             token: localStorage.getItem("JWT_token"),
             endereco: {
-                "user_id": 0,
                 "cep": "",
                 "uf": "",
                 "cidade": "",
@@ -15,7 +15,8 @@ class UserAddressEdit extends Component {
                 "rua": "",
                 "numero": "",
                 "complemento": ""
-            }
+            },
+            isApiRequested: false,
         }
     }
     
@@ -27,7 +28,12 @@ class UserAddressEdit extends Component {
                 "Authorization": "Bearer "+this.state.token 
             }
         }).then(data => data.json().then(data=>{
-            this.setState({endereco:data.data})
+            if(data.errorcode === 2){
+                alert(data.error);
+                this.props.history.goBack();
+            }else{
+                this.setState({endereco:data.data, isApiRequested: true})
+            }
         }))
     }
     handleInputChange = event => {
@@ -40,7 +46,7 @@ class UserAddressEdit extends Component {
         console.log(this.state.endereco);
     };
     handleSubmit = () => {
-        fetch("http://anorosa.com.br/Emporio037/api/endereco/update/id="+this.state.endereco.id+"&&userid="+this.state.endereco.user_id, {
+        fetch("http://anorosa.com.br/Emporio037/api/endereco/update/"+this.props.match.params.id, {
             method: "put",
             body: JSON.stringify(this.state.endereco),
             headers: {
@@ -80,14 +86,20 @@ class UserAddressEdit extends Component {
                                 <div className="form-row">
                                     <div className="form-group col-sm-6">
                                         <label for="cep">CEP</label>
-                                        <input defaultValue={this.state.endereco.cep} onChange={this.handleInputChange} type="text" className="form-control mb-2" id="cep" />
+                                        {this.state.isApiRequested
+                                            ?<input defaultValue={this.state.endereco.cep.replace(/^(\d{5})(\d{3}).*/, '$1-$2')} onChange={(e)=>this.CepMask(e)} type="text" className="form-control mb-2" id="cep" />
+                                            :<input disabled type="text" className="form-control mb-2" id="cep" />
+                                        }
                                         <a href="" target="_blank">Não sei meu CEP</a>
                                     </div>
                                     <div className="w-100"></div>
                                     <div className="form-group col-sm">
                                         <label for="estado">Estado</label>
                                         <select  onChange={this.handleInputChange}  className="form-control" id="uf" readonly >
-                                            <option value="">Selecione</option>
+                                            {this.state.isApiRequested
+                                                ?<option value={this.state.endereco.uf}>{this.state.endereco.uf}</option>
+                                                :<option value="">Selecione</option>
+                                            }                
                                             <option value="AC">Acre</option>
                                             <option value="AL">Alagoas</option>
                                             <option value="AP">Amapá</option>
@@ -119,31 +131,46 @@ class UserAddressEdit extends Component {
                                     </div>
                                     <div className="form-group col-sm">
                                         <label for="cidade">Cidade</label>
-                                        <input defaultValue={this.state.endereco.cidade} onChange={this.handleInputChange} type="text" className="form-control" id="cidade" readonly />
+                                        {this.state.isApiRequested
+                                            ? <input defaultValue={this.state.endereco.cidade} onChange={this.handleInputChange} type="text" className="form-control" id="cidade" readonly />
+                                            : <input disabled type="text" className="form-control" id="cidade" readonly />
+                                        }
                                     </div>
                                     <div className="w-100"></div>
                                     <div className="form-group col-sm-7">
                                         <label for="bairro">Bairro</label>
-                                        <input defaultValue={this.state.endereco.bairro} onChange={this.handleInputChange} type="text" className="form-control" id="bairro" />
+                                        {this.state.isApiRequested
+                                            ? <input defaultValue={this.state.endereco.bairro} onChange={this.handleInputChange} type="text" className="form-control" id="bairro" />
+                                            :<input disabled type="text" className="form-control" id="bairro" />
+                                        }
                                     </div>
                                     <div className="form-group col-sm-5">
                                         <label for="bairro">Complemento</label>
-                                        <input defaultValue={this.state.endereco.complemento} onChange={this.handleInputChange}  type="text" className="form-control" id="complemento" />
+                                        {this.state.isApiRequested
+                                            ?<input defaultValue={this.state.endereco.complemento} onChange={this.handleInputChange}  type="text" className="form-control" id="complemento" />
+                                            :<input disabled type="text" className="form-control" id="complemento" />
+                                        }
                                     </div>
                                     <div className="w-100"></div>
                                     <div className="form-group col-sm-8">
                                         <label for="rua">Rua</label>
-                                        <input defaultValue={this.state.endereco.rua} onChange={this.handleInputChange} type="text" className="form-control" id="rua" />
+                                        {this.state.isApiRequested
+                                            ?<input defaultValue={this.state.endereco.rua} onChange={this.handleInputChange} type="text" className="form-control" id="rua" />
+                                            :<input disabled type="text" className="form-control" id="rua" />
+                                        }
                                     </div>
                                     <div className="form-group col mb-5">
                                         <label for="numero">Número</label>
-                                        <input defaultValue={this.state.endereco.numero} onChange={this.handleInputChange} type="text" className="form-control" id="numero" />
+                                        {this.state.isApiRequested
+                                            ?<input defaultValue={this.state.endereco.numero} onChange={this.handleInputChange} type="text" className="form-control" id="numero" />
+                                            :<input disabled type="text" className="form-control" id="numero" />
+                                        }
                                     </div>
                                     <div className="w-100"></div>
                                     <div className="col-6 col-md-3">
-                                        <button className="btn btn-block btn-lg btn-outline-secondary">
+                                        <Link to={"/Perfil"} className="btn btn-block btn-lg btn-outline-secondary">
                                             Cancelar
-                                        </button>
+                                        </Link>
                                     </div>
                                     <div className="col-6 col-md-3">
                                         <button onClick={()=>{
@@ -159,6 +186,24 @@ class UserAddressEdit extends Component {
                 </div>
             </div>
         );
+    }
+    CepMask = (e) => {
+
+        let cep = e.target.value;
+        let cepMask = cep;
+        e.target.value = cepMask.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").replace(/\(|\)|-/g, '').replace(/^(\d{5})(\d{3}).*/, '$1-$2');
+        if (cep.length === 8) {
+            var state = cep.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").replace(/\(|\)|-/g, '');
+            this.setState(prevState => ({
+                endereco: { ...prevState.endereco, cep: state }
+            }));
+        }
+        if (cep.length < 8) {
+            this.setState(prevState => ({
+                endereco: { ...prevState.endereco, cep: "" }
+            }));
+        }
+
     }
 }
 
