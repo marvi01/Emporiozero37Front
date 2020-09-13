@@ -1,3 +1,9 @@
+.errorSpan{
+    color: red;
+    font-size: 0.8rem;
+    padding-left: 1rem;
+}
+
 #checkout {
     align-items: start;
 }

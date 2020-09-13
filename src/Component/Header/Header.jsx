@@ -33,6 +33,7 @@ import Perfil from '../Usuario/UserProfile';
 import Endereco from '../Usuario/ProfileForms/UserAddress';
 import Senha from '../Usuario/ProfileForms/UpdateUserPassword';
 import EditarPerfil from '../Usuario/ProfileForms/UpdateUserInfo';
+import UserAddressEdit from '../Usuario/ProfileForms/UserAddressEdit';
 
 
 
@@ -65,9 +66,10 @@ function Header() {
           <Route path ="/Admin/AtualizarProduto/:id" exact component={EditProd}/>
           <Route path ="/Admin/AdicionarCarousel" exact component={AddCarrousel}/>
           <Route path ="/Perfil" exact component={Perfil}/>
-          <Route path ="/Perfil/Enderecos/Cadastrar" exact component={Endereco}/>
+          <Route path ="/Perfil/Enderecos/Cadastrar/:id" exact component={Endereco}/>
           <Route path ="/Perfil/Senha/Editar" exact component={Senha}/>
           <Route path ="/Perfil/Editar" exact component={EditarPerfil}/>
+          <Route path="/Perfil/Enderecos/Editar/:id" exact component = {UserAddressEdit} />
 
       </Switch>
     </div>

@@ -8,9 +8,61 @@ class Checkout extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            //Dados do usuario resgatados da api
+            isUserLoggedIn: false,
+            loggedInUser: {
+                created_at: "",
+                email: "",
+                email_verified_at: null,
+                id: 0,
+                nasc: "",
+                nome: "",
+                telefone: "",
+                type: 0,
+                updated_at: ""
+            },
+            //Dados do usuario utilizados para registrar venda
+            user: {
+                email: "",
+                nasc: "",
+                nome: "",
+                cpf: "",
+                telefone: "",
+                id: null
+            },
+            userInputErrors: {
+                name: null,
+                tel: null,
+                email: null,
+                cpf: null,
+                birth: null,
+            },
+            isAdressRegistered: false,
+            RegisteredAdress: [{}],
+            //Variáveis para o funcionamento da interface
             index: 0,
             direction: null,
             carouselItemCount: 7
+        }
+    }
+    componentDidMount() {
+        const token = localStorage.getItem("JWT_token");
+        if (token != null) {
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Authorization': 'Bearer ' + token },
+            };
+            fetch("https://anorosa.com.br/Emporio037/api/me&adress", requestOptions)
+                .then(data => data.json().then(data => {
+                    if (data.status !== false) {
+                        this.setState({ loggedInUser: data.user, isUserLoggedIn: true });
+                        if(data.adress.length !== 0){
+                            this.setState({ Adress: data.adress, isUserLoggedIn: true });
+                        }
+                    }
+                    
+                }))
+                .catch(erro => this.setState(erro))
         }
     }
     slideTo = (valInd) => {
@@ -21,7 +73,7 @@ class Checkout extends Component {
             index
         })
     }
-     toggleCarousel = (direction) => {
+    toggleCarousel = (direction) => {
         let index = this.state.index
         const [min, max] = [0, this.state.carouselItemCount - 1]
 
@@ -100,13 +152,13 @@ class Checkout extends Component {
                         </div>
                     </div>
                 </div>
-                
+
                 <div className="row no-gutters" id="checkout">
                     <div className="col-lg-auto">
                         {/*STEPS */}
                         <div className="steps flex-lg-column">
                             <div className="step completed">
-                                <span className="step-info">Informações<br/> pessoais</span>
+                                <span className="step-info">Informações<br /> pessoais</span>
                                 <div className="indicator-container" title="Informações pessoais">
                                     <span className="step-indicator">
                                         <i className="fas fa-user icon-default"></i>
@@ -116,7 +168,7 @@ class Checkout extends Component {
                                 <span className="step-line"></span>
                             </div>
                             <div className="step completed">
-                                <span className="step-info">Endereço<br/>de entrega</span>
+                                <span className="step-info">Endereço<br />de entrega</span>
                                 <div className="indicator-container" title="Endereço de entrega">
                                     <span className="step-indicator">
                                         <i className="fas fa-map-marker-alt icon-default"></i>
@@ -126,7 +178,7 @@ class Checkout extends Component {
                                 <span className="step-line"></span>
                             </div>
                             <div className="step active">
-                                <span className="step-info">Opções <br/>de frete</span>
+                                <span className="step-info">Opções <br />de frete</span>
                                 <div className="indicator-container" title="Opções de frete">
                                     <span className="step-indicator">
                                         <i className="fas fa-shipping-fast icon-default"></i>
@@ -136,7 +188,7 @@ class Checkout extends Component {
                                 <span className="step-line"></span>
                             </div>
                             <div className="step">
-                                <span className="step-info">Método de<br/> pagamento</span>
+                                <span className="step-info">Método de<br /> pagamento</span>
                                 <div className="indicator-container" title="Método de pagamento">
                                     <span className="step-indicator">
                                         <i className="fas fa-credit-card icon-default"></i>
@@ -146,7 +198,7 @@ class Checkout extends Component {
                                 <span className="step-line"></span>
                             </div>
                             <div className="step">
-                                <span className="step-info">Finalizar <br/>a  compra</span>
+                                <span className="step-info">Finalizar <br />a  compra</span>
                                 <span className="step-indicator" title="Finalizar a compra">
                                     <i className="fas fa-check-double icon-default"></i>
                                     <i className="fas fa-check icon-active"></i>
@@ -165,40 +217,95 @@ class Checkout extends Component {
                                     indicators={false}
                                     activeIndex={this.state.index}
                                     direction={this.state.direction}
-                                    >
+                                >
                                     <Carousel.Item>
                                         <h2 className="step-title">Informações pessoais</h2>
                                         <div className="form-step">
                                             <div className="form-row">
                                                 <div className="form-group col-sm">
                                                     <label for="nome">Nome completo</label>
-                                                    <input type="text" className="form-control" id="nome" readonly value="Ryan W. Fonseca"/>
+                                                    {this.state.loggedInUser.nome !== ""
+                                                        ? <input type="text" className="form-control" id="nome" value={this.state.loggedInUser.nome} readonly disabled />
+                                                        : <input type="text" id="nome" name="nome" onChange={this.handleUserInputChange} className="form-control" id="nome" placeholder="Ryan W. Fonseca" />
+                                                    }
+                                                    {this.state.userInputErrors.name
+                                                        ?<span className="errorSpan">{this.state.userInputErrors.name}</span>
+                                                        :null
+                                                    }
                                                 </div>
                                                 <div className="form-group col-sm">
                                                     <label for="cpf">CPF</label>
-                                                    <input type="text" className="form-control" id="cpf" readonly value="047.854.369-75"/>
+                                                    <input type="text" autocomplete="off" onChange={(e) => this.CpfMask(e)} className="form-control" id="cpf" placeholder="999.999.999-99" />
+                                                    {this.state.userInputErrors.cpf
+                                                        ?<span className="errorSpan">{this.state.userInputErrors.cpf}</span>
+                                                        :null
+                                                    }
                                                 </div>
                                             </div>
                                             <div className="form-group">
                                                 <label for="email">Email</label>
-                                                <input type="email" className="form-control" id="email" name="email"/>
+                                                {this.state.loggedInUser.email != ""
+                                                    ? <input type="email" className="form-control" id="email" name="email" readonly disabled value={this.state.loggedInUser.email} />
+                                                    : <input type="email" onChange={this.handleUserInputChange} className="form-control" id="email" name="email" />
+                                                }
+                                                {this.state.userInputErrors.email
+                                                        ?<span className="errorSpan">{this.state.userInputErrors.email}</span>
+                                                        :null
+                                                    }
                                             </div>
                                             <div className="form-row mb-4">
                                                 <div className="form-group col-sm">
                                                     <label for="celular">Celular</label>
-                                                    <input type="text" className="form-control" id="celular" name="celular"/>
+                                                    {this.state.loggedInUser.telefone != ""
+                                                        ? <input type="text" className="form-control" id="celular" name="celular" readonly disabled value={this.state.loggedInUser.telefone.replace(/\(|\)|-/g, '').replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1)$2-$3')} />
+                                                        : <input type="text" onChange={(e) => this.TelephoneMask(e)} className="form-control" id="celular" name="celular" />
+                                                    }
+                                                    {this.state.userInputErrors.tel
+                                                        ?<span className="errorSpan">{this.state.userInputErrors.tel}</span>
+                                                        :null
+                                                    }
                                                 </div>
                                                 <div className="form-group col-sm">
                                                     <label for="nascimento">Nascimento</label>
-                                                    <input type="date" className="form-control" id="nascimento" name="nascimento"/>
+                                                    {this.state.loggedInUser.nasc !== ""
+                                                        ? <input type="date" className="form-control" id="nascimento" name="nascimento" value={this.state.loggedInUser.nasc} readonly disabled />
+                                                        : <input onChange={this.handleUserInputChange} type="date" className="form-control" id="nasc" name="nasc" />
+                                                    }
+                                                    {this.state.userInputErrors.birth
+                                                        ?<span className="errorSpan">{this.state.userInputErrors.birth}</span>
+                                                        :null
+                                                    }
                                                 </div>
                                             </div>
                                             <div className="step-actions">
-                                                <span className="btn btn-primary" onClick={() => this.toggleCarousel('next')}>
+                                                <span className="btn btn-primary" onClick={async () => {
+                                                    if (this.state.isUserLoggedIn) {
+
+                                                       await this.setState(prevState => ({ //Não discuta cmg, aqui tem q ser await se nn dá erro ok? Ok.
+                                                            user: { ...prevState.user,
+                                                                email: this.state.loggedInUser.email,
+                                                                nasc: this.state.loggedInUser.nasc,
+                                                                nome: this.state.loggedInUser.nome,
+                                                                telefone: this.state.loggedInUser.telefone,
+                                                                id: this.state.loggedInUser.id 
+                                                                }
+                                                        }));
+                                                        console.log("yeye");
+                                                        console.log(this.state.user);
+                                                        //console.log(this.state.user);
+                                                        if (this.validateUserInfo()) {
+                                                            this.toggleCarousel('next')
+                                                        }
+                                                    } else {
+                                                        if (this.validateUserInfo()) {
+                                                            this.toggleCarousel('next')
+                                                        }
+                                                    }
+                                                }}>
                                                     Próximo
                                                 </span>
                                             </div>
-                                        </div>    
+                                        </div>
                                     </Carousel.Item>
                                     <Carousel.Item>
                                         {/* ENDEREÇO DE ENTREGA */}
@@ -208,7 +315,7 @@ class Checkout extends Component {
                                             <div className="custom-controls-container">
                                                 <div className="custom-controls-container">
                                                     <div className="custom-checkbox-control">
-                                                        <input type="radio" className="custom-checkbox-input" id="address1" name="address"/>
+                                                        <input type="radio" className="custom-checkbox-input" id="address1" name="address" />
                                                         <label for="address1" className="custom-checkbox-label">
                                                             <div className="row no-gutters custom-checkbox-label-content">
                                                                 {/* ICONE */}
@@ -220,7 +327,7 @@ class Checkout extends Component {
                                                                 {/* TEXTO */}
                                                                 <div className="col custom-checkbox-label-text">
                                                                     <div className="adress-container">
-                                                                        <address>Rua Rosimary Silva Pereira, 286<br/>Formiga MG 35574-061<br/>(37) 3322-4589
+                                                                        <address>Rua Rosimary Silva Pereira, 286<br />Formiga MG 35574-061<br />(37) 3322-4589
                                                                         </address>
                                                                         <a href="">Editar</a>
                                                                     </div>
@@ -229,10 +336,10 @@ class Checkout extends Component {
                                                         </label>
                                                     </div>
                                                     <div className="custom-checkbox-control">
-                                                        <input type="radio" className="custom-checkbox-input" id="address2" name="address"/>
+                                                        <input type="radio" className="custom-checkbox-input" id="address2" name="address" />
                                                         <label for="address2" className="custom-checkbox-label">
                                                             <div className="row no-gutters custom-checkbox-label-content">
-                                                            {/* ICONE */}
+                                                                {/* ICONE */}
                                                                 <div className="col-auto custom-checkbox-label-icon">
                                                                     <div className="custom-checkbox-icon">
                                                                         <i className="fas fa-map-marker-alt"></i>
@@ -242,8 +349,8 @@ class Checkout extends Component {
                                                                 <div className="col custom-checkbox-label-text">
                                                                     <div className="adress-container">
                                                                         <address>
-                                                                            Rua Rosimary Silva Pereira, 286<br/>
-                                                                            Formiga MG, 35574-061<br/>
+                                                                            Rua Rosimary Silva Pereira, 286<br />
+                                                                            Formiga MG, 35574-061<br />
                                                                             (37) 3322-4589
                                                                         </address>
                                                                         <a href="">Editar</a>
@@ -274,7 +381,7 @@ class Checkout extends Component {
                                             <p>Clique em uma das opções abaixo para selecionar o frete</p>
                                             <div className="custom-controls-container">
                                                 <div className="custom-checkbox-control">
-                                                    <input type="radio" className="custom-checkbox-input" id="shipping1" name="shipping"/>
+                                                    <input type="radio" className="custom-checkbox-input" id="shipping1" name="shipping" />
                                                     <label for="shipping1" className="custom-checkbox-label">
                                                         <div className="row no-gutters custom-checkbox-label-content">
                                                             {/* ICONE */}
@@ -391,12 +498,12 @@ class Checkout extends Component {
                                                 <div className="col-sm-6 order-first order-sm-last">
                                                     <div className="flip-card">
                                                         <div className="flip-card-inner">
-                                                                <img src={card_front} className="invisible img-fluid" alt="" />
+                                                            <img src={card_front} className="invisible img-fluid" alt="" />
                                                             <div className="flip-card-front">
                                                                 <img src={card_front} alt="" />
                                                             </div>
                                                             <div className="flip-card-back">
-                                                            <img src={card_back} alt="" />
+                                                                <img src={card_back} alt="" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -513,8 +620,8 @@ class Checkout extends Component {
                                                             <div className="row no-gutters show-info-text">
                                                                 <div className="col">
                                                                     <address className="mb-0">
-                                                                        Rua Rosimary Silva Pereira, 286<br/>
-                                                                        Formiga MG, 35574061<br/>
+                                                                        Rua Rosimary Silva Pereira, 286<br />
+                                                                        Formiga MG, 35574061<br />
                                                                         (37) 3322-4589
                                                                     </address>
                                                                 </div>
@@ -565,9 +672,9 @@ class Checkout extends Component {
                                                         <div className="col">
                                                             <div className="row no-gutters show-info-text">
                                                                 <div className="col">
-                                                                    <span>5547 2895 6985 1447</span><br/>
-                                                                    <span>12/99</span> <span className="ml-2">CVV: 662</span><br/>
-                                                                    <span>Ryan W. Fonseca</span><br/>
+                                                                    <span>5547 2895 6985 1447</span><br />
+                                                                    <span>12/99</span> <span className="ml-2">CVV: 662</span><br />
+                                                                    <span>Ryan W. Fonseca</span><br />
                                                                 </div>
                                                                 <div className="col-sm-auto">
                                                                     <span className="btn-link" onClick={() => this.slideTo(4)}>
@@ -683,6 +790,125 @@ class Checkout extends Component {
             </div>
         );
     }
+
+    
+
+    //User form validations and masks
+
+    validateUserInfo() {
+        const user = this.state.user;
+        
+        var validate = true;
+        this.setState({ userInputErrors: { name: null, tel: null, email: null, cpf: null, birth: null, } });
+
+        if (user.nome !== null) {//namevalidation
+            if (user.nome.length < 3 || user.nome.length > 44) {
+                this.UserInputSetError("name", "O nome deve ter entre 3 e 44 caracteres.");
+                validate = false;
+            }
+        } else {
+            this.UserInputSetError("name", "Insira um nome");
+            validate = false;
+        }
+        if (user.nasc !== null) {//birthvalidation
+            var birth = user.nasc;
+            var regEx = /^\d{4}-\d{2}-\d{2}$/;
+            if (!birth.match(regEx)) {
+                this.UserInputSetError("birth", "Insira uma formatação de data válida");
+                validate = false;
+            };
+            let nasc = birth.split("-").map(Number);
+            let depois18Anos = new Date(nasc[0] + 18, nasc[1] - 1, nasc[2]);
+            let agora = new Date();
+
+            if (depois18Anos >= agora) {
+                this.UserInputSetError("birth", "Somente maiores de 18 anos podem comprar este tipo de produto")
+                validate = false;
+            }
+        } else {
+            this.UserInputSetError("birth", "Insira uma data de nascimento");
+            validate = false;
+        }
+        if (user.cpf !== null) {//Cpf validation
+            if (user.cpf.length !== 11) {
+                this.UserInputSetError("cpf", "Insira um cpf válido");
+                validate = false;
+            }
+        } else {
+            this.UserInputSetError("cpf", "Insira o seu cpf");
+            validate = false;
+        }
+        if (user.email !== null) {//Email validation
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if (!re.test(user.email.toLowerCase())) {
+                this.UserInputSetError("email", "Email inválido");
+                validate = false;
+            }
+        } else {
+            this.UserInputSetError("email", "Insira um email");
+            validate = false;
+        }
+        if (user.telefone !== null) {
+            if (user.telefone.length !== 11) {
+                this.UserInputSetError("tel", "Número de telefone inválido");
+                validate = false;
+            } else {
+                if (!/^[0-9]+$/.test(user.telefone)) {
+                    this.UserInputSetError("tel", "Digite apenas números para seu telefone.")
+                    validate = false;
+                }
+            }
+        } else {
+            this.UserInputSetError("tel", "Insira um número de telefone");
+            validate = false;
+        }
+
+        return validate;
+    }
+    UserInputSetError(input, errormsg) {
+        this.setState(prevState => ({
+            userInputErrors: { ...prevState.userInputErrors, [input]: errormsg }
+        }));
+    }
+
+    TelephoneMask = (e) => {
+        let numero = e.target.value;
+        e.target.value = numero.replace(/\(|\)|-/g, '').replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1)$2-$3');
+        if (numero.length === 11) {
+            this.setState(prevState => ({
+                user: { ...prevState.user, telefone: numero.replace(/\(|\)|-/g, '') }
+            }));
+        }
+        if (numero.length < 11) {
+            this.setState(prevState => ({
+                user: { ...prevState.user, telefone: "" }
+            }));
+        }
+    }
+    CpfMask = (e) => {
+
+        let cpf = e.target.value;
+        let cpfMask = cpf;
+        e.target.value = cpfMask.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").replace(/\(|\)|-/g, '').replace(/^(\d{3})(\d{3})(\d{3})(\d{2}).*/, '$1.$2.$3-$4');
+        if (cpf.length === 11) {
+            this.setState(prevState => ({
+                user: { ...prevState.user, cpf: cpf.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").replace(/\(|\)|-/g, '') }
+            }));
+        }
+        if (cpf.length < 11) {
+            this.setState(prevState => ({
+                user: { ...prevState.user, cpf: "" }
+            }));
+        }
+    }
+    handleUserInputChange = event => {
+        const target = event.target;
+        const name = target.name;
+        const value = target.value;
+        this.setState(prevState => ({
+            user: { ...prevState.user, [name]: value }
+        }));
+    };
 }
 
 export default Checkout;

@@ -61,12 +61,12 @@ class Destaque extends Component {
        i++;
       }
       
-      console.log(Destaq)
+      console.log(Destaq[3])
       return (
         <Slide {...properties}>
           {Destaq[0]}
-          {Destaq[1]}
-          {Destaq[2]}  
+          {Destaq[1] ? Destaq[1] : Destaq[0]}
+          {Destaq[2] ? Destaq[2] : Destaq[0]}  
         </Slide>
       );
     }else{

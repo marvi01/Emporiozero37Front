@@ -1,5 +1,6 @@
 import React, { Component } from 'react'; //Importa o método componente e react
 import '../UserProfile.css';//Importa css
+import { Link } from 'react-router-dom';
 
 
 class UpdateUserPassword extends Component {
@@ -15,10 +16,10 @@ class UpdateUserPassword extends Component {
                     <form action="" method="POST">
                         <div className="row no-gutters justify-content-center">
                             <div className="col-md-10 col-lg-6 px-sm-5 profile-form">
-                                <a href="arquivo3.html" className="prev-button">
+                                <Link to="/Perfil" className="prev-button">
                                     <i className="fas fa-long-arrow-alt-left mr-2"></i>
                                     Voltar
-                                </a>
+                                </Link>
                                 <div className="form-group">
                                     <label for="old_password">Senha atual</label>
                                     <input type="password" className="form-control" id="old_password" />

@@ -1,10 +1,44 @@
 import React, { Component } from 'react'; //Importa o método componente e react
 import './UserProfile.css';//Importa css
 import AddressNotFound from '../../imagens/address.jpg';
+import { Link } from 'react-router-dom';
+import AdressList from './AdressList';
 
 
 class UserProfile extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: {
+                "nome": "",
+                "email": "",
+                "type": "",
+                "telefone": "",
+                "nasc": ""
+            },
+            status: 200
+        }
+    }
+
+
+    componentDidMount() {
+        const token = localStorage.getItem('JWT_token');
+        console.log(token);
+        fetch("https://anorosa.com.br/Emporio037/api/me", {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + token },
+        }).then(data => data.json().then(data => {
+            console.log(data);
+            this.setState({ user: data });
+            console.log(data);
+        }))
+            .catch(erro => this.setState(erro));
+    }
    
+maskTelefone =(numero)=>{
+    let numeroMask = numero.replace(/\(|\)|-/g, '').replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1)$2-$3');     
+    return numeroMask;
+}
 
     render() {//Aqui acontece a renderização da página
         //O metodo return define o que vai ser renderizado no site
@@ -39,10 +73,7 @@ class UserProfile extends Component {
                                                 <div className="col">
                                                     <div className="row no-gutters">
                                                         <div className="col">
-                                                            <span>Ryanfonseca183@gmail.com</span>
-                                                        </div>
-                                                        <div className="col-auto">
-                                                            <a href="">Editar<i className="ml-2 fas fa-long-arrow-alt-right"></i></a>
+                                                            <span>{this.state.user.email}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -59,7 +90,7 @@ class UserProfile extends Component {
                                                             <span>*******</span>
                                                         </div>
                                                         <div className="col-auto">
-                                                            <a href="arquivo6.html">Editar<i className="ml-2 fas fa-long-arrow-alt-right"></i></a>
+                                                            <Link to="/Perfil/Senha/Editar">Editar<i className="ml-2 fas fa-long-arrow-alt-right"></i></Link>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -79,7 +110,7 @@ class UserProfile extends Component {
                                             <p className="mb-sm-0">Edite as suas informações pessoais</p>
                                         </div>
                                         <div className="col-sm-auto">
-                                            <a href="arquivo5.html">Editar <i className="ml-2 fas fa-long-arrow-alt-right"></i></a>
+                                            <Link to="/Perfil/Editar">Editar <i className="ml-2 fas fa-long-arrow-alt-right"></i></Link>
                                         </div>
                                     </div>
                                 </div>
@@ -91,17 +122,7 @@ class UserProfile extends Component {
                                                     <h3 className="h6">Nome</h3>
                                                 </div>
                                                 <div className="col">
-                                                    <span>Ryan William Fonseca</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li className="list-group-item">
-                                            <div className="row no-gutters">
-                                                <div className="col-sm-4">
-                                                    <h3 className="h6">CPF</h3>
-                                                </div>
-                                                <div className="col">
-                                                    <span>152.674.226-81</span>
+                                                    <span>{this.state.user.nome}</span>
                                                 </div>
                                             </div>
                                         </li>
@@ -111,7 +132,7 @@ class UserProfile extends Component {
                                                     <h3 className="h6">Nascimento</h3>
                                                 </div>
                                                 <div className="col">
-                                                    <span>06-07-2001</span>
+                                                    <span> <input value={this.state.user.nasc} className="input-clean" type="date" name="" id="" readOnly /> </span>
                                                 </div>
                                             </div>
                                         </li>
@@ -121,7 +142,7 @@ class UserProfile extends Component {
                                                     <h3 className="h6">Celular</h3>
                                                 </div>
                                                 <div className="col">
-                                                    <span>(37) 99875-5117</span>
+                                                    <span>{this.maskTelefone(this.state.user.telefone)}</span>
                                                 </div>
                                             </div>
                                         </li>
@@ -140,85 +161,20 @@ class UserProfile extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="card-body p-0">
-                                    <ul className="list-group list-group-flush">
-                                        <li className="list-group-item">
-                                            <div className="form-row flex-nowrap align-items-center">
-                                                <div className="col">
-                                                    <address>
-                                                        <strong> Rosimary Silva Pereira, 286</strong><br/>
-                                                        Santo Antonio<br/>
-                                                        Formiga, MG 35574-061<br/>
-                                                        (37) 3322-0949
-                                                    </address>
-                                                </div>
-                                                <div className="col-auto">
-                                                    <div className="dropdown dropleft">
-                                                        <button className="btn-reset dropdown-toggle" type="button" data-toggle="dropdown">
-                                                            <i className="fas fa-ellipsis-v"></i>
-                                                        </button>
-                                                        <div className="dropdown-menu">
-                                                            <a className="dropdown-item" href="#">Editar</a>
-                                                            <a className="dropdown-item" href="#">Deletar</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li className="list-group-item">
-                                            <div className="form-row flex-nowrap align-items-center">
-                                                <div className="col">
-                                                    <address>
-                                                        <strong className="text-bold">Rosimary Silva Pereira, 286</strong><br/>
-                                                        Santo Antonio<br/>
-                                                        Formiga, MG 35574-061<br/>
-                                                        (37) 3322-0949
-                                                    </address>
-                                                </div>
-                                                <div className="col-auto">
-                                                    <div className="dropdown dropleft">
-                                                        <button className="btn-reset dropdown-toggle" type="button" data-toggle="dropdown">
-                                                            <i className="fas fa-ellipsis-v"></i>
-                                                        </button>
-                                                        <div className="dropdown-menu">
-                                                            <a className="dropdown-item" href="#">Editar</a>
-                                                            <a className="dropdown-item" href="#">Deletar</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    {/* CASO NÃO HAJA ENDEREÇOS CADASTRADOS, EXIBIR ESSE CONTEÚDO
-
-                                    <div className="address-not-found">
-                                        <div className="row no-gutters justify-content-center">
-                                            <div className="col-md-4">
-                                                <img src={AddressNotFound} className="img-fluid" alt="Endereços de entrega não encontrados">
-                                            </div>
-                                            <div className="w-100"></div>
-                                            <div className="col-md-8 col-lg-6">
-                                                <h3>Nenhum endereço cadastrado</h3>
-                                                <p>Por favor, cadastre ao menos uma localização para que a gente possa carregar essas informações durante a compra.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    */}
-                                </div>
+                                <AdressList />
                                 <div className="card-footer">
                                     <div className="row no-gutters">
                                         <div className="col-sm-auto">
-                                            <a href="arquivo4.html" className="btn btn-block btn-primary">
+                                            <Link to={"/Perfil/Enderecos/Cadastrar/"+this.state.user.id} className="btn btn-block btn-primary">
                                                 Cadastrar novo endereço
-                                            </a>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>       
+                </div>
             </div>
         );
     }

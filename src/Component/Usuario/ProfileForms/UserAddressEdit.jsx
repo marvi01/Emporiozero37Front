@@ -1,12 +1,12 @@
-import React, { Component } from 'react'; //Importa o método componente e react
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import '../UserProfile.css';//Importa css
 import './AdressForm.css';
 
-class UserAddress extends Component {
+class UserAddressEdit extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            token: localStorage.getItem("JWT_token"),
             endereco: {
                 "cep": "",
                 "uf": "",
@@ -25,12 +25,30 @@ class UserAddress extends Component {
                 "numero": null,
                 "complemento": null
             },
-            status: 200
-
+            isApiRequested: false,
         }
     }
 
-
+    componentDidMount() {
+        const id = this.props.match.params;
+        console.log(id);
+        fetch("https://anorosa.com.br/Emporio037/api/showendereco/" + id.id, {
+            headers: {
+                "Authorization": "Bearer " + this.state.token
+            }
+        }).then(data => data.json().then(data => {
+            if (data.errorcode === 2) {
+                alert(data.error);
+                this.props.history.goBack();
+            } else {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    this.setState({ endereco: data.data, isApiRequested: true })
+                }
+            }
+        }))
+    }
     handleInputChange = event => {
         const target = event.target;
         const name = target.id;
@@ -38,41 +56,41 @@ class UserAddress extends Component {
         this.setState(prevState => ({
             endereco: { ...prevState.endereco, [name]: value }
         }));
-
+        console.log(this.state.endereco);
     };
     handleSubmit = () => {
-        const token = localStorage.getItem("JWT_token")
-
-        fetch("http://anorosa.com.br/Emporio037/api/endereco/add", {
-            method: "post",
+        this.setState({adressInputErrors: { "cep": null, "uf": null, "cidade": null, "bairro": null, "rua": null, "numero": null, "complemento": null},})
+        fetch("http://anorosa.com.br/Emporio037/api/endereco/update/" + this.props.match.params.id, {
+            method: "put",
             body: JSON.stringify(this.state.endereco),
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + token
+                "Authorization": "Bearer " + this.state.token
             }
         })
-            .then(data => data.json().then(data => {
-                console.log(data);
-                if (data.errorcode) {
-                    switch (data.errorcode) {
-                        case 1:
-                            this.setState({ adressInputErrors: data.error });
-                            break;
-                        case 3:
-                            alert("Erro interno");
-                            break;
-                        default:
-                            alert(data.erro)
-                            break;
+            .then(data =>
+                data.json().then(data => {
+                    console.log(data);
+                    if (data.errorcode){
+                        switch (data.errorcode){
+                            case 1:
+                                this.setState({adressInputErrors: data.error});
+                                break;
+                            case 3:
+                                alert("Erro interno");
+                                break;
+                            default:
+                                alert(data.erro)
+                                break;
+                        }
+                    }else{
+                        if(data.error){
+                            alert(data.error);
+                        }else{
+                            this.props.history.goBack();
+                        }
                     }
-                } else {
-                    if (data.error) {
-                        alert(data.error);
-                    } else {
-                        this.props.history.goBack();
-                    }
-                }
-            })).catch(erro => this.setState({ erro: erro }));
+                })).catch(erro => this.setState({ erro: erro }));
     };
 
     render() {//Aqui acontece a renderização da página
@@ -80,23 +98,26 @@ class UserAddress extends Component {
         return (
             <div>
                 <div className="user-page-title">
-                    <h1 className="h2 mb-0">Cadastrar endereço</h1>
+                    <h1 className="h2 mb-0">Editar endereço</h1>
                     <p className="mb-5 mb-sm-3">A sua localização será carregada durante o processo de compra</p>
                 </div>
                 <div className="container">
                     <div className="row no-gutters justify-content-center">
                         <div className="col-lg-8 px-sm-5 profile-form">
-                            <a href="arquivo3.html" className="prev-button">
+                            <Link to="/Perfil" className="prev-button">
                                 <i className="fas fa-long-arrow-alt-left mr-2"></i>
                                     Voltar
-                                </a>
+                                </Link>
                             <div className="form-row">
                                 <div className="form-group col-sm-6">
                                     <label for="cep">CEP</label>
-                                    <input autocomplete="off" onChange={(e) => this.CepMask(e)} type="text" className="form-control mb-2" id="cep" />
+                                    {this.state.isApiRequested
+                                        ? <input defaultValue={this.state.endereco.cep.replace(/^(\d{5})(\d{3}).*/, '$1-$2')} onChange={(e) => this.CepMask(e)} type="text" className="form-control mb-2" id="cep" />
+                                        : <input disabled type="text" className="form-control mb-2" id="cep" />
+                                    }
                                     {inputErrors.cep
-                                        ? <div><span className="errorSpan">{inputErrors.cep}</span> <br /></div>
-                                        : null
+                                        ? <span className="errorSpan">{inputErrors.cep}</span>
+                                        :null
                                     }
                                     <a href="" target="_blank">Não sei meu CEP</a>
                                 </div>
@@ -104,7 +125,10 @@ class UserAddress extends Component {
                                 <div className="form-group col-sm">
                                     <label for="estado">Estado</label>
                                     <select onChange={this.handleInputChange} className="form-control" id="uf" readonly >
-                                        <option value="">Selecione</option>
+                                        {this.state.isApiRequested
+                                            ? <option value={this.state.endereco.uf}>{this.state.endereco.uf}</option>
+                                            : <option value="">Selecione</option>
+                                        }
                                         <option value="AC">Acre</option>
                                         <option value="AL">Alagoas</option>
                                         <option value="AP">Amapá</option>
@@ -135,49 +159,64 @@ class UserAddress extends Component {
                                     </select>
                                     {inputErrors.uf
                                         ? <span className="errorSpan">{inputErrors.uf}</span>
-                                        : null
+                                        :null
                                     }
                                 </div>
                                 <div className="form-group col-sm">
                                     <label for="cidade">Cidade</label>
-                                    <input onChange={this.handleInputChange} type="text" className="form-control" id="cidade" readonly />
+                                    {this.state.isApiRequested
+                                        ? <input defaultValue={this.state.endereco.cidade} onChange={this.handleInputChange} type="text" className="form-control" id="cidade" readonly />
+                                        : <input disabled type="text" className="form-control" id="cidade" readonly />
+                                    }
                                     {inputErrors.cidade
                                         ? <span className="errorSpan">{inputErrors.cidade}</span>
-                                        : null
+                                        :null
                                     }
                                 </div>
                                 <div className="w-100"></div>
                                 <div className="form-group col-sm-7">
                                     <label for="bairro">Bairro</label>
-                                    <input onChange={this.handleInputChange} type="text" className="form-control" id="bairro" />
+                                    {this.state.isApiRequested
+                                        ? <input defaultValue={this.state.endereco.bairro} onChange={this.handleInputChange} type="text" className="form-control" id="bairro" />
+                                        : <input disabled type="text" className="form-control" id="bairro" />
+                                    }
                                     {inputErrors.bairro
                                         ? <span className="errorSpan">{inputErrors.bairro}</span>
-                                        : null
+                                        :null
                                     }
                                 </div>
                                 <div className="form-group col-sm-5">
                                     <label for="bairro">Complemento</label>
-                                    <input onChange={this.handleInputChange} type="text" className="form-control" id="complemento" />
+                                    {this.state.isApiRequested
+                                        ? <input defaultValue={this.state.endereco.complemento} onChange={this.handleInputChange} type="text" className="form-control" id="complemento" />
+                                        : <input disabled type="text" className="form-control" id="complemento" />
+                                    }
                                     {inputErrors.complemento
                                         ? <span className="errorSpan">{inputErrors.complemento}</span>
-                                        : null
+                                        :null
                                     }
                                 </div>
                                 <div className="w-100"></div>
                                 <div className="form-group col-sm-8">
                                     <label for="rua">Rua</label>
-                                    <input onChange={this.handleInputChange} type="text" className="form-control" id="rua" />
+                                    {this.state.isApiRequested
+                                        ? <input defaultValue={this.state.endereco.rua} onChange={this.handleInputChange} type="text" className="form-control" id="rua" />
+                                        : <input disabled type="text" className="form-control" id="rua" />
+                                    }
                                     {inputErrors.rua
                                         ? <span className="errorSpan">{inputErrors.rua}</span>
-                                        : null
+                                        :null
                                     }
                                 </div>
                                 <div className="form-group col mb-5">
                                     <label for="numero">Número</label>
-                                    <input onChange={this.handleInputChange} type="text" className="form-control" id="numero" />
+                                    {this.state.isApiRequested
+                                        ? <input defaultValue={this.state.endereco.numero} onChange={this.handleInputChange} type="text" className="form-control" id="numero" />
+                                        : <input disabled type="text" className="form-control" id="numero" />
+                                    }
                                     {inputErrors.numero
                                         ? <span className="errorSpan">{inputErrors.numero}</span>
-                                        : null
+                                        :null
                                     }
                                 </div>
                                 <div className="w-100"></div>
@@ -188,7 +227,6 @@ class UserAddress extends Component {
                                 </div>
                                 <div className="col-6 col-md-3">
                                     <button onClick={() => {
-                                        console.log(this.state.endereco);
                                         this.handleSubmit()
                                     }
                                     } className="btn btn-block btn-lg btn-primary">
@@ -221,4 +259,5 @@ class UserAddress extends Component {
 
     }
 }
-export default UserAddress; //Aqui retorna o componente
+
+export default UserAddressEdit;
