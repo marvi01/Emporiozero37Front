@@ -32,11 +32,11 @@ class Categorias extends Component {
         const status = this.state.status;
         if (status) {
             const exibiCateg = categorias.map((item, indice) => (
-                <div className="col">
+            <div className="col-6 col-sm-auto">
                 <a href="">
                     <div className="categoria">
-                        <div className="img-categoria" style={{ backgroundImage: 'url(' + 'https://anorosa.com.br/Emporio037/storage/' +item.img+ ')' }}></div>
-            <h3 className="h6">{item.nomecategoria}</h3>
+                        <img className="img-categoria" src={'https://anorosa.com.br/Emporio037/storage/' +item.img} />
+                        <h3 className="h6">{item.nomecategoria}</h3>
                     </div>
                 </a>
             </div>
@@ -51,7 +51,7 @@ class Categorias extends Component {
                 <h2 className="mb-3 h4">Categorias</h2>
                 <div className="form-row">
                 {this.htmlCateg()}
-                    <div className="col">
+                    <div className="col-sm-auto">
                         <a href="">
                             <div className="show-more flex-md-column justify-content-md-center">
                                 <i className="fas fa-angle-right mb-md-2 order-md-0"></i>
