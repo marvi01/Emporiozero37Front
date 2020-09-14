@@ -175,7 +175,7 @@ export default function HeaderMeio() {
                             localStorage.removeItem("JWT_token");
                             localStorage.removeItem("users");
                             setUser(true);
-                            window.location.reload();
+                            window.location.replace("http://localhost:3000/");
                         }
                     });
                 } catch (error) {

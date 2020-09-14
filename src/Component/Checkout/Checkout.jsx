@@ -3,11 +3,102 @@ import './Checkout.css';
 import Carousel from 'react-bootstrap/Carousel';
 import card_front from '../../imagens/card-front.png';
 import card_back from '../../imagens/card-back.png';
+import EnderecoList from './EnderecoList';
+import DetalheCarrinho from './DetalheCarrinho';
+import { Link } from 'react-router-dom';
 
 class Checkout extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            freteEnv: {
+                cepdestino: "",
+                peso: "",
+                valordeclarado: "",
+            },
+            confirm: {
+                "amount": 0,
+                "card_holder_name": "",
+                "card_cvv": "",
+                "card_number": "",
+                "card_expiration_date": "",
+                "installments": 0,
+                "customer": {
+                    "external_id": "",
+                    "name": "",
+                    "type": "individual",
+                    "country": "br",
+                    "documents": [],
+                    "phone_numbers": [],
+                    "email": ""
+                },
+                "billing": {
+                    "name": "Caio",
+                    "address": {
+                        "country": "br",
+                        "street": "Afonso Pena",
+                        "street_number": "93",
+                        "state": "mg",
+                        "city": "Lagoa da Prata",
+                        "neighborhood": "Centro",
+                        "zipcode": "35590000"
+                    }
+                },
+                "shipping": {
+                    "name": "",
+                    "fee": 0,
+                    "delivery_date": null,
+                    "expedited": false,
+                    "address": {
+                        "country": "br",
+                        "street": "Floriano Peixoto",
+                        "street_number": "246",
+                        "state": "mg",
+                        "city": "Formiga",
+                        "neighborhood": "Centro",
+                        "zipcode": "35570000"
+                    }
+                },
+                "items": []
+            },
+            "customerOFF": {
+                "external_id": "1",
+                "name": "Miguel Alves",
+                "type": "individual",
+                "country": "br",
+                "documents": [],
+                "phone_numbers": ["+5537988352002"],
+                "email": "miguelfernandesalves09@gmail.com"
+            },
+            "billingOFF": {
+                "name": "Caio",
+                "address": {
+                    "country": "br",
+                    "street": "Afonso Pena",
+                    "street_number": "93",
+                    "state": "mg",
+                    "city": "Lagoa da Prata",
+                    "neighborhood": "Centro",
+                    "zipcode": "35590000"
+                }
+            },
+            "shippingOFF": {
+                "name": "",
+                "fee": 0,
+                "delivery_date": null,
+                "expedited": false,
+                "address": {
+                    "country": "br",
+                    "street": "Floriano Peixoto",
+                    "street_number": "246",
+                    "state": "mg",
+                    "city": "Formiga",
+                    "neighborhood": "Centro",
+                    "zipcode": "35570000"
+                }
+            },
+            peso: 0,
+
             //Dados do usuario resgatados da api
             isUserLoggedIn: false,
             loggedInUser: {
@@ -38,14 +129,75 @@ class Checkout extends Component {
                 birth: null,
             },
             isAdressRegistered: false,
-            RegisteredAdress: [{}],
+            RegisteredAdress: {
+                "user_id": 0,
+                "cep": "",
+                "uf": "",
+                "cidade": "",
+                "bairro": "",
+                "rua": "",
+                "numero": "",
+                "complemento": ""
+            },
+            localidade: null,
             //Variáveis para o funcionamento da interface
             index: 0,
             direction: null,
             carouselItemCount: 7
+
+        }
+    }
+    listFrete = () => {
+        const frete = this.state.OpcFrete;
+        if (frete && frete.length) {
+            const htmlFrete = frete.map((item, indice) => {
+
+
+                return (
+                    <div>
+
+                    </div>
+                )
+            })
         }
     }
     componentDidMount() {
+        const data = new Date();
+        let formatData = "" + data.getFullYear() + "-" + (1 + data.getMonth()) + "-" + data.getDate();
+        var array = [];
+        var array2 = [];
+        var array3 = [];
+        for (let i = 0; i < 99; i++) {
+            let tranformador = sessionStorage.getItem(i);
+            if (tranformador != null) {
+                let tranformado = JSON.parse(tranformador);
+                array2.push(tranformado.ValorTotal);
+                array.push(tranformado);
+                array3.push((tranformado.ml * tranformado.QuantProd))
+            }
+        }
+        this.setState(prevState => ({
+            confirm: { ...prevState.confirm, items: array }
+        }));
+        let valor = 0;
+        array2.reduce(function (total, numero) {
+            valor = total + numero;
+            return valor;
+        }, 0)
+        let peso = 0;
+        array3.reduce(function (pesoTotal, num) {
+            peso = pesoTotal + num;
+            return peso;
+        }, 0)
+        this.setState(prevState => ({
+            freteEnv: { ...prevState.freteEnv, peso: (peso / 1000) }
+        }));
+        this.setState(prevState => ({
+            freteEnv: { ...prevState.freteEnv, valordeclarado: valor }
+        }));
+        this.setState(prevState => ({
+            confirm: { ...prevState.confirm, amount: valor }
+        }));
         const token = localStorage.getItem("JWT_token");
         if (token != null) {
             const requestOptions = {
@@ -54,16 +206,94 @@ class Checkout extends Component {
             };
             fetch("https://anorosa.com.br/Emporio037/api/me&adress", requestOptions)
                 .then(data => data.json().then(data => {
+
                     if (data.status !== false) {
-                        this.setState({ loggedInUser: data.user, isUserLoggedIn: true });
-                        if(data.adress.length !== 0){
+
+                        this.setState({ loggedInUser: data.user, isUserLoggedIn: data.status });
+                        this.setState({ RegisteredAdress: data.adress, isAdressRegistered: data.status })
+                        this.setState(prevState => ({
+                            customerOFF: { ...prevState.customerOFF, name: data.user.nome }
+                        }))
+                        this.setState(prevState => ({
+                            customerOFF: { ...prevState.customerOFF, email: data.user.email }
+                        }))
+                        this.setState(prevState => ({
+                            customerOFF: { ...prevState.customerOFF, phone_numbers: "+55" + data.user.telefone }
+                        }))
+                        this.setState(prevState => ({
+                            customerOFF: { ...prevState.customerOFF, external_id: data.user.id }
+                        }))
+                        this.setState(prevState => ({
+                            shippingOFF: { ...prevState.shippingOFF, delivery_date: formatData }
+                        }))
+                        if (data.adress.length !== 0) {
                             this.setState({ Adress: data.adress, isUserLoggedIn: true });
                         }
                     }
-                    
                 }))
-                .catch(erro => this.setState(erro))
+                .catch(erro => this.setState(erro));
+
+
         }
+    }
+    enderecoList = () => {
+        const end = this.state.RegisteredAdress;
+        const status = this.state.status;
+        if (end && end.length) {
+            const htmlEnd = end.map((item, indice) => {
+                return (
+                    <div key={indice} className="custom-checkbox-control">
+                        <input onClick={() => {
+                            this.setState(prevState => ({
+                                shippingOFF: {
+                                    ...prevState.shippingOFF, "address": {
+                                        "country": "br",
+                                        "street": item.rua,
+                                        "street_number": item.numero,
+                                        "state": item.uf.toLowerCase(),
+                                        "city": item.cidade,
+                                        "neighborhood": item.bairro,
+                                        "zipcode": item.cep
+                                    }
+                                }
+                            }));
+                            this.setState(prevState => ({
+                                freteEnv: { ...prevState.freteEnv, cepdestino: item.cep }
+                            }));
+                        }} type="radio" className="custom-checkbox-input" id={indice} name="address" />
+                        <label for={indice} className="custom-checkbox-label">
+                            <div className="row no-gutters custom-checkbox-label-content">
+                                {/* ICONE */}
+                                <div className="col-auto custom-checkbox-label-icon">
+                                    <div className="custom-checkbox-icon">
+                                        <i className="fas fa-map-marker-alt"></i>
+                                    </div>
+                                </div>
+                                {/* TEXTO */}
+                                <div className="col custom-checkbox-label-text">
+                                    <div className="adress-container">
+                                        <address>{item.rua}, {item.numero}<br />{item.cidade} {item.uf} {item.cep.substring(0, 5) + "-" + item.cep.substring(5)}<br />{item.complemento}
+                                        </address>
+                                        <Link to={"/Perfil/Enderecos/Editar/" + item.id}>Editar</Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                )
+            })
+            return htmlEnd;
+
+        } else if (!status) {
+
+        } else {
+            return (
+                <div>
+                    Load
+                </div>
+            )
+        }
+
     }
     slideTo = (valInd) => {
         let index = valInd;
@@ -91,6 +321,77 @@ class Checkout extends Component {
             direction,
             index
         })
+    }
+    handleCPF = event => {
+        const target = event.target;
+        const value = target.value;
+        this.setState(prevState => ({
+            customerOFF: {
+                ...prevState.customerOFF, documents: [{
+                    "type": "cpf",
+                    "number": value
+                }]
+            }
+        }))
+
+    }
+    handleCartao = event => {
+        const target = event.target;
+        const name = target.name;
+        const value = target.value;
+
+        this.setState(prevState => ({
+            confirm: { ...prevState.confirm, [name]: value }
+        }))
+    }
+    metodoPag = () => {
+        const cidade = this.state.shippingOFF.address.zipcode;
+        console.log(cidade);
+       // fetch(" https://viacep.com.br/ws/" + cidade + "/json").then(data => data.json().then(data => {
+        //    console.log(data);
+        //    this.setState({ localidade: data.localidade })
+        //}))
+        if (this.state.localidade === "Lagoa da Prata") {
+            return (
+                <div className="custom-checkbox-control">
+                    <input type="radio" className="custom-checkbox-input" id="pay3" name="payment_method" />
+                    <label for="pay3" className="custom-checkbox-label">
+                        <div className="row no-gutters custom-checkbox-label-content">
+                            {/* ICONE */}
+                            <div className="col-auto custom-checkbox-label-icon">
+                                <div className="custom-checkbox-icon">
+                                    <i className="fas fa-map-marker-alt"></i>
+                                </div>
+                            </div>
+                            {/* TEXTO */}
+                            <div className="col custom-checkbox-label-text">
+                                <h3 className="h6 mb-0">Pagar na entrega</h3>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+            )
+        } else {
+            return(
+            <div className="custom-checkbox-control">
+                <input type="radio" className="custom-checkbox-input" id="pay2" name="payment_method" />
+                <label for="pay2" className="custom-checkbox-label">
+                    <div className="row no-gutters custom-checkbox-label-content">
+                        {/* ICONE */}
+                        <div className="col-auto custom-checkbox-label-icon">
+                            <div className="custom-checkbox-icon">
+                                <i className="fas fa-file-invoice"></i>
+                            </div>
+                        </div>
+                        {/* TEXTO */}
+                        <div className="col custom-checkbox-label-text">
+                            <h3 className="h6">Boleto bancário</h3>
+                        </div>
+                    </div>
+                </label>
+            </div>
+            )
+        }
     }
     render() {
         return (
@@ -229,16 +530,20 @@ class Checkout extends Component {
                                                         : <input type="text" id="nome" name="nome" onChange={this.handleUserInputChange} className="form-control" id="nome" placeholder="Ryan W. Fonseca" />
                                                     }
                                                     {this.state.userInputErrors.name
-                                                        ?<span className="errorSpan">{this.state.userInputErrors.name}</span>
-                                                        :null
+                                                        ? <span className="errorSpan">{this.state.userInputErrors.name}</span>
+                                                        : null
                                                     }
                                                 </div>
                                                 <div className="form-group col-sm">
                                                     <label for="cpf">CPF</label>
-                                                    <input type="text" autocomplete="off" onChange={(e) => this.CpfMask(e)} className="form-control" id="cpf" placeholder="999.999.999-99" />
+                                                    <input type="text" autocomplete="off" onChange={(e) => {
+                                                        this.handleCPF(e)
+
+                                                        this.CpfMask(e)
+                                                    }} className="form-control" id="cpf" placeholder="999.999.999-99" />
                                                     {this.state.userInputErrors.cpf
-                                                        ?<span className="errorSpan">{this.state.userInputErrors.cpf}</span>
-                                                        :null
+                                                        ? <span className="errorSpan">{this.state.userInputErrors.cpf}</span>
+                                                        : null
                                                     }
                                                 </div>
                                             </div>
@@ -249,9 +554,9 @@ class Checkout extends Component {
                                                     : <input type="email" onChange={this.handleUserInputChange} className="form-control" id="email" name="email" />
                                                 }
                                                 {this.state.userInputErrors.email
-                                                        ?<span className="errorSpan">{this.state.userInputErrors.email}</span>
-                                                        :null
-                                                    }
+                                                    ? <span className="errorSpan">{this.state.userInputErrors.email}</span>
+                                                    : null
+                                                }
                                             </div>
                                             <div className="form-row mb-4">
                                                 <div className="form-group col-sm">
@@ -261,8 +566,8 @@ class Checkout extends Component {
                                                         : <input type="text" onChange={(e) => this.TelephoneMask(e)} className="form-control" id="celular" name="celular" />
                                                     }
                                                     {this.state.userInputErrors.tel
-                                                        ?<span className="errorSpan">{this.state.userInputErrors.tel}</span>
-                                                        :null
+                                                        ? <span className="errorSpan">{this.state.userInputErrors.tel}</span>
+                                                        : null
                                                     }
                                                 </div>
                                                 <div className="form-group col-sm">
@@ -272,8 +577,8 @@ class Checkout extends Component {
                                                         : <input onChange={this.handleUserInputChange} type="date" className="form-control" id="nasc" name="nasc" />
                                                     }
                                                     {this.state.userInputErrors.birth
-                                                        ?<span className="errorSpan">{this.state.userInputErrors.birth}</span>
-                                                        :null
+                                                        ? <span className="errorSpan">{this.state.userInputErrors.birth}</span>
+                                                        : null
                                                     }
                                                 </div>
                                             </div>
@@ -281,18 +586,18 @@ class Checkout extends Component {
                                                 <span className="btn btn-primary" onClick={async () => {
                                                     if (this.state.isUserLoggedIn) {
 
-                                                       await this.setState(prevState => ({ //Não discuta cmg, aqui tem q ser await se nn dá erro ok? Ok.
-                                                            user: { ...prevState.user,
+                                                        await this.setState(prevState => ({ //Não discuta cmg, aqui tem q ser await se nn dá erro ok? Ok.
+                                                            user: {
+                                                                ...prevState.user,
                                                                 email: this.state.loggedInUser.email,
                                                                 nasc: this.state.loggedInUser.nasc,
                                                                 nome: this.state.loggedInUser.nome,
                                                                 telefone: this.state.loggedInUser.telefone,
-                                                                id: this.state.loggedInUser.id 
-                                                                }
+                                                                id: this.state.loggedInUser.id
+                                                            }
                                                         }));
-                                                        console.log("yeye");
-                                                        console.log(this.state.user);
-                                                        //console.log(this.state.user);
+
+
                                                         if (this.validateUserInfo()) {
                                                             this.toggleCarousel('next')
                                                         }
@@ -314,51 +619,8 @@ class Checkout extends Component {
                                             <p>Clique em algum endereço abaixo para seleciona-lo</p>
                                             <div className="custom-controls-container">
                                                 <div className="custom-controls-container">
-                                                    <div className="custom-checkbox-control">
-                                                        <input type="radio" className="custom-checkbox-input" id="address1" name="address" />
-                                                        <label for="address1" className="custom-checkbox-label">
-                                                            <div className="row no-gutters custom-checkbox-label-content">
-                                                                {/* ICONE */}
-                                                                <div className="col-auto custom-checkbox-label-icon">
-                                                                    <div className="custom-checkbox-icon">
-                                                                        <i className="fas fa-map-marker-alt"></i>
-                                                                    </div>
-                                                                </div>
-                                                                {/* TEXTO */}
-                                                                <div className="col custom-checkbox-label-text">
-                                                                    <div className="adress-container">
-                                                                        <address>Rua Rosimary Silva Pereira, 286<br />Formiga MG 35574-061<br />(37) 3322-4589
-                                                                        </address>
-                                                                        <a href="">Editar</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </label>
-                                                    </div>
-                                                    <div className="custom-checkbox-control">
-                                                        <input type="radio" className="custom-checkbox-input" id="address2" name="address" />
-                                                        <label for="address2" className="custom-checkbox-label">
-                                                            <div className="row no-gutters custom-checkbox-label-content">
-                                                                {/* ICONE */}
-                                                                <div className="col-auto custom-checkbox-label-icon">
-                                                                    <div className="custom-checkbox-icon">
-                                                                        <i className="fas fa-map-marker-alt"></i>
-                                                                    </div>
-                                                                </div>
-                                                                {/* TEXTO */}
-                                                                <div className="col custom-checkbox-label-text">
-                                                                    <div className="adress-container">
-                                                                        <address>
-                                                                            Rua Rosimary Silva Pereira, 286<br />
-                                                                            Formiga MG, 35574-061<br />
-                                                                            (37) 3322-4589
-                                                                        </address>
-                                                                        <a href="">Editar</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </label>
-                                                    </div>
+                                                    <div>
+                                                        {this.enderecoList()}</div>
                                                     <a type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#add_address">
                                                         Novo endereço
                                                     </a>
@@ -368,7 +630,22 @@ class Checkout extends Component {
                                                 <span className="btn btn-link" onClick={() => this.toggleCarousel('prev')}>
                                                     Voltar
                                                 </span>
-                                                <span className="btn btn-primary" onClick={() => this.toggleCarousel('next')}>
+                                                <span className="btn btn-primary" onClick={async () => {
+                                                    this.toggleCarousel('next');
+
+                                                    await fetch("https://anorosa.com.br/Emporio037/api/correios/calcfrete", {
+                                                        method: "POST",
+                                                        body: JSON.stringify(this.state.freteEnv)
+                                                    })
+                                                        .then(data => data.json().then(data => {
+
+                                                            console.log(data);
+
+                                                        }))
+                                                        .catch(erro => this.setState(erro));
+                                                }
+
+                                                }>
                                                     Próximo
                                                 </span>
                                             </div>
@@ -399,12 +676,37 @@ class Checkout extends Component {
                                                         </div>
                                                     </label>
                                                 </div>
+
+                                            </div>
+                                            <div className="custom-controls-container">
+                                                <div className="custom-checkbox-control">
+                                                    <input type="radio" className="custom-checkbox-input" id="shipping1" name="shipping" />
+                                                    <label for="shipping1" className="custom-checkbox-label">
+                                                        <div className="row no-gutters custom-checkbox-label-content">
+                                                            {/* ICONE */}
+                                                            <div className="col-auto custom-checkbox-label-icon">
+                                                                <div className="custom-checkbox-icon">
+                                                                    <i className="fas fa-shipping-fast"></i>
+                                                                </div>
+                                                            </div>
+                                                            {/* TEXTO */}
+                                                            <div className="col custom-checkbox-label-text">
+                                                                <h3 className="shipping-name">Expresso</h3>
+                                                                <span className="shipping-price">R$ 34,00</span>
+                                                                <p className="shipping-info">Chegará entre os dias 21 e 25 de agosto </p>
+                                                            </div>
+                                                        </div>
+                                                    </label>
+                                                </div>
                                             </div>
                                             <div className="step-actions">
                                                 <span className="btn btn-link" onClick={() => this.toggleCarousel('prev')}>
                                                     Voltar
                                                 </span>
-                                                <span className="btn btn-primary" onClick={() => this.toggleCarousel('next')}>
+                                                <span className="btn btn-primary" onClick={() => {
+                                                    this.toggleCarousel('next');
+                                                    this.metodoPag()
+                                                }}>
                                                     Próximo
                                                 </span>
                                             </div>
@@ -434,40 +736,8 @@ class Checkout extends Component {
                                                         </div>
                                                     </label>
                                                 </div>
-                                                <div className="custom-checkbox-control">
-                                                    <input type="radio" className="custom-checkbox-input" id="pay2" name="payment_method" />
-                                                    <label for="pay2" className="custom-checkbox-label">
-                                                        <div className="row no-gutters custom-checkbox-label-content">
-                                                            {/* ICONE */}
-                                                            <div className="col-auto custom-checkbox-label-icon">
-                                                                <div className="custom-checkbox-icon">
-                                                                    <i className="fas fa-file-invoice"></i>
-                                                                </div>
-                                                            </div>
-                                                            {/* TEXTO */}
-                                                            <div className="col custom-checkbox-label-text">
-                                                                <h3 className="h6">Boleto bancário</h3>
-                                                            </div>
-                                                        </div>
-                                                    </label>
-                                                </div>
-                                                <div className="custom-checkbox-control">
-                                                    <input type="radio" className="custom-checkbox-input" id="pay3" name="payment_method" />
-                                                    <label for="pay3" className="custom-checkbox-label">
-                                                        <div className="row no-gutters custom-checkbox-label-content">
-                                                            {/* ICONE */}
-                                                            <div className="col-auto custom-checkbox-label-icon">
-                                                                <div className="custom-checkbox-icon">
-                                                                    <i className="fas fa-map-marker-alt"></i>
-                                                                </div>
-                                                            </div>
-                                                            {/* TEXTO */}
-                                                            <div className="col custom-checkbox-label-text">
-                                                                <h3 className="h6 mb-0">Pagar na entrega</h3>
-                                                            </div>
-                                                        </div>
-                                                    </label>
-                                                </div>
+                                                {this.metodoPag()}
+
                                             </div>
                                             <div className="step-actions">
                                                 <span className="btn btn-link" onClick={() => this.toggleCarousel('prev')}>
@@ -488,11 +758,11 @@ class Checkout extends Component {
                                                 <div className="col-sm-6">
                                                     <div className="form-group">
                                                         <label for="card-number">Número</label>
-                                                        <input type="text" className="form-control" id="card-number" />
+                                                        <input name="card_number" onChange={this.handleCartao} type="text" className="form-control" id="card-number" />
                                                     </div>
                                                     <div className="form-group">
                                                         <label for="card-title">Nome do portador</label>
-                                                        <input type="text" className="form-control" id="card-title" />
+                                                        <input name="card_holder_name" onChange={this.handleCartao} type="text" className="form-control" id="card-title" />
                                                     </div>
                                                 </div>
                                                 <div className="col-sm-6 order-first order-sm-last">
@@ -512,11 +782,11 @@ class Checkout extends Component {
                                             <div className="form-row">
                                                 <div className="form-group col-8 col-sm-6">
                                                     <label for="card-number">Validade</label>
-                                                    <input type="date" className="form-control" id="card-number" />
+                                                    <input name="card_expiration_date" onChange={this.handleCartao} maxLength="4" type="number" className="form-control" id="card-number" />
                                                 </div>
                                                 <div className="form-group col">
                                                     <label for="card-number">CVV</label>
-                                                    <input type="number" className="form-control" id="card-number" />
+                                                    <input name="card_cvv" onChange={this.handleCartao} type="number" className="form-control" id="card-number" />
                                                 </div>
                                             </div>
                                             <div className="step-actions">
@@ -745,45 +1015,7 @@ class Checkout extends Component {
                                 </Carousel>
                             </div>
                             {/* CARRINHO DE COMPRA */}
-                            <div className="col-md checkout-cart-details">
-                                <nav className="navbar navbar-expand-md navbar-dark bg-dark rounded p-3">
-                                    <a className="navbar-brand d-md-none" href="#">Carrinho de compras</a>
-                                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#checkout-cart-details-collapse">
-                                        <span className="navbar-toggler-icon"></span>
-                                    </button>
-                                    <div className="collapse navbar-collapse mt-3 mt-lg-0" id="checkout-cart-details-collapse">
-                                        <div className="checkout-cart-details-info">
-                                            <h2 className="h4">Detalhes</h2>
-                                            <div className="cart-product-details-container">
-                                                <div className="cart-product-details">
-                                                    <span>10x Vodka Absolut 600 ML</span>
-                                                    <span>R$ 600,00</span>
-                                                </div>
-                                                <div className="cart-product-details">
-                                                    <span>10x Vodka Absolut 600 ML</span>
-                                                    <span>R$ 600,00</span>
-                                                </div>
-                                                <div className="cart-product-details">
-                                                    <span>10x Vodka Absolut 600 ML</span>
-                                                    <span>R$ 600,00</span>
-                                                </div>
-                                            </div>
-                                            <div className="cart-values">
-                                                <hr className="bg-light" />
-                                                <div className="cart-value-info">
-                                                    <span>Frete</span>
-                                                    <span>R$ 84,00</span>
-                                                </div>
-                                                <div className="cart-value-info">
-                                                    <span>Total</span>
-                                                    <span>R$ 1200,00</span>
-                                                </div>
-                                            </div>
-                                            <button className="btn btn-block btn-primary">Ver carrinho</button>
-                                        </div>
-                                    </div>
-                                </nav>
-                            </div>
+                            <DetalheCarrinho />
                         </div>
                     </div>
                 </div>
@@ -791,13 +1023,13 @@ class Checkout extends Component {
         );
     }
 
-    
+
 
     //User form validations and masks
 
     validateUserInfo() {
         const user = this.state.user;
-        
+
         var validate = true;
         this.setState({ userInputErrors: { name: null, tel: null, email: null, cpf: null, birth: null, } });
 
