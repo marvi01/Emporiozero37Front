@@ -14,7 +14,11 @@ class UpdateUserInfo extends Component {
                 "telefone": "",
                 "nasc": ""
             },
+            userUpdates: {
+
+            },
             status: 200,
+            isApiRequested: false,
             telefoneerror: null,
             dataerror: null,
             nomeerror: null
@@ -23,13 +27,16 @@ class UpdateUserInfo extends Component {
 
     componentDidMount() {
         const token = localStorage.getItem('JWT_token');
-        console.log(token);
         fetch("https://anorosa.com.br/Emporio037/api/me", {
             method: 'POST',
             headers: { 'Authorization': 'Bearer ' + token },
         }).then(data => data.json().then(data => {
-            console.log(data);
-            this.setState({ user: data });
+            if (data.status !== false) {
+                this.setState({ user: data, isApiRequested: true });
+            } else {
+                alert("Favor realizar o login novamente");
+                this.props.history.goBack();
+            }
         }))
             .catch(erro => this.setState(erro));
     }
@@ -38,40 +45,33 @@ class UpdateUserInfo extends Component {
         const name = target.name;
         const value = target.value;
         this.setState(prevState => ({
-            user: { ...prevState.user, [name]: value }
+            userUpdates: { ...prevState.userUpdates, [name]: value }
         }));
-        console.log(this.state.user);
     };
-    handleSubmit = (json) => {
+    handleSubmit = () => {
+        if (this.state.user.telefone === this.state.userUpdates.telefone) {
+            delete this.state.userUpdates.telefone;
+        }
         const token = localStorage.getItem("JWT_token")
-        console.log(token);
-        fetch("http://anorosa.com.br/Emporio037/api/usuario/update/"+this.state.user.id, {
+        fetch("http://anorosa.com.br/Emporio037/api/usuario/update/" + this.state.user.id, {
             method: "put",
-            body: JSON.stringify(json),
+            body: JSON.stringify(this.state.userUpdates),
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + token
             }
         })
-            .then(data => {
-                if (data.ok) {
-                    this.setState({ redirect: true });
-                    alert('Atualizado com sucesso')
-                    return(
-                        <Redirect to="/"/>
-                    )
+            .then(data => data.json().then(data => {
+                if (data.status) {
+                    this.props.history.goBack();
                 } else {
-                    data.json().then(data => {
-                        if (data.error) {
-                            this.setState({ erro: data.error });
-                        }
-                    });
+                    alert(data.error);
                 }
-            }).catch(erro => this.setState({ erro: erro }));
+            })).catch(erro => this.setState({ erro: erro }));
     };
 
     render() {//Aqui acontece a renderização da página
-        console.log(this.state);
+        const isApiRequested = this.state.isApiRequested;
         return (
             <div>
                 <div className="user-page-title">
@@ -87,51 +87,34 @@ class UpdateUserInfo extends Component {
                                 </Link>
                             <div className="form-group">
                                 <label for="nome">Nome completo</label>
-                                <input onChange={this.handleInputChange} type="text" className="form-control mb-2" name="nome" id="nome" defaultValue={this.state.user.nome} />
+                                {isApiRequested
+                                    ? <input onChange={this.handleInputChange} type="text" className="form-control mb-2" name="nome" id="nome" defaultValue={this.state.user.nome} />
+                                    : <input disabled readonly type="text" className="form-control mb-2" />
+                                }
+
                                 <span className="errorspan">{this.state.nomeerror}</span>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-sm-6">
                                     <label for="celular">Celular</label>
-                                    <input onChange={this.handleInputChange} defaultValue={this.state.user.telefone} name="telefone" type="text" className="form-control" id="celular" />
+                                    {isApiRequested
+                                        ? <input onChange={this.handleInputChange} defaultValue={this.state.user.telefone} name="telefone" type="text" className="form-control" id="celular" />
+                                        : <input disabled readonly type="text" className="form-control" />
+                                    }
                                     <span className="errorspan">{this.state.telefoneerror}</span>
                                 </div>
                                 <div className="form-group col-sm-6 mb-5">
                                     <label for="nascimento">Nascimento</label>
-                                    <input onChange={this.handleInputChange} defaultValue={this.state.user.nasc} type="date" name="nasc" className="form-control" id="nascimento" />
+                                    {isApiRequested
+                                        ? <input onChange={this.handleInputChange} defaultValue={this.state.user.nasc} type="date" name="nasc" className="form-control" id="nascimento" />
+                                        : <input disabled readonly type="date" className="form-control" />
+                                    }
                                     <span className="errorspan">{this.state.dataerror}</span>
                                 </div>
                             </div>
                             <button onClick={() => {
-                                if (this.state.user.nome.length >= 3 && this.state.user.nome.length <= 44) {
-                                    this.setState({ nomeerror: null });
-
-                                } else {
-                                    this.setState({ nomeerror: 'Nome invalido!' });
-                                }
-                                if (this.state.user.telefone.length === 11) {
-                                    this.setState({ telefoneerror: null })
-                                } else {
-                                    this.setState({ telefoneerror: 'Telefone invalido!' })
-                                }
-                                const date = new Date(this.state.user.nasc);
-                                const dateAtual = new Date();
-                                let ano = dateAtual.getFullYear() - date.getFullYear();
-                                let mes = dateAtual.getMonth() - date.getMonth();
-                                if ((ano === 18 && mes > 0 || (ano === 18 && mes === 0 && dateAtual.getDate() >= date.getDate())) || ano > 18) {
-                                    this.setState({ dataerror: null })
-
-                                } else {
-                                    this.setState({ dataerror: 'Data invalida!' })
-                                }
-                                if(this.state.dataerror === null && this.state.nomeerror===null&& this.state.telefoneerror===null){
-                                    let UserUpdate ={
-                                        nome: this.state.user.nome,
-                                        telefone: this.state.user.telefone,
-                                        nasc:this.state.user.nasc
-                                    }
-                                    this.handleSubmit(UserUpdate)
-                                    console.log("Tudo correto ");
+                                if (this.inputValidation()) {
+                                    this.handleSubmit()
                                 }
                             }} className="btn btn-block btn-lg btn-primary">
                                 Salvar alterações
@@ -141,6 +124,43 @@ class UpdateUserInfo extends Component {
                 </div>
             </div>
         );
+    }
+    inputValidation() {
+        var updates = this.state.userUpdates;
+        var isValid = true;
+        if (updates.nome) {
+            if (updates.nome.length >= 3 && updates.nome.length <= 44) {
+                this.setState({ nomeerror: null });
+                isValid = false;
+            } else {
+                this.setState({ nomeerror: 'Nome invalido!' });
+            }
+        }
+        if (updates.telefone) {
+            if (updates.telefone.length === 11) {
+                this.setState({ telefoneerror: null })
+                
+            } else {
+                this.setState({ telefoneerror: 'Telefone invalido!' })
+                isValid = false;
+            }
+        }
+        if (updates.nasc) {
+
+
+            const date = new Date(updates.user.nasc);
+            const dateAtual = new Date();
+            let ano = dateAtual.getFullYear() - date.getFullYear();
+            let mes = dateAtual.getMonth() - date.getMonth();
+            if ((ano === 18 && mes > 0 || (ano === 18 && mes === 0 && dateAtual.getDate() >= date.getDate())) || ano > 18) {
+                this.setState({ dataerror: null })
+
+            } else {
+                this.setState({ dataerror: 'Data invalida!' })
+                isValid = false;
+            }
+        }
+        return isValid;
     }
 }
 export default UpdateUserInfo; //Aqui retorna o componente

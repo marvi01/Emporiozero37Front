@@ -3,16 +3,27 @@ import './App.css';
 
 
 import Header from './Component/Header/Header';
+import Dashboard from './Component/Dashboard/Dashboard';
+
 
 import { Switch, Route } from 'react-router-dom';
 import Login from './Component/Login/Login';
 import Cadastro from './Component/Cadastro/Cadastro';
+
+
 
 function App() {
   return (
     <div className="corpo">
      
       <Switch>
+          <Route path="/dashboard" exact component={Dashboard} />
+          <Route path="/dashboard/categorias" exact component={Dashboard} />
+
+          <Route path="/dashboard/produtos/create" exact component={Dashboard} />
+          <Route path="/dashboard/produtos/:id/edit" exact component={Dashboard} />
+          <Route path="/dashboard/produtos" exact component={Dashboard} />
+
           <Route path="/" exact component={Header} />
           <Route path="/Produto/:id" exact component={Header} />
           <Route path="/Categoria/:id" component={Header} />
