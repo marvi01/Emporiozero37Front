@@ -20,7 +20,6 @@ class AdressList extends Component {
             method: 'POST',
             headers: { 'Authorization': 'Bearer ' + token },
         }).then(data => data.json().then(data => {
-            console.log(data);
            this.setState({ endereco: data.adress, status: 200, loading:false });
         }))
             .catch(erro => this.setState(erro));
@@ -33,7 +32,6 @@ class AdressList extends Component {
 
     listEnd = () => {
         const endereco = this.state.endereco;
-        console.log(endereco);
         if (endereco !==  null && endereco.length !== 0) {
             const htmlEnd = endereco.map((item, indice) => (
                 <li key={indice} className="list-group-item">

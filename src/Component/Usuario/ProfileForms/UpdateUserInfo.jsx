@@ -62,7 +62,6 @@ class UpdateUserInfo extends Component {
             }
         })
             .then(data => data.json().then(data => {
-                console.log(data);
                 if (data.status) {
                     this.props.history.goBack();
                 } else {
@@ -129,7 +128,6 @@ class UpdateUserInfo extends Component {
     inputValidation() {
         var updates = this.state.userUpdates;
         var isValid = true;
-        console.log(updates);
         if (updates.nome) {
             if (updates.nome.length >= 3 && updates.nome.length <= 44) {
                 this.setState({ nomeerror: null });
@@ -139,7 +137,6 @@ class UpdateUserInfo extends Component {
             }
         }
         if (updates.telefone) {
-            console.log("dick");
             if (updates.telefone.length === 11) {
                 this.setState({ telefoneerror: null })
                 

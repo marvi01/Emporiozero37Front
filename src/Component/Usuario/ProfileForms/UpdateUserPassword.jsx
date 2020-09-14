@@ -60,7 +60,6 @@ class UpdateUserPassword extends Component {
                 }
             })
                 .then(data => data.json().then(data => {
-                    console.log(data);
                     if (data.errorcode) {
                         switch (data.errorcode) {
                             case 1:
@@ -144,7 +143,6 @@ class UpdateUserPassword extends Component {
                                     <li>Não utilize o seu nome ou números consecutivos</li>
                                 </ul>
                                 <button onClick={() => {
-                                            console.log(this.state.password);
                                             this.handleSubmit()
                                         }} className="btn btn-primary btn-block btn-lg">Salvar senha</button>
                             </div>

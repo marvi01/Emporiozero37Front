@@ -31,7 +31,6 @@ class UserAddressEdit extends Component {
 
     componentDidMount() {
         const id = this.props.match.params;
-        console.log(id);
         fetch("https://anorosa.com.br/Emporio037/api/showendereco/" + id.id, {
             headers: {
                 "Authorization": "Bearer " + this.state.token
@@ -56,7 +55,6 @@ class UserAddressEdit extends Component {
         this.setState(prevState => ({
             endereco: { ...prevState.endereco, [name]: value }
         }));
-        console.log(this.state.endereco);
     };
     handleSubmit = () => {
         this.setState({adressInputErrors: { "cep": null, "uf": null, "cidade": null, "bairro": null, "rua": null, "numero": null, "complemento": null},})
@@ -70,7 +68,6 @@ class UserAddressEdit extends Component {
         })
             .then(data =>
                 data.json().then(data => {
-                    console.log(data);
                     if (data.errorcode){
                         switch (data.errorcode){
                             case 1:
