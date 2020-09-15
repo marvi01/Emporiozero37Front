@@ -11,6 +11,7 @@ class Checkout extends Component {
     constructor(props) {
         super(props);
         this.state = {
+
             freteEnv: {
                 cepdestino: "",
                 peso: "",
@@ -139,6 +140,16 @@ class Checkout extends Component {
                 "numero": "",
                 "complemento": ""
             },
+            copyAdress: {
+                "user_id": 0,
+                "cep": "",
+                "uf": "",
+                "cidade": "",
+                "bairro": "",
+                "rua": "",
+                "numero": "",
+                "complemento": ""
+            },
             localidade: null,
             //Variáveis para o funcionamento da interface
             index: 0,
@@ -243,7 +254,7 @@ class Checkout extends Component {
             const htmlEnd = end.map((item, indice) => {
                 return (
                     <div key={indice} className="custom-checkbox-control">
-                        <input onClick={() => {
+                        <input onClick={async () => {
                             this.setState(prevState => ({
                                 shippingOFF: {
                                     ...prevState.shippingOFF, "address": {
@@ -257,9 +268,12 @@ class Checkout extends Component {
                                     }
                                 }
                             }));
-                            this.setState(prevState => ({
-                                freteEnv: { ...prevState.freteEnv, cepdestino: item.cep }
-                            }));
+                            this.setState({ copyAdress: item });
+                            console.log(item.cep);
+                            fetch(" https://viacep.com.br/ws/" + item.cep + "/json").then(data => data.json().then(data => {
+                                console.log(data);
+                                this.setState({ localidade: data.localidade })
+                            }))
                         }} type="radio" className="custom-checkbox-input" id={indice} name="address" />
                         <label for={indice} className="custom-checkbox-label">
                             <div className="row no-gutters custom-checkbox-label-content">
@@ -293,6 +307,66 @@ class Checkout extends Component {
                 </div>
             )
         }
+
+    }
+    parcela3a6 = () => {
+        let parcela = [3, 4, 5, 6];
+        const htmlParcela = parcela.map((item, indice) => {
+            let recebe = (this.state.confirm.amount + (this.state.confirm.amount * 1.19)) / item;
+            return (
+                <div key={indice} className="custom-checkbox-control">
+                    <input onClick={() => {
+                        this.setState(prevState => ({
+                            confirm: { ...prevState.confirm, installments: item }
+                        }))
+                    }} type="radio" className="custom-checkbox-input" id={item} name="parcels" />
+                    <label for={item} className="custom-checkbox-label">
+                        <div className="row no-gutters custom-checkbox-label-content">
+                            {/* ICONE */}
+                            <div className="col-auto custom-checkbox-label-icon">
+                                <div className="custom-checkbox-icon">
+                                    <i>{item}x</i>
+                                </div>
+                            </div>
+                            {/* TEXTO */}
+                            <div className="col custom-checkbox-label-text">
+                                <h3 className="h6 mb-0">R$ {recebe.toFixed(2).replace(".", ",")}  <span className="text-danger ml-3">Com juros</span></h3>
+                            </div>
+                        </div>
+                    </label>
+
+                </div>
+            )
+        })
+        return htmlParcela
+
+    }
+    parcela7a12 = () => {
+        let parcela = [7, 8, 9, 10, 11, 12];
+        const htmlParcela = parcela.map((item, indice) => {
+            let recebe = (this.state.confirm.amount + (this.state.confirm.amount * 1.59)) / item;
+            return (
+                <div key={indice} className="custom-checkbox-control">
+                    <input type="radio" className="custom-checkbox-input" id={item} name="parcels" />
+                    <label for={item} className="custom-checkbox-label">
+                        <div className="row no-gutters custom-checkbox-label-content">
+                            {/* ICONE */}
+                            <div className="col-auto custom-checkbox-label-icon">
+                                <div className="custom-checkbox-icon">
+                                    <i>{item}x</i>
+                                </div>
+                            </div>
+                            {/* TEXTO */}
+                            <div className="col custom-checkbox-label-text">
+                                <h3 className="h6 mb-0">R$ {recebe.toFixed(2).replace(".", ",")}  <span className="text-danger ml-3">Com juros</span></h3>
+                            </div>
+                        </div>
+                    </label>
+
+                </div>
+            )
+        })
+        return htmlParcela
 
     }
     slideTo = (valInd) => {
@@ -345,12 +419,7 @@ class Checkout extends Component {
         }))
     }
     metodoPag = () => {
-        const cidade = this.state.shippingOFF.address.zipcode;
-        console.log(cidade);
-       // fetch(" https://viacep.com.br/ws/" + cidade + "/json").then(data => data.json().then(data => {
-        //    console.log(data);
-        //    this.setState({ localidade: data.localidade })
-        //}))
+
         if (this.state.localidade === "Lagoa da Prata") {
             return (
                 <div className="custom-checkbox-control">
@@ -372,24 +441,24 @@ class Checkout extends Component {
                 </div>
             )
         } else {
-            return(
-            <div className="custom-checkbox-control">
-                <input type="radio" className="custom-checkbox-input" id="pay2" name="payment_method" />
-                <label for="pay2" className="custom-checkbox-label">
-                    <div className="row no-gutters custom-checkbox-label-content">
-                        {/* ICONE */}
-                        <div className="col-auto custom-checkbox-label-icon">
-                            <div className="custom-checkbox-icon">
-                                <i className="fas fa-file-invoice"></i>
+            return (
+                <div className="custom-checkbox-control">
+                    <input type="radio" className="custom-checkbox-input" id="pay2" name="payment_method" />
+                    <label for="pay2" className="custom-checkbox-label">
+                        <div className="row no-gutters custom-checkbox-label-content">
+                            {/* ICONE */}
+                            <div className="col-auto custom-checkbox-label-icon">
+                                <div className="custom-checkbox-icon">
+                                    <i className="fas fa-file-invoice"></i>
+                                </div>
+                            </div>
+                            {/* TEXTO */}
+                            <div className="col custom-checkbox-label-text">
+                                <h3 className="h6">Boleto bancário</h3>
                             </div>
                         </div>
-                        {/* TEXTO */}
-                        <div className="col custom-checkbox-label-text">
-                            <h3 className="h6">Boleto bancário</h3>
-                        </div>
-                    </div>
-                </label>
-            </div>
+                    </label>
+                </div>
             )
         }
     }
@@ -630,19 +699,8 @@ class Checkout extends Component {
                                                 <span className="btn btn-link" onClick={() => this.toggleCarousel('prev')}>
                                                     Voltar
                                                 </span>
-                                                <span className="btn btn-primary" onClick={async () => {
+                                                <span className="btn btn-primary" onClick={() => {
                                                     this.toggleCarousel('next');
-
-                                                    await fetch("https://anorosa.com.br/Emporio037/api/correios/calcfrete", {
-                                                        method: "POST",
-                                                        body: JSON.stringify(this.state.freteEnv)
-                                                    })
-                                                        .then(data => data.json().then(data => {
-
-                                                            console.log(data);
-
-                                                        }))
-                                                        .catch(erro => this.setState(erro));
                                                 }
 
                                                 }>
@@ -758,7 +816,7 @@ class Checkout extends Component {
                                                 <div className="col-sm-6">
                                                     <div className="form-group">
                                                         <label for="card-number">Número</label>
-                                                        <input name="card_number" onChange={this.handleCartao} type="text" className="form-control" id="card-number" />
+                                                        <input name="card_number" onChange={this.handleCartao} maxLength="16" type="text" className="form-control" id="card-number" />
                                                     </div>
                                                     <div className="form-group">
                                                         <label for="card-title">Nome do portador</label>
@@ -782,11 +840,11 @@ class Checkout extends Component {
                                             <div className="form-row">
                                                 <div className="form-group col-8 col-sm-6">
                                                     <label for="card-number">Validade</label>
-                                                    <input name="card_expiration_date" onChange={this.handleCartao} maxLength="4" type="number" className="form-control" id="card-number" />
+                                                    <input name="card_expiration_date" onChange={this.handleCartao} maxLength="4" type="text" className="form-control" id="card-number" />
                                                 </div>
                                                 <div className="form-group col">
                                                     <label for="card-number">CVV</label>
-                                                    <input name="card_cvv" onChange={this.handleCartao} type="number" className="form-control" id="card-number" />
+                                                    <input name="card_cvv" onChange={this.handleCartao} maxLength="3" type="text" className="form-control" id="card-number" />
                                                 </div>
                                             </div>
                                             <div className="step-actions">
@@ -817,7 +875,7 @@ class Checkout extends Component {
                                                             </div>
                                                             {/* TEXTO */}
                                                             <div className="col custom-checkbox-label-text">
-                                                                <h3 className="h6 mb-0">R$ 120,00  <span className="text-success ml-3">Sem juros</span></h3>
+                                                                <h3 className="h6 mb-0">R$ {(this.state.confirm.amount / 1).toFixed(2).replace(".", ",")}  <span className="text-success ml-3">Sem juros</span></h3>
                                                             </div>
                                                         </div>
                                                     </label>
@@ -834,29 +892,14 @@ class Checkout extends Component {
                                                             </div>
                                                             {/* TEXTO */}
                                                             <div className="col custom-checkbox-label-text">
-                                                                <h3 className="h6 mb-0">R$ 60,00  <span className="text-success ml-3">Sem juros</span></h3>
+                                                                <h3 className="h6 mb-0">R$ {(this.state.confirm.amount / 2).toFixed(2).replace(".", ",")}  <span className="text-success ml-3">Sem juros</span></h3>
                                                             </div>
                                                         </div>
                                                     </label>
                                                 </div>
                                                 <div className="collapse" id="collapse">
-                                                    <div className="custom-checkbox-control">
-                                                        <input type="radio" className="custom-checkbox-input" id="parcel3" name="parcels" />
-                                                        <label for="parcel3" className="custom-checkbox-label">
-                                                            <div className="row no-gutters custom-checkbox-label-content">
-                                                                {/* ICONE */}
-                                                                <div className="col-auto custom-checkbox-label-icon">
-                                                                    <div className="custom-checkbox-icon">
-                                                                        <i>3x</i>
-                                                                    </div>
-                                                                </div>
-                                                                {/* TEXTO */}
-                                                                <div className="col custom-checkbox-label-text">
-                                                                    <h3 className="h6 mb-0">R$ 40,00  <span className="text-danger ml-3">Com juros</span></h3>
-                                                                </div>
-                                                            </div>
-                                                        </label>
-                                                    </div>
+                                                    {this.parcela3a6()}
+                                                    {this.parcela7a12()}
                                                 </div>
                                                 <a className="btn btn-outline-primary" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapse">Mostrar mais opções</a>
                                             </div>
@@ -890,9 +933,9 @@ class Checkout extends Component {
                                                             <div className="row no-gutters show-info-text">
                                                                 <div className="col">
                                                                     <address className="mb-0">
-                                                                        Rua Rosimary Silva Pereira, 286<br />
-                                                                        Formiga MG, 35574061<br />
-                                                                        (37) 3322-4589
+                                                                        {this.state.copyAdress.rua}, {this.state.copyAdress.numero}<br />
+                                                                        {this.state.copyAdress.cidade} {this.state.copyAdress.uf.toUpperCase()}, {this.state.copyAdress.cep.substring(0,5)+"-"+this.state.copyAdress.cep.substring(5)}<br />
+                                                                        {this.state.copyAdress.complemento}
                                                                     </address>
                                                                 </div>
                                                                 <div className="col-sm-auto">
@@ -942,9 +985,9 @@ class Checkout extends Component {
                                                         <div className="col">
                                                             <div className="row no-gutters show-info-text">
                                                                 <div className="col">
-                                                                    <span>5547 2895 6985 1447</span><br />
-                                                                    <span>12/99</span> <span className="ml-2">CVV: 662</span><br />
-                                                                    <span>Ryan W. Fonseca</span><br />
+                                                                    <span>{this.state.confirm.card_number.substring(0, 4) + " " + this.state.confirm.card_number.substring(4, 8) + " " + this.state.confirm.card_number.substring(8, 12) + " " + this.state.confirm.card_number.substring(12, 16)}</span><br />
+                                                                    <span>{this.state.confirm.card_expiration_date.substring(0, 2) + "/" + this.state.confirm.card_expiration_date.substring(2, 4)}</span> <span className="ml-2">CVV: 662</span><br />
+                                                                    <span>{this.state.confirm.card_holder_name}</span><br />
                                                                 </div>
                                                                 <div className="col-sm-auto">
                                                                     <span className="btn-link" onClick={() => this.slideTo(4)}>
