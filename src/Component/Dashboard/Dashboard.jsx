@@ -15,6 +15,7 @@ class Dashboard extends Component {
         this.state={
             isApiRequested: false,
             type: null,
+            admin: null,
         }
     }
     componentDidMount() {
@@ -101,9 +102,10 @@ class Dashboard extends Component {
                                     <button id="sidebarCollapse" type="button" className="dashboard-collapse-button d-md-none">
                                         <i className="fa fa-bars"></i>
                                     </button>
-                                    <div className="dropdown">
+                                    {this.state.admin !== null
+                                    ?<div className="dropdown">
                                         <button className="btn dropdown-toggle" type="button" id="user-menu" data-toggle="dropdown">
-                                            Ryan William
+                                            {this.state.admin.nome}
                                         </button>
                                         <div className="dropdown-menu" aria-labelledby="user-menu">
                                             <a className="dropdown-item" href="#">Minha conta</a>
@@ -112,6 +114,8 @@ class Dashboard extends Component {
                                             <a className="dropdown-item" href="#">Sair</a>
                                         </div>
                                     </div>
+                                    :null
+                                    }
                                 </div>
                             </div>         
         
