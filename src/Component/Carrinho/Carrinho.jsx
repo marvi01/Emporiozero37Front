@@ -155,9 +155,9 @@ export default function Carrinho(props) {
                 <Link to="/" className="btn btn-lg btn-link">
                     Voltar a loja
             </Link>
-                <button className="btn btn-lg btn-success">
+                <Link to="/FinalizarCompra" className="btn btn-lg btn-success">
                     Finalizar compra
-            </button>
+            </Link>
             </div>
             <div className="clearfix"></div>
         </div>

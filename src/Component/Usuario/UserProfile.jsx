@@ -23,14 +23,11 @@ class UserProfile extends Component {
 
     componentDidMount() {
         const token = localStorage.getItem('JWT_token');
-        console.log(token);
         fetch("https://anorosa.com.br/Emporio037/api/me", {
             method: 'POST',
             headers: { 'Authorization': 'Bearer ' + token },
         }).then(data => data.json().then(data => {
-            console.log(data);
             this.setState({ user: data });
-            console.log(data);
         }))
             .catch(erro => this.setState(erro));
     }

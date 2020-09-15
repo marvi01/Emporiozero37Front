@@ -120,8 +120,8 @@ export default function HeaderMeio() {
                 return (
                     <ul className="nav">
                         <li className="nav-item">
-                            <Link className="nav-link text-dark-brown" to="/Carrinho">
-                                <i className="fas fa-shopping-cart mr-2"></i>
+                            <Link className="nav-link text-dark-brown" to="/Admin">
+                                <i className="fas fa-lock mr-2"></i>
                                             Admin
                             </Link>
                         </li>
@@ -175,7 +175,7 @@ export default function HeaderMeio() {
                             localStorage.removeItem("JWT_token");
                             localStorage.removeItem("users");
                             setUser(true);
-                            window.location.reload();
+                            window.location.replace("http://localhost:3000/");
                         }
                     });
                 } catch (error) {

@@ -5,42 +5,83 @@ import teste from '../../../imagens/teste.jpeg';
 import DataTable from 'react-data-table-component';
 
 class CategoriaIndex extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            categ: [],
+            isApiRequested: false,
+            type: null,
+            selectedItemId: null,
+            selectedItem: {
+                nomecategoria: null,
+                img: null
+            },
+            editCateg: {
+                img: null
+            },
+            addCateg: {},
+            addInputError: {
+                nomecategoria: null,
+                img: null
+            },
+            editInputError: {
+                nomecategoria: null,
+                img: null
+            },
+        }
+    }
+    componentDidMount() {
+
+        const requestOptions = {
+            method: 'get',
+        };
+        fetch("http://anorosa.com.br/Emporio037/api/categoria/list/ProdNumb", requestOptions)
+            .then(data => data.json().then(data => {
+                this.setState({ categ: data.data, isApiRequested: true });
+            }))
+            .catch(erro => this.setState(erro))
+    }
+
     //BOTÕES DE AÇÕES DA LINHA
-    actionsButtons() {
+    actionsButtons(id, object) {
         return <div className="btn-group dropleft">
             <button type="button" className="btn dropdown-toggle no-arrow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i className="fas fa-ellipsis-v"></i>
             </button>
             <div className="dropdown-menu shadow-sm">
-                <button type="button" className="dropdown-item" data-toggle="modal" data-target="#update_category_form">Editar</button>
-                <button type="button" className="dropdown-item" data-toggle="modal" data-target="#delete_category_form">Deletar</button>
+                <button onClick={() => { this.setState({ selectedItem: object }) }} type="button" className="dropdown-item" data-toggle="modal" data-target="#update_category_form">Editar</button>
+                <button onClick={() => { this.setState({ selectedItemId: id }) }} type="button" className="dropdown-item" data-toggle="modal" data-target="#delete_category_form">Deletar</button>
             </div>
         </div>
     }
     dataTable() {
-        
-        const data = [
-            { id: 1, icone: teste,  nome: 'Vodkas', created_at: '07/09/2020', numProdutos: 102, acoes: this.actionsButtons() },
-        ];
+        var data = [];
+        if (this.state.isApiRequested) {
+            var categoria = this.state.categ;
+            for (var i = 0; i < categoria.length; i++) {
+                categoria[i]['acoes'] = this.actionsButtons(categoria[i].id, categoria[i]);
+            }
+            data = categoria;
+        }
         const columns = [
             {
-              name: 'Nome',
-              selector: 'nome',
-              sortable: true,
+                name: 'Nome',
+                selector: 'nomecategoria',
+                sortable: true,
             },
             {
-              name: 'N° de produtos',   
-              selector: 'numProdutos',
-              sortable: true,
+                name: 'N° de produtos',
+                selector: 'quantProd',
+                sortable: true,
             },
             {
-              name: 'Data de cadastro',   
-              selector: 'created_at',
-              sortable: true,
+                name: 'Data de cadastro',
+                selector: 'created_at',
+                sortable: true,
             },
             {
-              name: 'Ações',
-              selector: 'acoes',
+                name: 'Ações',
+                selector: 'acoes',
             },
         ];
         //BOTÕES DE AÇÃO DO CABEÇALHO
@@ -48,25 +89,25 @@ class CategoriaIndex extends Component {
 
 
         //ELEMENTO DE EXPANSÃO DA LINHA
-        const ExpandableComponent = ({ data }) => 
+        const ExpandableComponent = ({ data }) =>
             <div className="p-3 bg-light">
                 <label className="small d-block mb-2">Icone</label>
-                <img className="category-icon img-thumbnail" src={data.icone} />;
+                <img className="category-icon img-thumbnail" src={"http://anorosa.com.br/Emporio037/storage/" + data.img} />
             </div>;
 
-        return <DataTable 
-        title="Categorias cadastradas" 
-        pagination={true}
-        actions={actions} 
-        columns={columns} 
-        data={data}
-        expandableRows
-        expandableRowsComponent={<ExpandableComponent />} />
+        return <DataTable
+            title="Categorias cadastradas"
+            pagination={true}
+            actions={actions}
+            columns={columns}
+            data={data}
+            expandableRows
+            expandableRowsComponent={<ExpandableComponent />} />
     }
-    
+
 
     render() {//Aqui acontece a renderização da página
-       
+
         return (
             <div>
                 <div className="dashboard-page-title p-md-5">
@@ -94,7 +135,8 @@ class CategoriaIndex extends Component {
                                     <div className="form-group row">
                                         <label htmlFor="add_nome" className="col-sm-2 col-form-label">Nome</label>
                                         <div className="col-sm-10">
-                                            <input type="text" className="form-control" id="add_nome" />
+                                            <input type="text" onChange={this.cadastrarInputChange} name="nomecategoria" className="form-control" id="add_nome" />
+                                            <span className="error">{this.state.addInputError.nomecategoria}</span>
                                         </div>
                                     </div>
                                     <div className="form-group row">
@@ -102,10 +144,11 @@ class CategoriaIndex extends Component {
                                         <div className="col-auto">
                                             <label>
                                                 <div className="create-category-icon-container">
-                                                    <input type="file" className="d-none" id="add_icone" />
-                                                    <img className="category-icon" alt="" />
+                                                    <input onChange={(e) => this.onChangeImg(e.target.files[0])} type="file" className="d-none" id="add_icone" />
+                                                    <img src={this.state.addCateg.img} className="category-icon" alt="" />
                                                 </div>
                                             </label>
+                                            <span className="error">{this.state.addInputError.img}</span>
                                         </div>
                                         <div className="col">
                                             <p className="mb-0 small">Tamanho recomendável: 200x150</p>
@@ -114,13 +157,13 @@ class CategoriaIndex extends Component {
                                 </form>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                                <button type="button" className="btn btn-primary">Cadastrar</button>
+                                <button onClick={() => this.setState({ addInputError: { nomecategoria: null, img: null } })} type="button" className="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="button" onClick={this.cadastrarCateg} className="btn btn-primary">Cadastrar</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
 
                 {/*   MODAL DE ATUALIZAÇÃO */}
                 <div className="modal fade" id="update_category_form" tabIndex="-1" >
@@ -132,7 +175,8 @@ class CategoriaIndex extends Component {
                                     <div className="form-group row">
                                         <label htmlFor="update_nome" className="col-sm-2 col-form-label">Nome</label>
                                         <div className="col-sm-10">
-                                            <input type="text"  id="update_nome" name="nome" value="Vodka" className="form-control" />
+                                            <input type="text" onChange={this.editarInputChange} id="update_nome" name="nomecategoria" placeholder={this.state.selectedItem.nomecategoria} className="form-control" />
+                                            <span className="error">{this.state.editInputError.nomecategoria}</span>
                                         </div>
                                     </div>
                                     <div className="form-group row">
@@ -140,9 +184,13 @@ class CategoriaIndex extends Component {
                                         <div className="col-auto">
                                             <label>
                                                 <div className="create-category-icon-container">
-                                                    <input type="file" className="d-none" id="update_icone" />
-                                                    <img className="category-icon" src={teste} alt="" />
+                                                    <input onChange={(e) => this.onEditImg(e.target.files[0])} type="file" className="d-none" id="update_icone" />
+                                                    {this.state.editCateg.img
+                                                        ? <img className="category-icon" src={this.state.editCateg.img} alt="" />
+                                                        : <img className="category-icon" src={"http://anorosa.com.br/Emporio037/storage/" + this.state.selectedItem.img} alt="" />
+                                                    }
                                                 </div>
+                                                <span className="error">{this.state.editInputError.img}</span>
                                             </label>
                                         </div>
                                         <div className="col">
@@ -152,8 +200,10 @@ class CategoriaIndex extends Component {
                                 </form>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                                <button type="button" className="btn btn-primary">Cadastrar</button>
+                                <button onClick={() => {
+                                    this.setState({ selectedItem: null, editCateg: { img: null } })
+                                }} type="button" className="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                                <button onClick={this.editarCateg}type="button" className="btn btn-primary">Editar</button>
                             </div>
                         </div>
                     </div>
@@ -174,17 +224,31 @@ class CategoriaIndex extends Component {
                                         <div className="col">
                                             <h5 className="modal-title mb-2">Atenção</h5>
                                             <p className="mb-2">Tem certeza que deseja <strong>deletar a categoria testes</strong>? Essa operação é irreversível.</p>
-                                            <span className="text-muted small">Todos as bebidas pertencentes a essa categoria também serão deletados.</span> 
+                                            <span className="text-muted small">Todas bebidas pertencentes a essa categoria também serão deletados.</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="form-row justify-content-center ">
                                     <div className="col-sm-4 mb-3 mb-sm-0">
-                                        <button type="button" className="btn btn-block btn-outline-secondary btn-lg" data-dismiss="modal">Cancelar</button>
-
+                                        <button onClick={() => this.setState({ selectedItemId: null })} type="button" className="btn btn-block btn-outline-secondary btn-lg" data-dismiss="modal">Cancelar</button>
                                     </div>
                                     <div className="col-sm-4">
-                                        <button type="button" className="btn btn-block btn-danger btn-lg">Deletar</button>
+                                        <button onClick={() => {
+                                            const token = localStorage.getItem("JWT_token");
+                                            fetch("https://anorosa.com.br/Emporio037/api/categoria/delete/" + this.state.selectedItemId, {
+                                                method: "delete",
+                                                headers: {
+                                                    "Content-Type": "application/json",
+                                                    "Authorization": "Bearer " + token
+                                                }
+                                            })
+                                                .then(data => data.json().then(data => {
+                                                    console.log(data);
+                                                    alert("Deletado com sucesso");
+                                                    window.location.reload();
+                                                }))
+                                                .catch(erro => this.setState(erro));
+                                        }} type="button" className="btn btn-block btn-danger btn-lg">Deletar</button>
                                     </div>
                                 </div>
                             </div>
@@ -194,5 +258,123 @@ class CategoriaIndex extends Component {
             </div>
         );
     }
+    async onChangeImg(file) {
+        var base64 = null;
+        var reader = new FileReader();
+        await reader.readAsDataURL(file);
+        reader.onload = await function () {
+            base64 = reader.result;
+            this.setState(prevState => ({
+                addCateg: { ...prevState.addCateg, img: base64 }
+            }))
+        }.bind(this);
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        };
+
+    }
+    cadastrarInputChange = event => {
+        const target = event.target;
+        const name = target.name;
+        const value = target.value;
+        this.setState(prevState => ({
+            addCateg: { ...prevState.addCateg, [name]: value }
+        }));
+    };
+    cadastrarCateg = event => {
+        const token = localStorage.getItem("JWT_token")
+        console.log(token);
+        fetch("http://anorosa.com.br/Emporio037/api/categoria/add", {
+            method: "post",
+            body: JSON.stringify(this.state.addCateg),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            }
+        }).then(data => data.json().then(data => {
+            if (data.status !== true) {
+                if (data.error === 1) {//Input error code
+                    this.setState({ addInputError: data.errors })
+                } else {
+                    alert(data.error)
+                }
+            } else {
+                this.setState({
+                    addInputError: {
+                        nomecategoria: null,
+                        img: null
+                    }
+                })
+                window.location.reload();
+            }
+        })).catch(erro => this.setState({ erro: erro }));
+        event.preventDefault();
+    }
+
+    async onEditImg(file) {
+        var base64 = null;
+        var reader = new FileReader();
+        await reader.readAsDataURL(file);
+        reader.onload = await function () {
+            base64 = reader.result;
+            this.setState(prevState => ({
+                editCateg: { ...prevState.editCateg, img: base64 }
+            }))
+        }.bind(this);
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        };
+
+    }
+    editarInputChange = event => {
+        const target = event.target;
+        const name = target.name;
+        const value = target.value;
+        this.setState(prevState => ({
+            editCateg: { ...prevState.editCateg, [name]: value }
+        }));
+    };
+
+    editarCateg = event => {
+        const id = this.props.match.params;
+        const token = localStorage.getItem("JWT_token");
+        console.log("8=====D");
+        var json;
+        if (this.state.editCateg.img === null) {
+            json = {
+                "nomecategoria": this.state.editCateg.nomecategoria
+            }
+        } else {
+            json = this.state.editCateg;
+        }
+        console.log(json);
+        fetch("https://anorosa.com.br/Emporio037/api/categoria/update/" + this.state.selectedItem.id, {
+            method: "put",
+            body: JSON.stringify(json),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            }
+        })
+            .then(data => data.json().then(data => {
+                if (data.status !== true) {
+                    if (data.error === 1) {//Input error code
+                        this.setState({ editInputError: data.errors })
+                    } else {
+                        alert(data.error)
+                    }
+                } else {
+                    this.setState({
+                        editInputError: {
+                            nomecategoria: null,
+                            img: null
+                        }
+                        
+                    });
+                    window.location.reload();
+                }
+            })).catch(erro => this.setState({ erro: erro }));
+        event.preventDefault();
+    };
 }
 export default CategoriaIndex; //Aqui retorna o componente

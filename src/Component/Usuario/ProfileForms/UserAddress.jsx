@@ -52,7 +52,6 @@ class UserAddress extends Component {
             }
         })
             .then(data => data.json().then(data => {
-                console.log(data);
                 if (data.errorcode) {
                     switch (data.errorcode) {
                         case 1:
@@ -188,7 +187,6 @@ class UserAddress extends Component {
                                 </div>
                                 <div className="col-6 col-md-3">
                                     <button onClick={() => {
-                                        console.log(this.state.endereco);
                                         this.handleSubmit()
                                     }
                                     } className="btn btn-block btn-lg btn-primary">
