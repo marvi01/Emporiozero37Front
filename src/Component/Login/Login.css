@@ -52,12 +52,7 @@
     padding: 0.5rem 1rem;
     border-radius: 0.25rem;
 }
-.center-flex {
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
+
 @media only screen and (min-width: 786px) {
     #logo {
         width: 75%;

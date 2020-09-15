@@ -50,7 +50,7 @@ class Destaque extends Component {
       const Destaq = this.state.data.map((item, indice) => {
         return (
           <div >
-            <img src={`https://anorosa.com.br/Emporio037/storage/${item.fotodestaque}`} className="img-fluid" alt="..."></img>
+            <img src={`https://anorosa.com.br/Emporio037/storage/${item.fotodestaque}`} alt="..."></img>
           </div>
 
         )
@@ -74,12 +74,12 @@ class Destaque extends Component {
         <Slide {...properties}>
           <div className="each-slide">
             <div >
-              <img src={destaque1} className="img-fluid" alt="..."></img>
+              <img src={destaque1} alt="..."></img>
             </div>
           </div>
           <div className="each-slide">
             <div >
-              <img src={destaque1} className="img-fluid" alt="..."></img>
+              <img src={destaque1} alt="..."></img>
             </div>
           </div>
         </Slide>

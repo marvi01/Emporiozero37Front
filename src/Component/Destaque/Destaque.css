@@ -1,6 +1,11 @@
 .react-slideshow-container:hover .nav {
   opacity: 1;
 }
+.images-wrap div div{
+  display:flex;
+  justify-content:center;
+  overflow:hidden;
+}
 .indicators {
   margin-top: 0px !important;
   transform: translateY(-100%);
@@ -18,5 +23,12 @@
 }
 .react-slideshow-container .nav:last-child {
   border-radius:5px 0px 0px  5px !important;
-
+}
+.react-slideshow-container img {
+  height: 250px;
+}
+@media only screen and (min-width: 576px) {
+  .react-slideshow-container img {
+    height: 350px;
+  }
 }

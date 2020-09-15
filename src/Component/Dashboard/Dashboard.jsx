@@ -8,6 +8,9 @@ import ProdutoIndex from './Produtos/ProdutoIndex';
 import ProdutoCreate from './Produtos/ProdutoCreate';
 import ProdutoUpdate from './Produtos/ProdutoUpdate';
 import CategoriaIndex from './Categorias/CategoriaIndex';
+import ImagensCreate from './ImagensDestaque/ImagensCreate';
+import ImagensIndex from './ImagensDestaque/ImagensIndex';
+
 
 class Dashboard extends Component {
   
@@ -58,10 +61,10 @@ class Dashboard extends Component {
                                     </a>
                                 </li>
                                 <li className="nav-item">
-                                    <a href="#" className="nav-link section-link">
+                                    <Link to={`/dashboard/imagensDestaque`} className="nav-link section-link">
                                         <i className="fas fa-images mr-3"></i>
                                         Imagens em destaque
-                                    </a>
+                                    </Link>
                                 </li>
                             </ul>
                             <button id="sidebarCollapse2" type="button" className="center-button dashboard-collapse-button d-md-none">
@@ -96,6 +99,9 @@ class Dashboard extends Component {
                         <Route path="/dashboard/produtos/create" exact component={ProdutoCreate} />
                         <Route path="/dashboard/produtos/:id/edit" exact component={ProdutoUpdate} />
                         <Route path="/dashboard/produtos" exact component={ProdutoIndex} />
+                        <Route path="/dashboard/imagensDestaque" exact component={ImagensIndex} />
+                        <Route path="/dashboard/imagensDestaque/create" exact component={ImagensCreate} />
+
                     </Switch>
                 </div>    
             </div>

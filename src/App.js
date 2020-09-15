@@ -4,6 +4,8 @@ import './App.css';
 
 import Header from './Component/Header/Header';
 import Dashboard from './Component/Dashboard/Dashboard';
+import VerificarIdade from './Component/VerificarIdade/VerificarIdade';
+
 
 
 import { Switch, Route } from 'react-router-dom';
@@ -23,6 +25,9 @@ function App() {
           <Route path="/dashboard/produtos/create" exact component={Dashboard} />
           <Route path="/dashboard/produtos/:id/edit" exact component={Dashboard} />
           <Route path="/dashboard/produtos" exact component={Dashboard} />
+          <Route path="/dashboard/imagensDestaque" exact component={Dashboard} />
+          <Route path="/dashboard/imagensDestaque/create" exact component={Dashboard} />
+
 
           <Route path="/" exact component={Header} />
           <Route path="/Produto/:id" exact component={Header} />
