@@ -201,9 +201,14 @@ class CategoriaIndex extends Component {
                             </div>
                             <div className="modal-footer">
                                 <button onClick={() => {
-                                    this.setState({ selectedItem: null, editCateg: { img: null } })
+                                    this.setState({
+                                        selectedItem: {
+                                            nomecategoria: null,
+                                            img: null
+                                        }, editCateg: { img: null }
+                                    })
                                 }} type="button" className="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                                <button onClick={this.editarCateg}type="button" className="btn btn-primary">Editar</button>
+                                <button onClick={this.editarCateg} type="button" className="btn btn-primary">Editar</button>
                             </div>
                         </div>
                     </div>
@@ -369,7 +374,7 @@ class CategoriaIndex extends Component {
                             nomecategoria: null,
                             img: null
                         }
-                        
+
                     });
                     window.location.reload();
                 }
