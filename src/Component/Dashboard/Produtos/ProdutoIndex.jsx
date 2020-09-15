@@ -6,16 +6,39 @@ import './Produtos.css'
 
 
 class ProdutoIndex extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            prod: [{}],
+            isApiRequested: false,
+            selectedItemId: null,
+            selectedItem: [],
+        }
+    }
+    componentDidMount() {
+
+        const requestOptions = {
+            method: 'get',
+        };
+        fetch("http://anorosa.com.br/Emporio037/api/produto/list/alphabetic", requestOptions)
+            .then(data => data.json().then(data => {
+                console.log(data);
+                if(data.status){
+                    this.setState({ prod: data.data, isApiRequested: true });
+                }             
+            }))
+            .catch(erro => this.setState(erro))
+    }
 
     //BOTÕES DE AÇÕES DA LINHA
-    actionsButtons(id) {
+    actionsButtons(id, object) {
         return <div className="btn-group dropleft">
             <button type="button" className="btn dropdown-toggle no-arrow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i className="fas fa-ellipsis-v"></i>
             </button>
             <div className="dropdown-menu shadow-sm">
                 <Link to={`/dashboard/produtos/${id}/edit`} className="dropdown-item" href="#">Editar</Link>
-                <button type="button" className="dropdown-item" data-toggle="modal" data-target="#delete_product_form">Deletar</button>
+                <button onClick={()=>this.setState({selectedItemId: id})}type="button" className="dropdown-item" data-toggle="modal" data-target="#delete_product_form">Deletar</button>
                 <a className="dropdown-item" href="#">Gerenciar desconto</a>
             </div>
         </div>
@@ -33,9 +56,17 @@ class ProdutoIndex extends Component {
     }
     dataTable() {
         //ARRAY DE BEBIDAS PARA LISTAGEM
-        const data = [
+       /* const data = [
             { id: 1, imagem: vodka, descricao: "Testando", nome: 'Vodkas', volume: '700 ml', preco: this.productPrice(120, 20), desconto: '20%', teor: '37%', acoes: this.actionsButtons(1)},
-        ];
+        ];*/
+        var data = [];
+        if (this.state.isApiRequested) {
+            var produto = this.state.prod;
+            for (var i = 0; i < produto.length; i++) {
+                produto[i]['acoes'] = this.actionsButtons(produto[i].id, produto[i]);
+            }
+            data = produto;
+        }
 
         //BOTÕES DE CADASTRP
         const actions = <Link to="/dashboard/produtos/create" className="btn btn-primary table-action"><i className="fas fa-plus mr-2"></i> Novo</Link>;
@@ -43,30 +74,30 @@ class ProdutoIndex extends Component {
         //COLUNAS DA TABELA
         const columns = [
             {
-            name: 'Nome',
-            selector: 'nome',
-            sortable: true,
-            },
-            {
-            name: 'Volume',
-            selector: 'volume',
-            sortable: true,
-            },
-            {
-            name: 'Preço',
-            selector: 'preco',
-            sortable: true,
-            },
-            {
-            name: 'Desconto',
-            selector: 'desconto',
-            sortable: true,
-            },
-            {
-            name: 'Ações',
-            selector: 'acoes',
-            sortable: false,
-            },
+                name: 'Nome',
+                selector: 'nomeprod',
+                sortable: true,
+                },
+                {
+                name: 'Volume',
+                selector: 'ml',
+                sortable: true,
+                },
+                {
+                name: 'Preço',
+                selector: 'preco',
+                sortable: true,
+                },
+                {
+                name: 'Desconto',
+                selector: 'desconto',
+                sortable: true,
+                },
+                {
+                name: 'Ações',
+                selector: 'acoes',
+                sortable: false,
+                },
            
         ];
 
@@ -76,7 +107,7 @@ class ProdutoIndex extends Component {
                 <div className="col-sm-auto mr-3">
                     <label className="small">Imagem</label>
                     <div className="product-image-container img-thumbnail">
-                        <img className="product-image" src={data.imagem} />;
+                        <img className="product-image" src={"http://anorosa.com.br/Emporio037/storage/"+data.foto} />
                     </div>
                 </div>
                 <div className="col">
@@ -135,11 +166,25 @@ class ProdutoIndex extends Component {
                                 </div>
                                 <div className="form-row justify-content-center ">
                                     <div className="col-sm-4 mb-3 mb-sm-0">
-                                        <button type="button" className="btn btn-block btn-outline-secondary btn-lg" data-dismiss="modal">Cancelar</button>
+                                        <button onClick={()=>this.setState({selectedItemId: null, selectedItem: []})} type="button" className="btn btn-block btn-outline-secondary btn-lg" data-dismiss="modal">Cancelar</button>
 
                                     </div>
                                     <div className="col-sm-4">
-                                        <button type="button" className="btn btn-block btn-danger btn-lg">Deletar</button>
+                                        <button onClick={() => {
+                                            const token = localStorage.getItem("JWT_token");
+                                            fetch("https://anorosa.com.br/Emporio037/api/produto/delete/" + this.state.selectedItemId, {
+                                                method: "delete",
+                                                headers: {
+                                                    "Content-Type": "application/json",
+                                                    "Authorization": "Bearer " + token
+                                                }
+                                            })
+                                                .then(data => data.json().then(data => {
+                                                    console.log(data);
+                                                    window.location.reload();
+                                                }))
+                                                .catch(erro => this.setState(erro));
+                                        }} type="button" className="btn btn-block btn-danger btn-lg">Deletar</button>
                                     </div>
                                 </div>
                             </div>

@@ -35,7 +35,7 @@ class CategoriaIndex extends Component {
         const requestOptions = {
             method: 'get',
         };
-        fetch("http://anorosa.com.br/Emporio037/api/categoria/list/ProdNumb/10", requestOptions)
+        fetch("http://anorosa.com.br/Emporio037/api/categoria/list/ProdNumb", requestOptions)
             .then(data => data.json().then(data => {
                 this.setState({ categ: data.data, isApiRequested: true });
             }))
