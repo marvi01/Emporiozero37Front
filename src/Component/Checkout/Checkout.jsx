@@ -312,12 +312,16 @@ class Checkout extends Component {
     parcela3a6 = () => {
         let parcela = [3, 4, 5, 6];
         const htmlParcela = parcela.map((item, indice) => {
-            let recebe = (this.state.confirm.amount + (this.state.confirm.amount * 1.19)) / item;
+            let valorFinal = (this.state.confirm.amount + (this.state.confirm.amount * 1.19));
+            let recebe = valorFinal / item;
             return (
                 <div key={indice} className="custom-checkbox-control">
                     <input onClick={() => {
                         this.setState(prevState => ({
                             confirm: { ...prevState.confirm, installments: item }
+                        }))
+                        this.setState(prevState => ({
+                            confirm: { ...prevState.confirm, amout: recebe }
                         }))
                     }} type="radio" className="custom-checkbox-input" id={item} name="parcels" />
                     <label for={item} className="custom-checkbox-label">
@@ -344,10 +348,18 @@ class Checkout extends Component {
     parcela7a12 = () => {
         let parcela = [7, 8, 9, 10, 11, 12];
         const htmlParcela = parcela.map((item, indice) => {
-            let recebe = (this.state.confirm.amount + (this.state.confirm.amount * 1.59)) / item;
+            let valorFinal = (this.state.confirm.amount + (this.state.confirm.amount * 1.59));
+            let recebe = valorFinal / item;
             return (
                 <div key={indice} className="custom-checkbox-control">
-                    <input type="radio" className="custom-checkbox-input" id={item} name="parcels" />
+                    <input onClick={() => {
+                        this.setState(prevState => ({
+                            confirm: { ...prevState.confirm, installments: item }
+                        }))
+                        this.setState(prevState => ({
+                            confirm: { ...prevState.confirm, amout: valorFinal }
+                        }))
+                    }} type="radio" className="custom-checkbox-input" id={item} name="parcels" />
                     <label for={item} className="custom-checkbox-label">
                         <div className="row no-gutters custom-checkbox-label-content">
                             {/* ICONE */}
@@ -423,7 +435,9 @@ class Checkout extends Component {
         if (this.state.localidade === "Lagoa da Prata") {
             return (
                 <div className="custom-checkbox-control">
-                    <input type="radio" className="custom-checkbox-input" id="pay3" name="payment_method" />
+                    <input onClick={() => {
+                        this.setState({ metodoPagamento: "local" })
+                    }} type="radio" className="custom-checkbox-input" id="pay3" name="payment_method" />
                     <label for="pay3" className="custom-checkbox-label">
                         <div className="row no-gutters custom-checkbox-label-content">
                             {/* ICONE */}
@@ -443,7 +457,9 @@ class Checkout extends Component {
         } else {
             return (
                 <div className="custom-checkbox-control">
-                    <input type="radio" className="custom-checkbox-input" id="pay2" name="payment_method" />
+                    <input onClick={() => {
+                        this.setState({ metodoPagamento: "boleto" })
+                    }} type="radio" className="custom-checkbox-input" id="pay2" name="payment_method" />
                     <label for="pay2" className="custom-checkbox-label">
                         <div className="row no-gutters custom-checkbox-label-content">
                             {/* ICONE */}
@@ -763,7 +779,6 @@ class Checkout extends Component {
                                                 </span>
                                                 <span className="btn btn-primary" onClick={() => {
                                                     this.toggleCarousel('next');
-                                                    this.metodoPag()
                                                 }}>
                                                     Próximo
                                                 </span>
@@ -778,7 +793,9 @@ class Checkout extends Component {
                                             <div className="custom-controls-container">
 
                                                 <div className="custom-checkbox-control">
-                                                    <input type="radio" className="custom-checkbox-input" id="pay1" name="payment_method" />
+                                                    <input onClick={() => {
+                                                        this.setState({ metodoPagamento: "card" })
+                                                    }} type="radio" className="custom-checkbox-input" id="pay1" name="payment_method" />
                                                     <label for="pay1" className="custom-checkbox-label">
                                                         <div className="row no-gutters custom-checkbox-label-content">
                                                             {/* ICONE */}
@@ -864,7 +881,11 @@ class Checkout extends Component {
                                             <h3 className="form-step-title mb-4">Número de parcelas</h3>
                                             <div className="custom-controls-container">
                                                 <div className="custom-checkbox-control">
-                                                    <input type="radio" className="custom-checkbox-input" id="parcel1" name="parcels" />
+                                                    <input onClick={() => {
+                                                        this.setState(prevState => ({
+                                                            confirm: { ...prevState.confirm, installments: 1 }
+                                                        }))
+                                                    }} type="radio" className="custom-checkbox-input" id="parcel1" name="parcels" />
                                                     <label for="parcel1" className="custom-checkbox-label">
                                                         <div className="row no-gutters custom-checkbox-label-content">
                                                             {/* ICONE */}
@@ -881,7 +902,11 @@ class Checkout extends Component {
                                                     </label>
                                                 </div>
                                                 <div className="custom-checkbox-control">
-                                                    <input type="radio" className="custom-checkbox-input" id="parcel2" name="parcels" />
+                                                    <input onClick={() => {
+                                                        this.setState(prevState => ({
+                                                            confirm: { ...prevState.confirm, installments: 2 }
+                                                        }))
+                                                    }} type="radio" className="custom-checkbox-input" id="parcel2" name="parcels" />
                                                     <label for="parcel2" className="custom-checkbox-label">
                                                         <div className="row no-gutters custom-checkbox-label-content">
                                                             {/* ICONE */}
@@ -934,7 +959,7 @@ class Checkout extends Component {
                                                                 <div className="col">
                                                                     <address className="mb-0">
                                                                         {this.state.copyAdress.rua}, {this.state.copyAdress.numero}<br />
-                                                                        {this.state.copyAdress.cidade} {this.state.copyAdress.uf.toUpperCase()}, {this.state.copyAdress.cep.substring(0,5)+"-"+this.state.copyAdress.cep.substring(5)}<br />
+                                                                        {this.state.copyAdress.cidade} {this.state.copyAdress.uf.toUpperCase()}, {this.state.copyAdress.cep.substring(0, 5) + "-" + this.state.copyAdress.cep.substring(5)}<br />
                                                                         {this.state.copyAdress.complemento}
                                                                     </address>
                                                                 </div>
@@ -1002,13 +1027,13 @@ class Checkout extends Component {
                                                     <div className="row no-gutters show-info-content">
                                                         <div className="col-auto">
                                                             <div className="show-info-icon">
-                                                                <i>1x</i>
+                                                                <i>{this.state.confirm.installments}x</i>
                                                             </div>
                                                         </div>
                                                         <div className="col">
                                                             <div className="row no-gutters show-info-text">
                                                                 <div className="col">
-                                                                    <h3 className="h6 mb-0">R$ 60,00 <span className="text-success ml-3">Sem juros</span></h3>
+                                                                    <h3 className="h6 mb-0">R$ {(this.state.confirm.amount / this.state.confirm.installments).toFixed(2).replace(".", ",")} <span className="text-success ml-3">Sem juros</span></h3>
                                                                 </div>
                                                                 <div className="col-sm-auto">
                                                                     <span className="btn-link" onClick={() => this.slideTo(5)}>
@@ -1040,7 +1065,7 @@ class Checkout extends Component {
                                                                 <h3 className="price-confirm">Total</h3>
                                                             </div>
                                                             <div className="col-auto">
-                                                                <span className="shipping-price-confirm">R$ 1200,00</span>
+                                                                <span className="shipping-price-confirm">R$ {this.state.confirm.amount.toFixed(2).replace(".", ",")}</span>
                                                             </div>
                                                         </div>
                                                     </div>
