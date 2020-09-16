@@ -73,7 +73,33 @@ button, a, input[type="submit"] {
   height: 40vmin;
   pointer-events: none;
 }
+.btn-reset {
+  border:none !important;
+  background: transparent !important;
+  outline:none !important;
+  padding: 0px;
+  margin: 0px;
+}
 
+.flex-between {
+  display:flex;
+  justify-content:space-between;
+  align-items: center;
+}
+.center-flex {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.center-button {
+  display:block;
+  margin: 0 auto;
+  margin-top: 1rem;
+}
+.table td {
+  vertical-align: middle;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
