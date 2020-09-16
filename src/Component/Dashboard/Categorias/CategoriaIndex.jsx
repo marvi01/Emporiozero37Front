@@ -50,7 +50,7 @@ class CategoriaIndex extends Component {
             </button>
             <div className="dropdown-menu shadow-sm">
                 <button onClick={() => { this.setState({ selectedItem: object }) }} type="button" className="dropdown-item" data-toggle="modal" data-target="#update_category_form">Editar</button>
-                <button onClick={() => { this.setState({ selectedItemId: id }) }} type="button" className="dropdown-item" data-toggle="modal" data-target="#delete_category_form">Deletar</button>
+                <button onClick={() => { this.setState({ selectedItemId: id, selectedItem: object}) }} type="button" className="dropdown-item" data-toggle="modal" data-target="#delete_category_form">Deletar</button>
             </div>
         </div>
     }
@@ -228,14 +228,14 @@ class CategoriaIndex extends Component {
                                         </div>
                                         <div className="col">
                                             <h5 className="modal-title mb-2">Atenção</h5>
-                                            <p className="mb-2">Tem certeza que deseja <strong>deletar a categoria testes</strong>? Essa operação é irreversível.</p>
+                                            <p className="mb-2">Tem certeza que deseja <strong>deletar a categoria {this.state.selectedItem.nomecategoria}</strong>? Essa operação é irreversível.</p>
                                             <span className="text-muted small">Todas bebidas pertencentes a essa categoria também serão deletados.</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="form-row justify-content-center ">
                                     <div className="col-sm-4 mb-3 mb-sm-0">
-                                        <button onClick={() => this.setState({ selectedItemId: null })} type="button" className="btn btn-block btn-outline-secondary btn-lg" data-dismiss="modal">Cancelar</button>
+                                        <button onClick={() => this.setState({ selectedItemId: null, selectedItem: {nomecategoria: null, img: null} })} type="button" className="btn btn-block btn-outline-secondary btn-lg" data-dismiss="modal">Cancelar</button>
                                     </div>
                                     <div className="col-sm-4">
                                         <button onClick={() => {

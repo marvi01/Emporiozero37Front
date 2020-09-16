@@ -12,7 +12,7 @@ class ProdutoIndex extends Component {
             prod: [{}],
             isApiRequested: false,
             selectedItemId: null,
-            selectedItem: [],
+            selectedItem: {},
         }
     }
     componentDidMount() {
@@ -38,7 +38,7 @@ class ProdutoIndex extends Component {
             </button>
             <div className="dropdown-menu shadow-sm">
                 <Link to={`/dashboard/produtos/${id}/edit`} className="dropdown-item" href="#">Editar</Link>
-                <button onClick={()=>this.setState({selectedItemId: id})}type="button" className="dropdown-item" data-toggle="modal" data-target="#delete_product_form">Deletar</button>
+                <button onClick={()=>this.setState({selectedItemId: id, selectedItem: object})}type="button" className="dropdown-item" data-toggle="modal" data-target="#delete_product_form">Deletar</button>
                 <a className="dropdown-item" href="#">Gerenciar desconto</a>
             </div>
         </div>
@@ -160,13 +160,13 @@ class ProdutoIndex extends Component {
                                         </div>
                                         <div className="col">
                                             <h5 className="modal-title mb-2">Atenção</h5>
-                                            <p className="mb-0">Tem certeza que deseja <strong>deletar a bebida Vodka 600 ML</strong>? Essa operação é irreversível.</p>
+                                            <p className="mb-0">Tem certeza que deseja <strong>deletar a bebida {this.state.selectedItem.nomeprod} {this.state.selectedItem.ml} ML</strong>? Essa operação é irreversível.</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="form-row justify-content-center ">
                                     <div className="col-sm-4 mb-3 mb-sm-0">
-                                        <button onClick={()=>this.setState({selectedItemId: null, selectedItem: []})} type="button" className="btn btn-block btn-outline-secondary btn-lg" data-dismiss="modal">Cancelar</button>
+                                        <button onClick={()=>this.setState({selectedItemId: null, selectedItem: {nomeprod: null, ml: null}})} type="button" className="btn btn-block btn-outline-secondary btn-lg" data-dismiss="modal">Cancelar</button>
 
                                     </div>
                                     <div className="col-sm-4">

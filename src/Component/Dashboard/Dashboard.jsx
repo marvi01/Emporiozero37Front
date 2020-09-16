@@ -19,6 +19,7 @@ class Dashboard extends Component {
             isApiRequested: false,
             type: null,
             admin: null,
+            menulateral: "active",
         }
     }
     componentDidMount() {
@@ -38,12 +39,11 @@ class Dashboard extends Component {
         }
     }
     validateAccType() {
-        console.log(this.state.isApiRequested);
         if (this.state.isApiRequested) {
             if (this.state.type === 1) {
                 return (
                     <div>
-                        <div id="sidebar">
+                        <div id="sidebar" className={this.state.menulateral}>
                             <div className="row justify-content-center">
                                 <div className="col-sm-8 col-md-12">
                                     <img src={logo} id="sidebar-logo" alt="Logo empório zero37" />
@@ -93,7 +93,7 @@ class Dashboard extends Component {
                                     </Link>
                                         </li>
                                     </ul>
-                                    <button id="sidebarCollapse2" type="button" className="center-button dashboard-collapse-button d-md-none">
+                                    <button onClick={()=>this.setState({menulateral: null})} id="sidebarCollapse2" type="button" className="center-button dashboard-collapse-button d-md-none">
                                         <i className="fas fa-chevron-left"></i>
                                     </button>
                                 </div>
@@ -102,7 +102,7 @@ class Dashboard extends Component {
                         <div id="dashboard-content">
                             <div id="dashboard-topbar" className="px-md-5">
                                 <div className="flex-between justify-content-md-end">
-                                    <button id="sidebarCollapse" type="button" className="dashboard-collapse-button d-md-none">
+                                    <button onClick={()=>this.setState({menulateral: "active"})} id="sidebarCollapse" type="button" className="dashboard-collapse-button d-md-none">
                                         <i className="fa fa-bars"></i>
                                     </button>
                                     {this.state.admin !== null
